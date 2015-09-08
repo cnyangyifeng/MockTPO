@@ -1,6 +1,10 @@
 package com.mocktpo.util;
 
-public interface Constants {
+public interface LayoutConstants {
+
+    /**************************************************
+     * Global
+     **************************************************/
 
     int MARGIN = 5;
 

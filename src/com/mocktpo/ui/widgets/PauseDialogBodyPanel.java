@@ -1,9 +1,9 @@
-package com.mocktpo.ui;
+package com.mocktpo.ui.widgets;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PauseBodyPanel extends JPanel {
+public class PauseDialogBodyPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {

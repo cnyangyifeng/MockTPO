@@ -1,12 +1,13 @@
-package com.mocktpo.ui;
+package com.mocktpo.ui.widgets;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class FooterPanel extends JPanel {
+public class BodyPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+
         super.paintComponent(g);
 
         int width = this.getWidth();
@@ -14,7 +15,7 @@ public class FooterPanel extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        Color bg = new Color(60, 77, 130); // #3c4d82
+        Color bg = new Color(255, 255, 255); // #ffffff
 
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);

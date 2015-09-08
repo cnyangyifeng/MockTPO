@@ -1,13 +1,17 @@
-package com.mocktpo.ui;
+package com.mocktpo.ui.tests.listening;
 
-import javax.media.*;
-import javax.media.format.AudioFormat;
+import com.mocktpo.audio.AudioWorker;
+import com.mocktpo.util.GlobalConstants;
+
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.net.URL;
 
-public class ListeningSectionDirectionsPanel extends JPanel {
+public class ListeningSectionDirectionsPanel extends JPanel implements PropertyChangeListener {
 
     public ListeningSectionDirectionsPanel(JComponent owner) {
         super();
@@ -24,7 +28,7 @@ public class ListeningSectionDirectionsPanel extends JPanel {
 
         this.add(this.descriptionPane);
 
-        this.setAudioPlayer();
+        this.audioStart();
     }
 
     private void setDescriptionPane() {
@@ -55,28 +59,11 @@ public class ListeningSectionDirectionsPanel extends JPanel {
         this.descriptionPane.setText(text);
     }
 
-    public void setAudioPlayer() {
-        if (this.audioPlayer == null) {
-            Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
-            Format input2 = new AudioFormat(AudioFormat.MPEG);
-            Format output = new AudioFormat(AudioFormat.LINEAR);
-            PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
-
-            try {
-                this.audioPlayer = Manager.createPlayer(new MediaLocator(this.getClass().getResource("listening_section_directions.mp3")));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void startAudio() {
-        this.audioPlayer.stop();
-        this.audioPlayer.start();
-    }
-
-    public void stopAudio() {
-        this.audioPlayer.stop();
+    private void audioStart() {
+        URL url = this.getClass().getResource(GlobalConstants.AUDIO_ROOT + "listening_section_directions.mp3");
+        AudioWorker worker = new AudioWorker(url);
+        worker.addPropertyChangeListener(this);
+        worker.execute();
     }
 
     @Override
@@ -94,7 +81,18 @@ public class ListeningSectionDirectionsPanel extends JPanel {
         g2d.fillRect(0, 0, width, height);
     }
 
+    /**************************************************
+     * Listeners
+     **************************************************/
+
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
+
+    /**************************************************
+     * Properties
+     **************************************************/
+
     private JComponent owner;
     private JEditorPane descriptionPane;
-    private Player audioPlayer;
 }

@@ -1,6 +1,11 @@
-package com.mocktpo.ui;
+package com.mocktpo.ui.windows;
 
-import com.mocktpo.util.Constants;
+import com.mocktpo.ui.base.MButton;
+import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.ui.widgets.FooterPanel;
+import com.mocktpo.ui.widgets.HeaderPanel;
+import com.mocktpo.util.GlobalConstants;
+import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -62,7 +67,7 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
     private void setHeaderPanel() {
         this.headerPanel = new HeaderPanel();
 
-        this.headerPanel.setBounds(0, 0, this.getWidth(), Constants.HEADER_PANEL_HEIGHT);
+        this.headerPanel.setBounds(0, 0, this.getWidth(), LayoutConstants.HEADER_PANEL_HEIGHT);
 
         this.headerPanel.setLayout(null);
 
@@ -78,18 +83,18 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
     private void setLogoLabel() {
         this.logoLabel = new JLabel();
 
-        this.logoLabel.setBounds(0, Constants.MARGIN, Constants.LOGO_LABEL_WIDTH, Constants.LOGO_LABEL_HEIGHT);
+        this.logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("logo.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "logo.png"));
         this.logoLabel.setIcon(icon);
     }
 
     private void setTitlePane() {
         this.titlePane = new JEditorPane();
 
-        int x = Constants.LOGO_LABEL_WIDTH + Constants.MARGIN * 2;
-        int y = Constants.MARGIN;
-        this.titlePane.setBounds(x, y, Constants.TITLE_PANE_WIDTH, Constants.TITLE_PANE_HEIGHT);
+        int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
+        int y = LayoutConstants.MARGIN;
+        this.titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
 
         this.titlePane.setEditable(false);
         this.titlePane.setOpaque(false);
@@ -102,12 +107,12 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
     }
 
     private void setExitApplicationButton() {
-        this.exitApplicationButton = new JButton();
+        this.exitApplicationButton = new MButton();
 
-        int x = Constants.MARGIN;
-        int y = Constants.HEADER_PANEL_HEIGHT - Constants.EXIT_APPLICATION_BUTTON_HEIGHT - Constants.MARGIN;
-        this.exitApplicationButton.setBounds(x, y, Constants.EXIT_APPLICATION_BUTTON_WIDTH, Constants.EXIT_APPLICATION_BUTTON_HEIGHT);
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("exit_application.png"));
+        int x = LayoutConstants.MARGIN;
+        int y = LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.EXIT_APPLICATION_BUTTON_HEIGHT - LayoutConstants.MARGIN;
+        this.exitApplicationButton.setBounds(x, y, LayoutConstants.EXIT_APPLICATION_BUTTON_WIDTH, LayoutConstants.EXIT_APPLICATION_BUTTON_HEIGHT);
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "exit_application.png"));
 
         this.exitApplicationButton.setIcon(icon);
         this.exitApplicationButton.setText(null);
@@ -128,8 +133,8 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
     private void setBodyPanel() {
         this.bodyPanel = new BodyPanel();
 
-        int height = this.getHeight() - Constants.HEADER_PANEL_HEIGHT - Constants.FOOTER_PANEL_HEIGHT;
-        this.bodyPanel.setBounds(0, Constants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
+        int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
+        this.bodyPanel.setBounds(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
 
         this.bodyPanel.setLayout(null);
 
@@ -143,9 +148,9 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
     private void setSloganPane() {
         this.sloganPane = new JEditorPane();
 
-        int x = (this.bodyPanel.getWidth() - Constants.SLOGAN_PANE_WIDTH) / 2;
-        int y = Constants.MARGIN * 5;
-        this.sloganPane.setBounds(x, y, Constants.SLOGAN_PANE_WIDTH, Constants.SLOGAN_PANE_HEIGHT);
+        int x = (this.bodyPanel.getWidth() - LayoutConstants.SLOGAN_PANE_WIDTH) / 2;
+        int y = LayoutConstants.MARGIN * 5;
+        this.sloganPane.setBounds(x, y, LayoutConstants.SLOGAN_PANE_WIDTH, LayoutConstants.SLOGAN_PANE_HEIGHT);
 
         this.sloganPane.setEditable(false);
         this.sloganPane.setOpaque(false);
@@ -162,9 +167,9 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
         this.bodyScrollPane = new JScrollPane();
 
         int x = this.sloganPane.getX();
-        int y = this.sloganPane.getY() + this.sloganPane.getHeight() + Constants.MARGIN * 5;
-        int height = this.bodyPanel.getHeight() - y - Constants.MARGIN * 10;
-        this.bodyScrollPane.setBounds(x, y, Constants.BODY_TABLE_PANE_WIDTH, height);
+        int y = this.sloganPane.getY() + this.sloganPane.getHeight() + LayoutConstants.MARGIN * 5;
+        int height = this.bodyPanel.getHeight() - y - LayoutConstants.MARGIN * 10;
+        this.bodyScrollPane.setBounds(x, y, LayoutConstants.BODY_TABLE_PANE_WIDTH, height);
 
         JEditorPane bodyPane = new JEditorPane();
         bodyPane.setEditable(false);
@@ -192,7 +197,7 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
     private void setFooterPanel() {
         this.footerPanel = new FooterPanel();
 
-        this.footerPanel.setBounds(0, this.getHeight() - Constants.FOOTER_PANEL_HEIGHT, this.getWidth(), Constants.FOOTER_PANEL_HEIGHT);
+        this.footerPanel.setBounds(0, this.getHeight() - LayoutConstants.FOOTER_PANEL_HEIGHT, this.getWidth(), LayoutConstants.FOOTER_PANEL_HEIGHT);
 
         this.footerPanel.setLayout(null);
 
@@ -204,9 +209,9 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
     private void setCopyrightPane() {
         this.copyrightPane = new JEditorPane();
 
-        int x = (this.footerPanel.getWidth() - Constants.COPYRIGHT_PANE_WIDTH) / 2;
-        int y = (Constants.FOOTER_PANEL_HEIGHT - Constants.COPYRIGHT_PANE_HEIGHT) / 2;
-        this.copyrightPane.setBounds(x, y, Constants.COPYRIGHT_PANE_WIDTH, Constants.COPYRIGHT_PANE_HEIGHT);
+        int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
+        int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
+        this.copyrightPane.setBounds(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT);
 
         this.copyrightPane.setEditable(false);
         this.copyrightPane.setOpaque(false);
@@ -272,7 +277,7 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
     private HeaderPanel headerPanel;
     private JLabel logoLabel;
     private JEditorPane titlePane;
-    private JButton exitApplicationButton;
+    private MButton exitApplicationButton;
 
     private BodyPanel bodyPanel;
     private JEditorPane sloganPane;

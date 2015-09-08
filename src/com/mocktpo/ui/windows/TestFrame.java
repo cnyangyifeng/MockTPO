@@ -1,6 +1,14 @@
-package com.mocktpo.ui;
+package com.mocktpo.ui.windows;
 
-import com.mocktpo.util.Constants;
+import com.mocktpo.ui.base.MButton;
+import com.mocktpo.ui.dialogs.PauseDialog;
+import com.mocktpo.ui.tests.listening.ConversationPanel;
+import com.mocktpo.ui.tests.listening.ListeningSectionDirectionsPanel;
+import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.ui.widgets.FooterPanel;
+import com.mocktpo.ui.widgets.HeaderPanel;
+import com.mocktpo.util.GlobalConstants;
+import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
@@ -61,7 +69,7 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     private void setHeaderPanel() {
         this.headerPanel = new HeaderPanel();
 
-        this.headerPanel.setBounds(0, 0, this.getWidth(), Constants.HEADER_PANEL_HEIGHT);
+        this.headerPanel.setBounds(0, 0, this.getWidth(), LayoutConstants.HEADER_PANEL_HEIGHT);
 
         this.headerPanel.setLayout(null);
 
@@ -81,18 +89,18 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     private void setLogoLabel() {
         this.logoLabel = new JLabel();
 
-        this.logoLabel.setBounds(0, Constants.MARGIN, Constants.LOGO_LABEL_WIDTH, Constants.LOGO_LABEL_HEIGHT);
+        this.logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("logo.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "logo.png"));
         this.logoLabel.setIcon(icon);
     }
 
     private void setTitlePane() {
         this.titlePane = new JEditorPane();
 
-        int x = Constants.LOGO_LABEL_WIDTH + Constants.MARGIN * 2;
-        int y = Constants.MARGIN;
-        this.titlePane.setBounds(x, y, Constants.TITLE_PANE_WIDTH, Constants.TITLE_PANE_HEIGHT);
+        int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
+        int y = LayoutConstants.MARGIN;
+        this.titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
 
         this.titlePane.setEditable(false);
         this.titlePane.setOpaque(false);
@@ -105,13 +113,13 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     }
 
     private void setPauseTestButton() {
-        this.pauseTestButton = new JButton();
+        this.pauseTestButton = new MButton();
 
-        int x = Constants.MARGIN;
-        int y = Constants.HEADER_PANEL_HEIGHT - Constants.PAUSE_TEST_BUTTON_HEIGHT - Constants.MARGIN;
-        this.pauseTestButton.setBounds(x, y, Constants.PAUSE_TEST_BUTTON_WIDTH, Constants.PAUSE_TEST_BUTTON_HEIGHT);
+        int x = LayoutConstants.MARGIN;
+        int y = LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.PAUSE_TEST_BUTTON_HEIGHT - LayoutConstants.MARGIN;
+        this.pauseTestButton.setBounds(x, y, LayoutConstants.PAUSE_TEST_BUTTON_WIDTH, LayoutConstants.PAUSE_TEST_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("pause_test.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
         this.pauseTestButton.setIcon(icon);
         this.pauseTestButton.setText(null);
         this.pauseTestButton.setMargin(new Insets(0, 0, 0, 0));
@@ -125,13 +133,13 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     }
 
     private void setSectionExitButton() {
-        this.sectionExitButton = new JButton();
+        this.sectionExitButton = new MButton();
 
-        int x = this.pauseTestButton.getX() + Constants.PAUSE_TEST_BUTTON_WIDTH + Constants.MARGIN;
-        int y = Constants.HEADER_PANEL_HEIGHT - Constants.SECTION_EXIT_BUTTON_HEIGHT - Constants.MARGIN;
-        this.sectionExitButton.setBounds(x, y, Constants.SECTION_EXIT_BUTTON_WIDTH, Constants.SECTION_EXIT_BUTTON_HEIGHT);
+        int x = this.pauseTestButton.getX() + LayoutConstants.PAUSE_TEST_BUTTON_WIDTH + LayoutConstants.MARGIN;
+        int y = LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.SECTION_EXIT_BUTTON_HEIGHT - LayoutConstants.MARGIN;
+        this.sectionExitButton.setBounds(x, y, LayoutConstants.SECTION_EXIT_BUTTON_WIDTH, LayoutConstants.SECTION_EXIT_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("section_exit.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "section_exit.png"));
         this.sectionExitButton.setIcon(icon);
         this.sectionExitButton.setText(null);
         this.sectionExitButton.setMargin(new Insets(0, 0, 0, 0));
@@ -145,13 +153,13 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     }
 
     private void setContinueButton() {
-        this.continueButton = new JButton();
+        this.continueButton = new MButton();
 
-        int x = this.getWidth() - Constants.CONTINUE_BUTTON_WIDTH - Constants.MARGIN;
-        int y = Constants.MARGIN * 2;
-        this.continueButton.setBounds(x, y, Constants.CONTINUE_BUTTON_WIDTH, Constants.CONTINUE_BUTTON_HEIGHT);
+        int x = this.getWidth() - LayoutConstants.CONTINUE_BUTTON_WIDTH - LayoutConstants.MARGIN;
+        int y = LayoutConstants.MARGIN * 2;
+        this.continueButton.setBounds(x, y, LayoutConstants.CONTINUE_BUTTON_WIDTH, LayoutConstants.CONTINUE_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("continue.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "continue.png"));
         this.continueButton.setIcon(icon);
         this.continueButton.setText(null);
         this.continueButton.setMargin(new Insets(0, 0, 0, 0));
@@ -171,13 +179,12 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     private void setBodyPanel() {
         this.bodyPanel = new BodyPanel();
 
-        int height = this.getHeight() - Constants.HEADER_PANEL_HEIGHT - Constants.FOOTER_PANEL_HEIGHT;
-        this.bodyPanel.setBounds(0, Constants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
+        int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
+        this.bodyPanel.setBounds(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
 
         this.bodyPanel.setLayout(null);
 
         this.lsdPanel = new ListeningSectionDirectionsPanel(this.bodyPanel);
-        this.lsdPanel.startAudio();
 
         this.bodyPanel.add(this.lsdPanel);
     }
@@ -189,7 +196,7 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     private void setFooterPanel() {
         this.footerPanel = new FooterPanel();
 
-        this.footerPanel.setBounds(0, this.getHeight() - Constants.FOOTER_PANEL_HEIGHT, this.getWidth(), Constants.FOOTER_PANEL_HEIGHT);
+        this.footerPanel.setBounds(0, this.getHeight() - LayoutConstants.FOOTER_PANEL_HEIGHT, this.getWidth(), LayoutConstants.FOOTER_PANEL_HEIGHT);
 
         this.footerPanel.setLayout(null);
 
@@ -201,9 +208,9 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     private void setCopyrightPane() {
         this.copyrightPane = new JEditorPane();
 
-        int x = (this.footerPanel.getWidth() - Constants.COPYRIGHT_PANE_WIDTH) / 2;
-        int y = (Constants.FOOTER_PANEL_HEIGHT - Constants.COPYRIGHT_PANE_HEIGHT) / 2;
-        this.copyrightPane.setBounds(x, y, Constants.COPYRIGHT_PANE_WIDTH, Constants.COPYRIGHT_PANE_HEIGHT);
+        int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
+        int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
+        this.copyrightPane.setBounds(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT);
 
         this.copyrightPane.setEditable(false);
         this.copyrightPane.setOpaque(false);
@@ -241,10 +248,6 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (this.lsdPanel != null) {
-            this.lsdPanel.stopAudio();
-        }
-
         String ac = e.getActionCommand();
         switch (ac) {
             case "doPauseTest":
@@ -273,9 +276,9 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     private HeaderPanel headerPanel;
     private JLabel logoLabel;
     private JEditorPane titlePane;
-    private JButton pauseTestButton;
-    private JButton sectionExitButton;
-    private JButton continueButton;
+    private MButton pauseTestButton;
+    private MButton sectionExitButton;
+    private MButton continueButton;
 
     private BodyPanel bodyPanel;
     private ListeningSectionDirectionsPanel lsdPanel;

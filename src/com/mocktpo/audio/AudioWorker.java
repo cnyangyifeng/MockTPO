@@ -1,4 +1,4 @@
-package com.mocktpo.ui;
+package com.mocktpo.audio;
 
 import javax.media.*;
 import javax.media.format.AudioFormat;

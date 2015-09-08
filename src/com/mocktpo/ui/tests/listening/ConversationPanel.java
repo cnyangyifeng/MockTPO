@@ -1,6 +1,8 @@
-package com.mocktpo.ui;
+package com.mocktpo.ui.tests.listening;
 
-import com.mocktpo.util.Constants;
+import com.mocktpo.audio.AudioWorker;
+import com.mocktpo.util.GlobalConstants;
+import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,19 +35,19 @@ public class ConversationPanel extends JPanel implements PropertyChangeListener 
     private void setConversationLabel() {
         this.conversationLabel = new JLabel();
 
-        int x = (this.getWidth() - Constants.CONVERSATION_LABEL_WIDTH) / 2;
-        this.conversationLabel.setBounds(x, Constants.MARGIN * 4, Constants.CONVERSATION_LABEL_WIDTH, Constants.CONVERSATION_LABEL_HEIGHT);
+        int x = (this.getWidth() - LayoutConstants.CONVERSATION_LABEL_WIDTH) / 2;
+        this.conversationLabel.setBounds(x, LayoutConstants.MARGIN * 4, LayoutConstants.CONVERSATION_LABEL_WIDTH, LayoutConstants.CONVERSATION_LABEL_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("conversation.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "conversation.png"));
         this.conversationLabel.setIcon(icon);
     }
 
     private void setConversationProgressBar() {
         this.conversationProgressBar = new JProgressBar();
 
-        int x = (this.getWidth() - Constants.CONVERSATION_PROGRESS_BAR_WIDTH) / 2;
-        int y = this.conversationLabel.getY() + Constants.CONVERSATION_LABEL_HEIGHT + Constants.MARGIN * 4;
-        this.conversationProgressBar.setBounds(x, y, Constants.CONVERSATION_PROGRESS_BAR_WIDTH, Constants.CONVERSATION_PROGRESS_BAR_HEIGHT);
+        int x = (this.getWidth() - LayoutConstants.CONVERSATION_PROGRESS_BAR_WIDTH) / 2;
+        int y = this.conversationLabel.getY() + LayoutConstants.CONVERSATION_LABEL_HEIGHT + LayoutConstants.MARGIN * 4;
+        this.conversationProgressBar.setBounds(x, y, LayoutConstants.CONVERSATION_PROGRESS_BAR_WIDTH, LayoutConstants.CONVERSATION_PROGRESS_BAR_HEIGHT);
 
         this.conversationProgressBar.setMinimum(0);
         this.conversationProgressBar.setMaximum(100);
@@ -55,7 +57,7 @@ public class ConversationPanel extends JPanel implements PropertyChangeListener 
     }
 
     private void audioStart() {
-        URL url = this.getClass().getResource("conversation.mp3");
+        URL url = this.getClass().getResource(GlobalConstants.AUDIO_ROOT + "conversation.mp3");
         AudioWorker worker = new AudioWorker(url);
         worker.addPropertyChangeListener(this);
         worker.execute();

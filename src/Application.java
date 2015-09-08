@@ -1,4 +1,4 @@
-import com.mocktpo.ui.MainFrame;
+import com.mocktpo.ui.windows.MainFrame;
 
 import java.awt.*;
 

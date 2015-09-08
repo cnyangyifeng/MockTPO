@@ -1,4 +1,4 @@
-package com.mocktpo.ui;
+package com.mocktpo.ui.widgets;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,11 @@
-package com.mocktpo.ui;
+package com.mocktpo.ui.dialogs;
 
-import com.mocktpo.util.Constants;
+import com.mocktpo.ui.base.MButton;
+import com.mocktpo.ui.widgets.PauseDialogBodyPanel;
+import com.mocktpo.ui.windows.MainFrame;
+import com.mocktpo.ui.windows.TestFrame;
+import com.mocktpo.util.GlobalConstants;
+import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
@@ -30,9 +35,9 @@ public class PauseDialog extends JDialog implements ActionListener {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
 
-        int x = ((int) screenSize.getWidth() - Constants.PAUSE_DIALOG_WIDTH) / 2;
-        int y = ((int) screenSize.getHeight() - Constants.PAUSE_DIALOG_HEIGHT) / 2;
-        this.setBounds(x, y, Constants.PAUSE_DIALOG_WIDTH, Constants.PAUSE_DIALOG_HEIGHT);
+        int x = ((int) screenSize.getWidth() - LayoutConstants.PAUSE_DIALOG_WIDTH) / 2;
+        int y = ((int) screenSize.getHeight() - LayoutConstants.PAUSE_DIALOG_HEIGHT) / 2;
+        this.setBounds(x, y, LayoutConstants.PAUSE_DIALOG_WIDTH, LayoutConstants.PAUSE_DIALOG_HEIGHT);
 
         this.setResizable(false);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -41,7 +46,7 @@ public class PauseDialog extends JDialog implements ActionListener {
     }
 
     private void setBodyPanel() {
-        this.bodyPanel = new PauseBodyPanel();
+        this.bodyPanel = new PauseDialogBodyPanel();
         this.bodyPanel.setBounds(0, 0, this.getWidth(), this.getHeight());
 
         this.bodyPanel.setLayout(null);
@@ -61,16 +66,16 @@ public class PauseDialog extends JDialog implements ActionListener {
         this.pauseLabel = new JLabel("Pause", JLabel.CENTER);
         this.pauseLabel.setForeground(Color.WHITE);
         this.pauseLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        int x = (this.bodyPanel.getWidth() - Constants.PAUSE_LABEL_WIDTH) / 2;
-        this.pauseLabel.setBounds(x, Constants.MARGIN, Constants.PAUSE_LABEL_WIDTH, Constants.PAUSE_LABEL_HEIGHT);
+        int x = (this.bodyPanel.getWidth() - LayoutConstants.PAUSE_LABEL_WIDTH) / 2;
+        this.pauseLabel.setBounds(x, LayoutConstants.MARGIN, LayoutConstants.PAUSE_LABEL_WIDTH, LayoutConstants.PAUSE_LABEL_HEIGHT);
     }
 
     private void setPauseDescriptionPane() {
         this.pauseDescriptionPane = new JEditorPane();
 
-        int x = (this.bodyPanel.getWidth() - Constants.PAUSE_DESCRIPTION_WIDTH) / 2;
-        int y = this.pauseLabel.getY() + Constants.PAUSE_LABEL_HEIGHT + Constants.MARGIN * 2;
-        this.pauseDescriptionPane.setBounds(x, y, Constants.PAUSE_DESCRIPTION_WIDTH, Constants.PAUSE_DESCRIPTION_HEIGHT);
+        int x = (this.bodyPanel.getWidth() - LayoutConstants.PAUSE_DESCRIPTION_WIDTH) / 2;
+        int y = this.pauseLabel.getY() + LayoutConstants.PAUSE_LABEL_HEIGHT + LayoutConstants.MARGIN * 2;
+        this.pauseDescriptionPane.setBounds(x, y, LayoutConstants.PAUSE_DESCRIPTION_WIDTH, LayoutConstants.PAUSE_DESCRIPTION_HEIGHT);
 
         this.pauseDescriptionPane.setEditable(false);
         this.pauseDescriptionPane.setOpaque(false);
@@ -83,13 +88,13 @@ public class PauseDialog extends JDialog implements ActionListener {
     }
 
     private void setPauseGoButton() {
-        this.pauseGoButton = new JButton();
+        this.pauseGoButton = new MButton();
 
-        int x = this.bodyPanel.getWidth() / 2 - Constants.PAUSE_GO_BUTTON_WIDTH - Constants.MARGIN * 2;
-        int y = this.pauseDescriptionPane.getY() + Constants.PAUSE_DESCRIPTION_HEIGHT + Constants.MARGIN * 2;
-        this.pauseGoButton.setBounds(x, y, Constants.PAUSE_GO_BUTTON_WIDTH, Constants.PAUSE_GO_BUTTON_HEIGHT);
+        int x = this.bodyPanel.getWidth() / 2 - LayoutConstants.PAUSE_GO_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
+        int y = this.pauseDescriptionPane.getY() + LayoutConstants.PAUSE_DESCRIPTION_HEIGHT + LayoutConstants.MARGIN * 2;
+        this.pauseGoButton.setBounds(x, y, LayoutConstants.PAUSE_GO_BUTTON_WIDTH, LayoutConstants.PAUSE_GO_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("pause_test.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
         this.pauseGoButton.setIcon(icon);
         this.pauseGoButton.setText(null);
         this.pauseGoButton.setMargin(new Insets(0, 0, 0, 0));
@@ -103,13 +108,13 @@ public class PauseDialog extends JDialog implements ActionListener {
     }
 
     private void setPauseCancelButton() {
-        this.pauseCancelButton = new JButton();
+        this.pauseCancelButton = new MButton();
 
-        int x = this.bodyPanel.getWidth() / 2 + Constants.MARGIN * 2;
-        int y = this.pauseDescriptionPane.getY() + Constants.PAUSE_DESCRIPTION_HEIGHT + Constants.MARGIN * 2;
-        this.pauseCancelButton.setBounds(x, y, Constants.PAUSE_CANCEL_BUTTON_WIDTH, Constants.PAUSE_CANCEL_BUTTON_HEIGHT);
+        int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;
+        int y = this.pauseDescriptionPane.getY() + LayoutConstants.PAUSE_DESCRIPTION_HEIGHT + LayoutConstants.MARGIN * 2;
+        this.pauseCancelButton.setBounds(x, y, LayoutConstants.PAUSE_CANCEL_BUTTON_WIDTH, LayoutConstants.PAUSE_CANCEL_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource("pause_test.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
         this.pauseCancelButton.setIcon(icon);
         this.pauseCancelButton.setText(null);
         this.pauseCancelButton.setMargin(new Insets(0, 0, 0, 0));
@@ -150,9 +155,9 @@ public class PauseDialog extends JDialog implements ActionListener {
      * Properties
      **************************************************/
 
-    private PauseBodyPanel bodyPanel;
+    private PauseDialogBodyPanel bodyPanel;
     private JLabel pauseLabel;
     private JEditorPane pauseDescriptionPane;
-    private JButton pauseGoButton;
-    private JButton pauseCancelButton;
+    private MButton pauseGoButton;
+    private MButton pauseCancelButton;
 }

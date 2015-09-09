@@ -5,9 +5,18 @@ import java.awt.*;
 
 public class BodyPanel extends JPanel {
 
+    public BodyPanel(Rectangle bounds) {
+        super();
+        this.setBounds(bounds);
+        initComponents();
+    }
+
+    private void initComponents() {
+        this.setLayout(null);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
-
         super.paintComponent(g);
 
         int width = this.getWidth();

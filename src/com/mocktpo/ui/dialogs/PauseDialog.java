@@ -1,6 +1,6 @@
 package com.mocktpo.ui.dialogs;
 
-import com.mocktpo.ui.base.MButton;
+import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.ui.widgets.PauseDialogBodyPanel;
 import com.mocktpo.ui.windows.MainFrame;
 import com.mocktpo.ui.windows.TestFrame;
@@ -132,21 +132,27 @@ public class PauseDialog extends JDialog implements ActionListener {
      **************************************************/
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("doPauseGo")) {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice device = ge.getDefaultScreenDevice();
-            TestFrame testFrame = (TestFrame) this.getOwner();
-            MainFrame mainFrame = testFrame.getMainFrame();
+        if ("doPauseGo".equals(e.getActionCommand())) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                    GraphicsDevice device = ge.getDefaultScreenDevice();
+                    TestFrame testFrame = (TestFrame) PauseDialog.this.getOwner();
+                    MainFrame mainFrame = testFrame.getMainFrame();
 
-            this.dispose();
-            testFrame.dispose();
+                    PauseDialog.this.dispose();
+                    testFrame.didPauseTest();
+                    testFrame.dispose();
 
-            if (mainFrame == null) {
-                mainFrame = new MainFrame(device.getDefaultConfiguration());
-            }
-            device.setFullScreenWindow(mainFrame);
-            mainFrame.setVisible(true);
-        } else if (e.getActionCommand().equals("doPauseCancel")) {
+                    if (mainFrame == null) {
+                        mainFrame = new MainFrame(device.getDefaultConfiguration());
+                    }
+                    device.setFullScreenWindow(mainFrame);
+                    mainFrame.setVisible(true);
+                }
+            });
+        } else if ("doPauseCancel".equals(e.getActionCommand())) {
             this.dispose();
         }
     }

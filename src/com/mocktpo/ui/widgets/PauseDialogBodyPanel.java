@@ -7,7 +7,6 @@ public class PauseDialogBodyPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-
         super.paintComponent(g);
 
         int width = this.getWidth();

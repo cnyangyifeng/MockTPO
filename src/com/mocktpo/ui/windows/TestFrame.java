@@ -1,12 +1,13 @@
 package com.mocktpo.ui.windows;
 
-import com.mocktpo.ui.base.MButton;
 import com.mocktpo.ui.dialogs.PauseDialog;
 import com.mocktpo.ui.tests.listening.ConversationPanel;
+import com.mocktpo.ui.tests.listening.HeadsetPanel;
 import com.mocktpo.ui.tests.listening.ListeningSectionDirectionsPanel;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
+import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
@@ -16,10 +17,8 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
-public class TestFrame extends JFrame implements WindowListener, ActionListener {
+public class TestFrame extends JFrame implements ActionListener {
 
     public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc);
@@ -39,8 +38,6 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
         this.getContentPane().add(headerPanel);
         this.getContentPane().add(bodyPanel);
         this.getContentPane().add(footerPanel);
-
-        this.addWindowListener(this);
     }
 
     private void globalSettings() {
@@ -177,16 +174,11 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
      **************************************************/
 
     private void setBodyPanel() {
-        this.bodyPanel = new BodyPanel();
-
         int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
-        this.bodyPanel.setBounds(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
-
-        this.bodyPanel.setLayout(null);
-
-        this.lsdPanel = new ListeningSectionDirectionsPanel(this.bodyPanel);
-
-        this.bodyPanel.add(this.lsdPanel);
+        this.bodyBounds = new Rectangle(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
+        this.bodyPanel = new BodyPanel(this.bodyBounds);
+        this.headsetPanel = new HeadsetPanel(this.bodyBounds);
+        this.bodyPanel = this.headsetPanel;
     }
 
     /**************************************************
@@ -223,44 +215,56 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     }
 
     /**************************************************
-     * Listeners
+     * Public methods
      **************************************************/
 
-    public void windowOpened(WindowEvent e) {
+    public void didPauseTest() {
+        if (bodyPanel instanceof HeadsetPanel) {
+
+        } else if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
+            this.lsdPanel.stopAudio();
+        } else if (bodyPanel instanceof ConversationPanel) {
+            this.conversationPanel.stopAudio();
+        }
     }
 
-    public void windowClosing(WindowEvent e) {
-    }
-
-    public void windowClosed(WindowEvent e) {
-    }
-
-    public void windowIconified(WindowEvent e) {
-    }
-
-    public void windowDeiconified(WindowEvent e) {
-    }
-
-    public void windowActivated(WindowEvent e) {
-    }
-
-    public void windowDeactivated(WindowEvent e) {
-    }
+    /**************************************************
+     * Listeners
+     **************************************************/
 
     public void actionPerformed(ActionEvent e) {
         String ac = e.getActionCommand();
         switch (ac) {
             case "doPauseTest":
-                PauseDialog pause = new PauseDialog(this, "", true);
-                pause.setVisible(true);
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        PauseDialog pause = new PauseDialog(TestFrame.this, "", true);
+                        pause.setVisible(true);
+                    }
+                });
                 break;
             case "doSectionExit":
                 break;
             case "doContinue":
-                this.conversationPanel = new ConversationPanel(this.bodyPanel);
-                this.bodyPanel.remove(this.lsdPanel);
-                this.bodyPanel.add(this.conversationPanel);
-                this.bodyPanel.repaint();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        getContentPane().remove(bodyPanel);
+                        if (bodyPanel instanceof HeadsetPanel) {
+                            lsdPanel = new ListeningSectionDirectionsPanel(bodyBounds);
+                            bodyPanel = lsdPanel;
+                            lsdPanel.startAudio();
+                        } else if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
+                            lsdPanel.stopAudio();
+                            conversationPanel = new ConversationPanel(bodyBounds);
+                            bodyPanel = conversationPanel;
+                            conversationPanel.startAudio();
+                        }
+                        getContentPane().add(bodyPanel);
+                        repaint();
+                    }
+                });
                 break;
             default:
                 break;
@@ -281,11 +285,14 @@ public class TestFrame extends JFrame implements WindowListener, ActionListener 
     private MButton continueButton;
 
     private BodyPanel bodyPanel;
+    private HeadsetPanel headsetPanel;
     private ListeningSectionDirectionsPanel lsdPanel;
     private ConversationPanel conversationPanel;
 
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
+
+    private Rectangle bodyBounds;
 
     public MainFrame getMainFrame() {
         return this.mainFrame;

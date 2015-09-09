@@ -1,9 +1,9 @@
 package com.mocktpo.ui.windows;
 
-import com.mocktpo.ui.base.MButton;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
+import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
@@ -15,10 +15,8 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
-public class MainFrame extends JFrame implements WindowListener, ActionListener, HyperlinkListener {
+public class MainFrame extends JFrame implements ActionListener, HyperlinkListener {
 
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
@@ -37,8 +35,6 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
         this.getContentPane().add(this.headerPanel);
         this.getContentPane().add(this.bodyPanel);
         this.getContentPane().add(this.footerPanel);
-
-        this.addWindowListener(this);
     }
 
     private void globalSettings() {
@@ -131,15 +127,12 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
      **************************************************/
 
     private void setBodyPanel() {
-        this.bodyPanel = new BodyPanel();
-
         int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
-        this.bodyPanel.setBounds(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
-
-        this.bodyPanel.setLayout(null);
+        Rectangle bounds = new Rectangle(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
+        this.bodyPanel = new BodyPanel(bounds);
 
         this.setSloganPane();
-        this.setBodyTablePane();
+        this.setBodyScrollPane();
 
         this.bodyPanel.add(this.sloganPane);
         this.bodyPanel.add(this.bodyScrollPane);
@@ -163,7 +156,7 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
                 "<div class='slogan-desc'> only for <span class='highlighted'>noncommercial</span> use. Please contact <a href='' class='author'>me</a> to report bugs and check updates.</div>");
     }
 
-    private void setBodyTablePane() {
+    private void setBodyScrollPane() {
         this.bodyScrollPane = new JScrollPane();
 
         int x = this.sloganPane.getX();
@@ -227,44 +220,25 @@ public class MainFrame extends JFrame implements WindowListener, ActionListener,
      * Listeners
      **************************************************/
 
-    public void windowOpened(WindowEvent e) {
-    }
-
-    public void windowClosing(WindowEvent e) {
-    }
-
-    public void windowClosed(WindowEvent e) {
-    }
-
-    public void windowIconified(WindowEvent e) {
-    }
-
-    public void windowDeiconified(WindowEvent e) {
-    }
-
-    public void windowActivated(WindowEvent e) {
-    }
-
-    public void windowDeactivated(WindowEvent e) {
-    }
-
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("doExitApplication")) {
+        if ("doExitApplication".equals(e.getActionCommand())) {
             System.exit(0);
         }
     }
 
     public void hyperlinkUpdate(HyperlinkEvent e) {
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice device = ge.getDefaultScreenDevice();
-            // if (this.testFrame == null) {
-            this.testFrame = new TestFrame(device.getDefaultConfiguration(), this);
-            // }
-            device.setFullScreenWindow(this.testFrame);
-            this.testFrame.setVisible(true);
-
-            this.setVisible(false);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                    GraphicsDevice device = ge.getDefaultScreenDevice();
+                    testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
+                    device.setFullScreenWindow(testFrame);
+                    testFrame.setVisible(true);
+                    setVisible(false);
+                }
+            });
         }
     }
 

@@ -1,34 +1,33 @@
 package com.mocktpo.ui.tests.listening;
 
-import com.mocktpo.audio.AudioWorker;
+import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 
+import javax.media.*;
+import javax.media.format.AudioFormat;
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
-public class ListeningSectionDirectionsPanel extends JPanel implements PropertyChangeListener {
+public class ListeningSectionDirectionsPanel extends BodyPanel implements ActionListener {
 
-    public ListeningSectionDirectionsPanel(JComponent owner) {
-        super();
-        this.owner = owner;
+    public ListeningSectionDirectionsPanel(Rectangle bounds) {
+        super(bounds);
         this.initComponents();
     }
 
     private void initComponents() {
-        this.setBounds(0, 0, this.owner.getWidth(), this.owner.getHeight());
-
         this.setLayout(null);
 
         this.setDescriptionPane();
 
         this.add(this.descriptionPane);
 
-        this.audioStart();
+        this.setAudioPlayer();
     }
 
     private void setDescriptionPane() {
@@ -41,7 +40,7 @@ public class ListeningSectionDirectionsPanel extends JPanel implements PropertyC
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".lsd-header { color: #3d4167; font-family: Georgia; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .lsd { color: #333333; font-family: Arial; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .lsd-footer { color: #333333; font-family: Arial; font-size: 12px; font-style: italic; text-align: center;  }");
+        style.addRule(".lsd-header { color: #3d4167; font-family: Georgia; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .lsd { color: #333333; font-family: Arial; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .lsd-footer { color: #333333; font-family: Arial; font-size: 12px; font-style: italic; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='lsd-header'>Listening Section Directions</div>";
         text += "<div class='lsd'>This test measures your ability to understand conversations and lectures in English.</div>";
@@ -55,15 +54,21 @@ public class ListeningSectionDirectionsPanel extends JPanel implements PropertyC
         text += "<div class='lsd'>You must answer each question. After you answer, click on <b>Next</b>. Then click on <b>OK</b> to confirm your answer and go on to the next question. After you click on <b>OK</b>, you cannot return to previous questions. If you are using the <b>Untimed Mode</b>, you may return to previous questions and you may listen to each conversation and lecture again. Remember that prior exposure to the conversations, lectures, and questions could lead to an increase in your section scores and may not reflect a score you would get when seeing them for the first time.</div>";
         text += "<div class='lsd'>During this practice test, you may click the <b>Pause</b> icon at any time. This will stop the test until you decide to continue. You may continue the test in a few minutes or at any time during the period that your test is activated.</div>";
         text += "<div class='lsd'>In an actual test, and if you are using <b>Timed Mode</b>, a clock at the top of the screen will show you how much time is remaining. The clock will not count down while you are listening. The clock will count down only while you are answering the questions.</div>";
-        text += "<div class='lsd-footer'>(click on <b>Continue</b> at any time to dismiss these directions.)</div>";
+        text += "<div class='lsd-footer'>(Click on <b>Continue</b> at any time to dismiss these directions.)</div>";
         this.descriptionPane.setText(text);
     }
 
-    private void audioStart() {
+    private void setAudioPlayer() {
         URL url = this.getClass().getResource(GlobalConstants.AUDIO_ROOT + "listening_section_directions.mp3");
-        AudioWorker worker = new AudioWorker(url);
-        worker.addPropertyChangeListener(this);
-        worker.execute();
+        Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
+        Format input2 = new AudioFormat(AudioFormat.MPEG);
+        Format output = new AudioFormat(AudioFormat.LINEAR);
+        PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
+        try {
+            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(url));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -81,18 +86,42 @@ public class ListeningSectionDirectionsPanel extends JPanel implements PropertyC
         g2d.fillRect(0, 0, width, height);
     }
 
+    public void startAudio() {
+        this.audioPlayer.start();
+        this.timer = new Timer(1000, this);
+        this.timer.setActionCommand("startAudio");
+        this.timer.start();
+    }
+
+    public void stopAudio() {
+        this.audioPlayer.stop();
+        this.timer.stop();
+    }
+
     /**************************************************
      * Listeners
      **************************************************/
 
-    public void propertyChange(PropertyChangeEvent evt) {
-
+    public void actionPerformed(ActionEvent e) {
+        if ("startAudio".equals(e.getActionCommand())) {
+            long duration = this.audioPlayer.getDuration().getNanoseconds();
+            long now = this.audioPlayer.getMediaTime().getNanoseconds();
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (now >= duration) {
+                        timer.stop();
+                    }
+                }
+            });
+        }
     }
 
     /**************************************************
      * Properties
      **************************************************/
 
-    private JComponent owner;
     private JEditorPane descriptionPane;
+    private Player audioPlayer;
+    private Timer timer;
 }

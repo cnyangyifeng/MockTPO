@@ -56,12 +56,19 @@ public interface LayoutConstants {
     int PAUSE_CANCEL_BUTTON_HEIGHT = 34;
 
     /**************************************************
+     * Headset
+     **************************************************/
+
+    int HEADSET_DESC_PANE_WIDTH = 600;
+    int HEADSET_DESC_PANE_HEIGHT = 480;
+
+    /**************************************************
      * Conversation
      **************************************************/
 
     int CONVERSATION_LABEL_WIDTH = 600;
     int CONVERSATION_LABEL_HEIGHT = 450;
 
-    int CONVERSATION_PROGRESS_BAR_WIDTH = 400;
-    int CONVERSATION_PROGRESS_BAR_HEIGHT = 40;
+    int CONVERSATION_PROGRESS_BAR_WIDTH = 320;
+    int CONVERSATION_PROGRESS_BAR_HEIGHT = 6;
 }

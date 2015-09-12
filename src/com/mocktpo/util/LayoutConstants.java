@@ -63,6 +63,13 @@ public interface LayoutConstants {
     int HEADSET_DESC_PANE_HEIGHT = 480;
 
     /**************************************************
+     * Changing Volume
+     **************************************************/
+
+    int CHANGING_VOLUME_DESC_PANE_WIDTH = 680;
+    int CHANGING_VOLUME_DESC_PANE_HEIGHT = 600;
+
+    /**************************************************
      * Conversation
      **************************************************/
 

@@ -1,6 +1,7 @@
 package com.mocktpo.ui.windows;
 
 import com.mocktpo.ui.dialogs.PauseDialog;
+import com.mocktpo.ui.tests.listening.ChangingVolumePanel;
 import com.mocktpo.ui.tests.listening.ConversationPanel;
 import com.mocktpo.ui.tests.listening.HeadsetPanel;
 import com.mocktpo.ui.tests.listening.ListeningSectionDirectionsPanel;
@@ -252,6 +253,9 @@ public class TestFrame extends JFrame implements ActionListener {
                     public void run() {
                         getContentPane().remove(bodyPanel);
                         if (bodyPanel instanceof HeadsetPanel) {
+                            cvPanel = new ChangingVolumePanel(bodyBounds);
+                            bodyPanel = cvPanel;
+                        } else if (bodyPanel instanceof ChangingVolumePanel) {
                             lsdPanel = new ListeningSectionDirectionsPanel(bodyBounds);
                             bodyPanel = lsdPanel;
                             lsdPanel.startAudio();
@@ -286,6 +290,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private BodyPanel bodyPanel;
     private HeadsetPanel headsetPanel;
+    private ChangingVolumePanel cvPanel;
     private ListeningSectionDirectionsPanel lsdPanel;
     private ConversationPanel conversationPanel;
 

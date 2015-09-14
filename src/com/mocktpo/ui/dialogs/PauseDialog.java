@@ -16,6 +16,31 @@ import java.awt.event.ActionListener;
 
 public class PauseDialog extends JDialog implements ActionListener {
 
+    public static final int PAUSE_DIALOG_WIDTH = 440;
+    public static final int PAUSE_DIALOG_HEIGHT = 420;
+
+    public static final int PAUSE_LABEL_WIDTH = 200;
+    public static final int PAUSE_LABEL_HEIGHT = 40;
+
+    public static final int PAUSE_DESCRIPTION_PANE_WIDTH = 418;
+    public static final int PAUSE_DESCRIPTION_PANE_HEIGHT = 260;
+
+    public static final int PAUSE_GO_BUTTON_WIDTH = 84;
+    public static final int PAUSE_GO_BUTTON_HEIGHT = 34;
+
+    public static final int PAUSE_CANCEL_BUTTON_WIDTH = 84;
+    public static final int PAUSE_CANCEL_BUTTON_HEIGHT = 34;
+
+    /**************************************************
+     * Properties
+     **************************************************/
+
+    private PauseDialogBodyPanel bodyPanel;
+    private JLabel pauseLabel;
+    private JEditorPane pauseDescriptionPane;
+    private MButton pauseGoButton;
+    private MButton pauseCancelButton;
+
     public PauseDialog(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
         initComponents();
@@ -35,9 +60,9 @@ public class PauseDialog extends JDialog implements ActionListener {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
 
-        int x = ((int) screenSize.getWidth() - LayoutConstants.PAUSE_DIALOG_WIDTH) / 2;
-        int y = ((int) screenSize.getHeight() - LayoutConstants.PAUSE_DIALOG_HEIGHT) / 2;
-        this.setBounds(x, y, LayoutConstants.PAUSE_DIALOG_WIDTH, LayoutConstants.PAUSE_DIALOG_HEIGHT);
+        int x = ((int) screenSize.getWidth() - PAUSE_DIALOG_WIDTH) / 2;
+        int y = ((int) screenSize.getHeight() - PAUSE_DIALOG_HEIGHT) / 2;
+        this.setBounds(x, y, PAUSE_DIALOG_WIDTH, PAUSE_DIALOG_HEIGHT);
 
         this.setResizable(false);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -66,16 +91,16 @@ public class PauseDialog extends JDialog implements ActionListener {
         this.pauseLabel = new JLabel("Pause", JLabel.CENTER);
         this.pauseLabel.setForeground(Color.WHITE);
         this.pauseLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        int x = (this.bodyPanel.getWidth() - LayoutConstants.PAUSE_LABEL_WIDTH) / 2;
-        this.pauseLabel.setBounds(x, LayoutConstants.MARGIN, LayoutConstants.PAUSE_LABEL_WIDTH, LayoutConstants.PAUSE_LABEL_HEIGHT);
+        int x = (this.bodyPanel.getWidth() - PAUSE_LABEL_WIDTH) / 2;
+        this.pauseLabel.setBounds(x, LayoutConstants.MARGIN, PAUSE_LABEL_WIDTH, PAUSE_LABEL_HEIGHT);
     }
 
     private void setPauseDescriptionPane() {
         this.pauseDescriptionPane = new JEditorPane();
 
-        int x = (this.bodyPanel.getWidth() - LayoutConstants.PAUSE_DESCRIPTION_WIDTH) / 2;
-        int y = this.pauseLabel.getY() + LayoutConstants.PAUSE_LABEL_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.pauseDescriptionPane.setBounds(x, y, LayoutConstants.PAUSE_DESCRIPTION_WIDTH, LayoutConstants.PAUSE_DESCRIPTION_HEIGHT);
+        int x = (this.bodyPanel.getWidth() - PAUSE_DESCRIPTION_PANE_WIDTH) / 2;
+        int y = this.pauseLabel.getY() + PAUSE_LABEL_HEIGHT + LayoutConstants.MARGIN * 2;
+        this.pauseDescriptionPane.setBounds(x, y, PAUSE_DESCRIPTION_PANE_WIDTH, PAUSE_DESCRIPTION_PANE_HEIGHT);
 
         this.pauseDescriptionPane.setEditable(false);
         this.pauseDescriptionPane.setOpaque(false);
@@ -90,9 +115,9 @@ public class PauseDialog extends JDialog implements ActionListener {
     private void setPauseGoButton() {
         this.pauseGoButton = new MButton();
 
-        int x = this.bodyPanel.getWidth() / 2 - LayoutConstants.PAUSE_GO_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
-        int y = this.pauseDescriptionPane.getY() + LayoutConstants.PAUSE_DESCRIPTION_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.pauseGoButton.setBounds(x, y, LayoutConstants.PAUSE_GO_BUTTON_WIDTH, LayoutConstants.PAUSE_GO_BUTTON_HEIGHT);
+        int x = this.bodyPanel.getWidth() / 2 - PAUSE_GO_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
+        int y = this.pauseDescriptionPane.getY() + PAUSE_DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
+        this.pauseGoButton.setBounds(x, y, PAUSE_GO_BUTTON_WIDTH, PAUSE_GO_BUTTON_HEIGHT);
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
         this.pauseGoButton.setIcon(icon);
@@ -111,8 +136,8 @@ public class PauseDialog extends JDialog implements ActionListener {
         this.pauseCancelButton = new MButton();
 
         int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;
-        int y = this.pauseDescriptionPane.getY() + LayoutConstants.PAUSE_DESCRIPTION_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.pauseCancelButton.setBounds(x, y, LayoutConstants.PAUSE_CANCEL_BUTTON_WIDTH, LayoutConstants.PAUSE_CANCEL_BUTTON_HEIGHT);
+        int y = this.pauseDescriptionPane.getY() + PAUSE_DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
+        this.pauseCancelButton.setBounds(x, y, PAUSE_CANCEL_BUTTON_WIDTH, PAUSE_CANCEL_BUTTON_HEIGHT);
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
         this.pauseCancelButton.setIcon(icon);
@@ -156,14 +181,4 @@ public class PauseDialog extends JDialog implements ActionListener {
             this.dispose();
         }
     }
-
-    /**************************************************
-     * Properties
-     **************************************************/
-
-    private PauseDialogBodyPanel bodyPanel;
-    private JLabel pauseLabel;
-    private JEditorPane pauseDescriptionPane;
-    private MButton pauseGoButton;
-    private MButton pauseCancelButton;
 }

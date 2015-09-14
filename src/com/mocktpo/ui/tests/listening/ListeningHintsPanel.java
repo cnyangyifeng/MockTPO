@@ -1,26 +1,28 @@
 package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.ui.widgets.BodyPanel;
-import com.mocktpo.util.GlobalConstants;
+import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 
-public class HeadsetPanel extends BodyPanel {
+public class ListeningHintsPanel extends BodyPanel {
 
-    public static final int DESCRIPTION_PANE_WIDTH = 600;
-    public static final int DESCRIPTION_PANE_HEIGHT = 480;
+    public static final int DESCRIPTION_PANE_WIDTH = 500;
+    public static final int DESCRIPTION_PANE_HEIGHT = 380;
 
     /**************************************************
      * Properties
      **************************************************/
 
     private JEditorPane descriptionPane;
+    private String hints;
 
-    public HeadsetPanel(Rectangle bounds) {
+    public ListeningHintsPanel(Rectangle bounds, String hints) {
         super(bounds);
+        this.hints = hints;
         this.initComponents();
     }
 
@@ -36,21 +38,20 @@ public class HeadsetPanel extends BodyPanel {
         this.descriptionPane = new JEditorPane();
 
         int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
-        int y = (this.getHeight() - DESCRIPTION_PANE_HEIGHT) / 2;
+        int y = LayoutConstants.MARGIN * 4;
         this.descriptionPane.setBounds(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT);
 
         this.descriptionPane.setEditable(false);
-        this.descriptionPane.setOpaque(false);
+        this.descriptionPane.setOpaque(true);
+        this.descriptionPane.setBackground(new Color(255, 252, 239));
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".hs-header { color: #333333; font-family: Arial; font-size: 12px; margin-bottom: 20px; text-align: center; } .hs-body { margin-bottom: 20px; text-align: center; } .hs-footer { color: #333333; font-family: Arial; font-size: 12px; text-align: center; }");
+        style.addRule(".hints { color: #666666; font-family: Arial; font-size: 20px; margin-top: 100px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
-        String text = "<div class='hs-header'>Now put on your headset.</div>";
-        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "headset.png").toString();
-        text += "<div class='hs-body'><img src='" + imgUrl + "' /></div>";
-        text += "<div class='hs-footer'>Click on <b>Continue</b> to go on.</div>";
+        String text = "<div class='hints'>" + this.hints + "</div>";
         this.descriptionPane.setText(text);
+
     }
 
     @Override
@@ -62,7 +63,7 @@ public class HeadsetPanel extends BodyPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        Color bg = new Color(238, 213, 204);
+        Color bg = new Color(255, 255, 255); // #ffffff
 
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);

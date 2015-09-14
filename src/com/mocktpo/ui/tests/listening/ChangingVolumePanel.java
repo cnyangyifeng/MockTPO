@@ -1,7 +1,6 @@
 package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.ui.widgets.BodyPanel;
-import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
@@ -9,6 +8,15 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 
 public class ChangingVolumePanel extends BodyPanel {
+
+    public static final int DESCRIPTION_PANE_WIDTH = 680;
+    public static final int DESCRIPTION_PANE_HEIGHT = 600;
+
+    /**************************************************
+     * Properties
+     **************************************************/
+
+    private JEditorPane descriptionPane;
 
     public ChangingVolumePanel(Rectangle bounds) {
         super(bounds);
@@ -26,8 +34,8 @@ public class ChangingVolumePanel extends BodyPanel {
     private void setDescriptionPane() {
         this.descriptionPane = new JEditorPane();
 
-        int x = (this.getWidth() - LayoutConstants.CHANGING_VOLUME_DESC_PANE_WIDTH) / 2;
-        this.descriptionPane.setBounds(x, 0, LayoutConstants.CHANGING_VOLUME_DESC_PANE_WIDTH, LayoutConstants.CHANGING_VOLUME_DESC_PANE_HEIGHT);
+        int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
+        this.descriptionPane.setBounds(x, 0, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT);
 
         this.descriptionPane.setEditable(false);
         this.descriptionPane.setOpaque(false);
@@ -58,10 +66,4 @@ public class ChangingVolumePanel extends BodyPanel {
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
     }
-
-    /**************************************************
-     * Properties
-     **************************************************/
-
-    private JEditorPane descriptionPane;
 }

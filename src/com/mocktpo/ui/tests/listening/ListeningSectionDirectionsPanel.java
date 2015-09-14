@@ -15,6 +15,14 @@ import java.net.URL;
 
 public class ListeningSectionDirectionsPanel extends BodyPanel implements ActionListener {
 
+    /**************************************************
+     * Properties
+     **************************************************/
+
+    private JEditorPane descriptionPane;
+    private Player audioPlayer;
+    private Timer timer;
+
     public ListeningSectionDirectionsPanel(Rectangle bounds) {
         super(bounds);
         this.initComponents();
@@ -116,12 +124,4 @@ public class ListeningSectionDirectionsPanel extends BodyPanel implements Action
             });
         }
     }
-
-    /**************************************************
-     * Properties
-     **************************************************/
-
-    private JEditorPane descriptionPane;
-    private Player audioPlayer;
-    private Timer timer;
 }

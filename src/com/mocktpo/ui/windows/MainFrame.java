@@ -18,6 +18,27 @@ import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame implements ActionListener, HyperlinkListener {
 
+    public static final int EXIT_APPLICATION_BUTTON_WIDTH = 84;
+    public static final int EXIT_APPLICATION_BUTTON_HEIGHT = 34;
+    public static final int SLOGAN_PANE_WIDTH = 1000;
+    public static final int SLOGAN_PANE_HEIGHT = 80;
+    public static final int BODY_TABLE_PANE_WIDTH = 1000;
+
+    /**************************************************
+     * Properties
+     **************************************************/
+
+    private TestFrame testFrame;
+    private HeaderPanel headerPanel;
+    private JLabel logoLabel;
+    private JEditorPane titlePane;
+    private MButton exitApplicationButton;
+    private BodyPanel bodyPanel;
+    private JEditorPane sloganPane;
+    private JScrollPane bodyScrollPane;
+    private FooterPanel footerPanel;
+    private JEditorPane copyrightPane;
+
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
         initComponents();
@@ -41,12 +62,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
 
-        // Insets insets = tk.getScreenInsets(this.getGraphicsConfiguration());
-        // System.out.println("Insets: left " + insets.left + ", top " + insets.top + ", right " + insets.right + ", bottom " + insets.bottom);
-
         Rectangle bounds = new Rectangle(screenSize);
-        // bounds.width -= insets.left + insets.right;
-        // bounds.height -= insets.top + insets.bottom;
         this.setBounds(bounds);
 
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -106,8 +122,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         this.exitApplicationButton = new MButton();
 
         int x = LayoutConstants.MARGIN;
-        int y = LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.EXIT_APPLICATION_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        this.exitApplicationButton.setBounds(x, y, LayoutConstants.EXIT_APPLICATION_BUTTON_WIDTH, LayoutConstants.EXIT_APPLICATION_BUTTON_HEIGHT);
+        int y = LayoutConstants.HEADER_PANEL_HEIGHT - EXIT_APPLICATION_BUTTON_HEIGHT - LayoutConstants.MARGIN;
+        this.exitApplicationButton.setBounds(x, y, EXIT_APPLICATION_BUTTON_WIDTH, EXIT_APPLICATION_BUTTON_HEIGHT);
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "exit_application.png"));
 
         this.exitApplicationButton.setIcon(icon);
@@ -141,9 +157,9 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
     private void setSloganPane() {
         this.sloganPane = new JEditorPane();
 
-        int x = (this.bodyPanel.getWidth() - LayoutConstants.SLOGAN_PANE_WIDTH) / 2;
+        int x = (this.bodyPanel.getWidth() - SLOGAN_PANE_WIDTH) / 2;
         int y = LayoutConstants.MARGIN * 5;
-        this.sloganPane.setBounds(x, y, LayoutConstants.SLOGAN_PANE_WIDTH, LayoutConstants.SLOGAN_PANE_HEIGHT);
+        this.sloganPane.setBounds(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT);
 
         this.sloganPane.setEditable(false);
         this.sloganPane.setOpaque(false);
@@ -162,7 +178,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         int x = this.sloganPane.getX();
         int y = this.sloganPane.getY() + this.sloganPane.getHeight() + LayoutConstants.MARGIN * 5;
         int height = this.bodyPanel.getHeight() - y - LayoutConstants.MARGIN * 10;
-        this.bodyScrollPane.setBounds(x, y, LayoutConstants.BODY_TABLE_PANE_WIDTH, height);
+        this.bodyScrollPane.setBounds(x, y, BODY_TABLE_PANE_WIDTH, height);
 
         JEditorPane bodyPane = new JEditorPane();
         bodyPane.setEditable(false);
@@ -241,22 +257,4 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
             });
         }
     }
-
-    /**************************************************
-     * Properties
-     **************************************************/
-
-    private TestFrame testFrame;
-
-    private HeaderPanel headerPanel;
-    private JLabel logoLabel;
-    private JEditorPane titlePane;
-    private MButton exitApplicationButton;
-
-    private BodyPanel bodyPanel;
-    private JEditorPane sloganPane;
-    private JScrollPane bodyScrollPane;
-
-    private FooterPanel footerPanel;
-    private JEditorPane copyrightPane;
 }

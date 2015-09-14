@@ -14,6 +14,21 @@ import java.net.URL;
 
 public class ConversationPanel extends BodyPanel implements ActionListener {
 
+    public static final int CONVERSATION_LABEL_WIDTH = 600;
+    public static final int CONVERSATION_LABEL_HEIGHT = 450;
+
+    public static final int CONVERSATION_PROGRESS_BAR_WIDTH = 320;
+    public static final int CONVERSATION_PROGRESS_BAR_HEIGHT = 6;
+
+    /**************************************************
+     * Properties
+     **************************************************/
+
+    private JLabel conversationLabel;
+    private JProgressBar conversationProgressBar;
+    private Player audioPlayer;
+    private Timer timer;
+
     public ConversationPanel(Rectangle bounds) {
         super(bounds);
         this.initComponents();
@@ -34,8 +49,8 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
     private void setConversationLabel() {
         this.conversationLabel = new JLabel();
 
-        int x = (this.getWidth() - LayoutConstants.CONVERSATION_LABEL_WIDTH) / 2;
-        this.conversationLabel.setBounds(x, LayoutConstants.MARGIN * 5, LayoutConstants.CONVERSATION_LABEL_WIDTH, LayoutConstants.CONVERSATION_LABEL_HEIGHT);
+        int x = (this.getWidth() - CONVERSATION_LABEL_WIDTH) / 2;
+        this.conversationLabel.setBounds(x, LayoutConstants.MARGIN * 5, CONVERSATION_LABEL_WIDTH, CONVERSATION_LABEL_HEIGHT);
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "conversation.png"));
         this.conversationLabel.setIcon(icon);
@@ -44,9 +59,9 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
     private void setConversationProgressBar() {
         this.conversationProgressBar = new JProgressBar();
 
-        int x = (this.getWidth() - LayoutConstants.CONVERSATION_PROGRESS_BAR_WIDTH) / 2;
-        int y = this.conversationLabel.getY() + LayoutConstants.CONVERSATION_LABEL_HEIGHT + LayoutConstants.MARGIN * 10;
-        this.conversationProgressBar.setBounds(x, y, LayoutConstants.CONVERSATION_PROGRESS_BAR_WIDTH, LayoutConstants.CONVERSATION_PROGRESS_BAR_HEIGHT);
+        int x = (this.getWidth() - CONVERSATION_PROGRESS_BAR_WIDTH) / 2;
+        int y = this.conversationLabel.getY() + CONVERSATION_LABEL_HEIGHT + LayoutConstants.MARGIN * 10;
+        this.conversationProgressBar.setBounds(x, y, CONVERSATION_PROGRESS_BAR_WIDTH, CONVERSATION_PROGRESS_BAR_HEIGHT);
 
         this.conversationProgressBar.setMinimum(0);
         this.conversationProgressBar.setMaximum(100);
@@ -122,13 +137,4 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
             });
         }
     }
-
-    /**************************************************
-     * Properties
-     **************************************************/
-
-    private JLabel conversationLabel;
-    private JProgressBar conversationProgressBar;
-    private Player audioPlayer;
-    private Timer timer;
 }

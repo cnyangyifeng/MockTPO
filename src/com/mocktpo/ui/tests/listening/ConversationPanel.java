@@ -1,7 +1,6 @@
 package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.ui.widgets.BodyPanel;
-import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
 import javax.media.*;
@@ -29,8 +28,13 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
     private Player audioPlayer;
     private Timer timer;
 
-    public ConversationPanel(Rectangle bounds) {
+    private URL imageUrl;
+    private URL audioUrl;
+
+    public ConversationPanel(Rectangle bounds, URL imageUrl, URL audioUrl) {
         super(bounds);
+        this.imageUrl = imageUrl;
+        this.audioUrl = audioUrl;
         this.initComponents();
     }
 
@@ -52,7 +56,7 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
         int x = (this.getWidth() - CONVERSATION_LABEL_WIDTH) / 2;
         this.conversationLabel.setBounds(x, LayoutConstants.MARGIN * 5, CONVERSATION_LABEL_WIDTH, CONVERSATION_LABEL_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "conversation.png"));
+        ImageIcon icon = new ImageIcon(this.imageUrl);
         this.conversationLabel.setIcon(icon);
     }
 
@@ -71,13 +75,12 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
     }
 
     private void setAudioPlayer() {
-        URL url = this.getClass().getResource(GlobalConstants.AUDIO_ROOT + "conversation.mp3");
         Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
         Format input2 = new AudioFormat(AudioFormat.MPEG);
         Format output = new AudioFormat(AudioFormat.LINEAR);
         PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
         try {
-            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(url));
+            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(this.audioUrl));
         } catch (Exception e) {
             e.printStackTrace();
         }

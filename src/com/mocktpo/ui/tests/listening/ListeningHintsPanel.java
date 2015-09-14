@@ -47,7 +47,7 @@ public class ListeningHintsPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".hints { color: #666666; font-family: Arial; font-size: 20px; margin-top: 100px; text-align: center; }");
+        style.addRule(".hints { color: #333333; font-family: Arial; font-size: 20px; margin-top: 100px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='hints'>" + this.hints + "</div>";
         this.descriptionPane.setText(text);

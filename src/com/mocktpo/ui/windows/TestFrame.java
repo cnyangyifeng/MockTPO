@@ -12,6 +12,7 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class TestFrame extends JFrame implements ActionListener {
 
@@ -413,7 +414,11 @@ public class TestFrame extends JFrame implements ActionListener {
                             lsdPanel.startAudio();
                         } else if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
                             lsdPanel.stopAudio();
-                            conversationPanel = new ConversationPanel(bodyBounds);
+                            String imageVal = GlobalConstants.TESTS_ROOT + "TPO25" + GlobalConstants.LISTENING_DIR + "L1-C1.png";
+                            URL imageUrl = this.getClass().getResource(imageVal);
+                            String audioVal = GlobalConstants.TESTS_ROOT + "TPO25" + GlobalConstants.LISTENING_DIR + "L1-C1.mp3";
+                            URL audioUrl = this.getClass().getResource(audioVal);
+                            conversationPanel = new ConversationPanel(bodyBounds, imageUrl, audioUrl);
                             bodyPanel = conversationPanel;
                             conversationPanel.startAudio();
                         } else if (bodyPanel instanceof ConversationPanel) {

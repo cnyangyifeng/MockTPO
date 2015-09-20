@@ -1,0 +1,125 @@
+<question-group>
+    <index>L1-C1-Q</index>
+    <questions>
+        <question>
+            <index>L1-C1-Q1</index>
+            <subject>What is the conversation mainly about?</subject>
+            <audio>L1-C1-Q1.mp3</audio>
+            <answer>A</answer>
+            <options>
+                <option>
+                    <index>A</index>
+                    <text>The student's eligibility to graduate next semester</text>
+                </option>
+                <option>
+                    <index>B</index>
+                    <text>The student's difficulties in registering for classes</text>
+                </option>
+                <option>
+                    <index>C</index>
+                    <text>A difficult class the student must take next semester</text>
+                </option>
+                <option>
+                    <index>D</index>
+                    <text>Possible elective choices in the student's degree program</text>
+                </option>
+            </options>
+        </question>
+        <question>
+            <index>L1-C1-Q2</index>
+            <audio>L1-C1-Q2.mp3</audio>
+            <subject>According to the woman, why was the program's curriculum changed?</subject>
+            <answer>A</answer>
+            <options>
+                <option>
+                    <index>A</index>
+                    <text>To attract more international students to the program</text>
+                </option>
+                <option>
+                    <index>B</index>
+                    <text>To reflect the growing importance of international business</text>
+                </option>
+                <option>
+                    <index>C</index>
+                    <text>To take advantage of the expertise of new faculty members</text>
+                </option>
+                <option>
+                    <index>D</index>
+                    <text>To give students a stronger background in management</text>
+                </option>
+            </options>
+        </question>
+        <question>
+            <index>L1-C1-Q3</index>
+            <audio>L1-C1-Q3.mp3</audio>
+            <subject>What does the woman imply about the new departmental requirements?</subject>
+            <answer>A</answer>
+            <options>
+                <option>
+                    <index>A</index>
+                    <text>To attract more international students to the program</text>
+                </option>
+                <option>
+                    <index>B</index>
+                    <text>To reflect the growing importance of international business</text>
+                </option>
+                <option>
+                    <index>C</index>
+                    <text>To take advantage of the expertise of new faculty members</text>
+                </option>
+                <option>
+                    <index>D</index>
+                    <text>To give students a stronger background in management</text>
+                </option>
+            </options>
+        </question>
+        <question>
+            <index>L1-C1-Q4</index>
+            <audio>L1-C1-Q4.mp3</audio>
+            <subject>Why does the woman mention writing a letter?</subject>
+            <answer>A</answer>
+            <options>
+                <option>
+                    <index>A</index>
+                    <text>To point out the best way for the student to contact the dean's office</text>
+                </option>
+                <option>
+                    <index>B</index>
+                    <text>To confirm that a personal letter is a graduation requirement</text>
+                </option>
+                <option>
+                    <index>C</index>
+                    <text>To indicate that she is willing to provide the student with further assistance</text>
+                </option>
+                <option>
+                    <index>D</index>
+                    <text>To emphasize that the student will need special permission to graduate</text>
+                </option>
+            </options>
+        </question>
+        <question>
+            <index>L1-C1-Q5</index>
+            <audio>L1-C1-Q5.mp3</audio>
+            <subject>Why does the woman say this: [audio]</subject>
+            <answer>A</answer>
+            <options>
+                <option>
+                    <index>A</index>
+                    <text>To suggest that the student has not fulfilled all of his requirements</text>
+                </option>
+                <option>
+                    <index>B</index>
+                    <text>To indicate one of the new graduation requirements</text>
+                </option>
+                <option>
+                    <index>C</index>
+                    <text>To find out the student's opinion about a particular class</text>
+                </option>
+                <option>
+                    <index>D</index>
+                    <text>To be sure that the student has taken a required class</text>
+                </option>
+            </options>
+        </question>
+    </questions>
+</question-group>

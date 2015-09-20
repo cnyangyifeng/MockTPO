@@ -66,19 +66,6 @@ public class ListeningSectionDirectionsPanel extends BodyPanel implements Action
         this.descriptionPane.setText(text);
     }
 
-    private void setAudioPlayer() {
-        URL url = this.getClass().getResource(GlobalConstants.AUDIO_ROOT + "listening_section_directions.mp3");
-        Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
-        Format input2 = new AudioFormat(AudioFormat.MPEG);
-        Format output = new AudioFormat(AudioFormat.LINEAR);
-        PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
-        try {
-            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(url));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -92,6 +79,19 @@ public class ListeningSectionDirectionsPanel extends BodyPanel implements Action
 
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
+    }
+
+    private void setAudioPlayer() {
+        URL url = this.getClass().getResource(GlobalConstants.AUDIO_ROOT + "listening_section_directions.mp3");
+        Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
+        Format input2 = new AudioFormat(AudioFormat.MPEG);
+        Format output = new AudioFormat(AudioFormat.LINEAR);
+        PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
+        try {
+            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(url));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void startAudio() {

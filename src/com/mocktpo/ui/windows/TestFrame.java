@@ -1,10 +1,14 @@
 package com.mocktpo.ui.windows;
 
+import com.mocktpo.model.ChoiceOption;
+import com.mocktpo.model.ChoiceQuestion;
+import com.mocktpo.model.ChoiceQuestionGroup;
 import com.mocktpo.ui.dialogs.PauseDialog;
 import com.mocktpo.ui.tests.listening.*;
 import com.mocktpo.ui.widgets.*;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
+import com.thoughtworks.xstream.XStream;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
@@ -12,6 +16,7 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.net.URL;
 
 public class TestFrame extends JFrame implements ActionListener {
@@ -80,9 +85,12 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private Rectangle bodyBounds;
 
-    public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
+    private String testIndex;
+
+    public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame, String testIndex) {
         super(gc);
         this.mainFrame = mainFrame;
+        this.testIndex = testIndex;
         initComponents();
     }
 
@@ -414,9 +422,9 @@ public class TestFrame extends JFrame implements ActionListener {
                             lsdPanel.startAudio();
                         } else if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
                             lsdPanel.stopAudio();
-                            String imageVal = GlobalConstants.TESTS_ROOT + "TPO25" + GlobalConstants.LISTENING_DIR + "L1-C1.png";
+                            String imageVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + "L1-C1.png";
                             URL imageUrl = this.getClass().getResource(imageVal);
-                            String audioVal = GlobalConstants.TESTS_ROOT + "TPO25" + GlobalConstants.LISTENING_DIR + "L1-C1.mp3";
+                            String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + "L1-C1.mp3";
                             URL audioUrl = this.getClass().getResource(audioVal);
                             conversationPanel = new ConversationPanel(bodyBounds, imageUrl, audioUrl);
                             bodyPanel = conversationPanel;
@@ -426,8 +434,27 @@ public class TestFrame extends JFrame implements ActionListener {
                             lhPanel = new ListeningHintsPanel(bodyBounds, "Now get ready to answer the questions. You may use your notes to help you answer.");
                             bodyPanel = lhPanel;
                         } else if (bodyPanel instanceof ListeningHintsPanel) {
-                            cqPanel = new ConversationQuestionPanel(bodyBounds);
+                            conversationPanel.stopAudio();
+                            ChoiceQuestionGroup cqg;
+                            try {
+                                XStream xs = new XStream();
+                                xs.alias("question-group", ChoiceQuestionGroup.class);
+                                xs.alias("question", ChoiceQuestion.class);
+                                xs.alias("option", ChoiceOption.class);
+                                String val = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + "L1-C1-Q.xml";
+                                URL xml = this.getClass().getResource(val);
+                                cqg = (ChoiceQuestionGroup) xs.fromXML(new File(xml.toURI()));
+                                ChoiceQuestion cq = cqg.getQuestions().get(0);
+                                System.out.println(cq.getAudio());
+                                String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + cq.getAudio();
+                                URL audioUrl = this.getClass().getResource(audioVal);
+
+                                cqPanel = new ConversationQuestionPanel(bodyBounds, cq, audioUrl);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             bodyPanel = cqPanel;
+                            cqPanel.startAudio();
                         }
                         getContentPane().add(bodyPanel);
                         repaint();

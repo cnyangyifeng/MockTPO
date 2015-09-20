@@ -38,7 +38,7 @@ public class ListeningHintsPanel extends BodyPanel {
         this.descriptionPane = new JEditorPane();
 
         int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
-        int y = LayoutConstants.MARGIN * 4;
+        int y = LayoutConstants.MARGIN * 5;
         this.descriptionPane.setBounds(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT);
 
         this.descriptionPane.setEditable(false);
@@ -47,7 +47,7 @@ public class ListeningHintsPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".hints { color: #333333; font-family: Arial; font-size: 20px; margin-top: 100px; text-align: center; }");
+        style.addRule(".hints { color: #333333; font-family: Arial; font-size: 16px; margin-top: 80px; padding: 30px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='hints'>" + this.hints + "</div>";
         this.descriptionPane.setText(text);

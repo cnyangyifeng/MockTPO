@@ -1,5 +1,6 @@
 package com.mocktpo.ui.windows;
 
+import com.mocktpo.model.Test;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
@@ -15,6 +16,8 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainFrame extends JFrame implements ActionListener, HyperlinkListener {
 
@@ -181,19 +184,35 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         this.bodyScrollPane.setBounds(x, y, BODY_TABLE_PANE_WIDTH, height);
 
         JEditorPane bodyPane = new JEditorPane();
+
         bodyPane.setEditable(false);
         bodyPane.setOpaque(false);
+
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule("table { color: #666666; font-family: Georgia; font-size: 14px; font-weight: normal; margin-bottom: 200px; width: 100%; } tr { border-bottom: 1px #dddddd dashed; } td { height: 50px; margin-left: 10px; } a.action { color: #3c4d82; text-decoration: none; }");
+        style.addRule("table { color: #666666; font-family: Georgia; font-size: 14px; font-weight: normal; margin-bottom: 20px; width: 100%; } tr { border-bottom: 1px #dddddd dashed; } td { height: 50px; margin-left: 10px; } a.action { color: #3c4d82; text-decoration: none; }");
         bodyPane.setEditorKit(kit);
-        String[] tests = new String[]{"TOEFL iBT Complete Practice Test V30", "TOEFL iBT Complete Practice Test V29", "TOEFL iBT Complete Practice Test V28", "TOEFL iBT Complete Practice Test V27", "TOEFL iBT Complete Practice Test V26", "TOEFL iBT Complete Practice Test V25", "TOEFL iBT Complete Practice Test V24", "TOEFL iBT Complete Practice Test V23", "TOEFL iBT Complete Practice Test V22", "TOEFL iBT Complete Practice Test V21"};
+        List<Test> tests = new ArrayList<Test>();
+        tests.add(new Test("TOEFL iBT Complete Practice Test V30", "TPO30"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V29", "TPO29"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V28", "TPO28"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V27", "TPO27"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V26", "TPO26"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V25", "TPO25"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V24", "TPO24"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V23", "TPO23"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V22", "TPO22"));
+        tests.add(new Test("TOEFL iBT Complete Practice Test V21", "TPO21"));
         String val = "<table>";
-        for (String test : tests) {
-            val += "<tr><td>" + test + "</td><td><a class='action' href=''>Go</a></td></tr>";
+        for (Test test : tests) {
+            val += "<tr><td>" + test.getName() + "</td>";
+            val += "<td><a class='action' href=''>Download</a></td>";
+            val += "<td><a class='action' href='" + test.getIndex() + "'>New Test</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class='action' href='" + test.getIndex() + "'>Continue</a></td>";
+            val += "<td><a class='action' href='" + test.getIndex() + "'>Reports</a></td></tr>";
         }
         val += "</table>";
         bodyPane.setText(val);
+
         bodyPane.addHyperlinkListener(this);
 
         this.bodyScrollPane.setViewportView(bodyPane);
@@ -249,7 +268,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
                 public void run() {
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     GraphicsDevice device = ge.getDefaultScreenDevice();
-                    testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
+                    testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this, e.getDescription());
                     device.setFullScreenWindow(testFrame);
                     testFrame.setVisible(true);
                     setVisible(false);

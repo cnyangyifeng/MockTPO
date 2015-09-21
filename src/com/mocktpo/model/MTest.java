@@ -1,12 +1,12 @@
 package com.mocktpo.model;
 
-public class Test {
+public class MTest {
 
     private String index;
     private String name;
     private String status;
 
-    public Test(String index, String name) {
+    public MTest(String index, String name) {
         this.index = index;
         this.name = name;
     }
@@ -33,5 +33,10 @@ public class Test {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return this.index;
     }
 }

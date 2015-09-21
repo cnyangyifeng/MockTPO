@@ -1,8 +1,6 @@
 package com.mocktpo.ui.windows;
 
-import com.mocktpo.model.ChoiceOption;
-import com.mocktpo.model.ChoiceQuestion;
-import com.mocktpo.model.ChoiceQuestionGroup;
+import com.mocktpo.model.*;
 import com.mocktpo.ui.dialogs.PauseDialog;
 import com.mocktpo.ui.tests.listening.*;
 import com.mocktpo.ui.widgets.*;
@@ -48,8 +46,8 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int TIMER_LABEL_WIDTH = 60;
     public static final int TIMER_LABEL_HEIGHT = 20;
 
-    public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 70;
-    public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 50;
+    // public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 70;
+    // public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 50;
 
     /**************************************************
      * Properties
@@ -71,7 +69,7 @@ public class TestFrame extends JFrame implements ActionListener {
     private MButton continueButton;
 
     private JLabel timerLabel;
-    private MButton hideOrShowTimerButton;
+    // private MButton hideOrShowTimerButton;
 
     private BodyPanel bodyPanel;
     private HeadsetPanel headsetPanel;
@@ -86,6 +84,7 @@ public class TestFrame extends JFrame implements ActionListener {
     private Rectangle bodyBounds;
 
     private String testIndex;
+    private MListening listening;
 
     public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame, String testIndex) {
         super(gc);
@@ -120,6 +119,27 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setUndecorated(true);
 
         this.setTitle("TOEFL iBT Complete Practice Test");
+
+        this.configData();
+    }
+
+    private void configData() {
+        XStream xs = new XStream();
+        xs.alias("listening", MListening.class);
+        xs.alias("conversation", MConversation.class);
+        xs.alias("lecture", MLecture.class);
+        xs.alias("image", MImage.class);
+        xs.alias("audio", MAudio.class);
+        xs.alias("question", MChoiceQuestion.class);
+        xs.alias("option", MChoiceOption.class);
+
+        String val = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + GlobalConstants.CONF_FILE;
+        URL xml = this.getClass().getResource(val);
+        try {
+            this.listening = (MListening) xs.fromXML(new File(xml.toURI()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**************************************************
@@ -385,9 +405,7 @@ public class TestFrame extends JFrame implements ActionListener {
      **************************************************/
 
     public void didPauseTest() {
-        if (bodyPanel instanceof HeadsetPanel) {
-
-        } else if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
+        if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
             this.lsdPanel.stopAudio();
         } else if (bodyPanel instanceof ConversationPanel) {
             this.conversationPanel.stopAudio();
@@ -426,9 +444,9 @@ public class TestFrame extends JFrame implements ActionListener {
                             lsdPanel.startAudio();
                         } else if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
                             lsdPanel.stopAudio();
-                            String imageVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + "L1-C1.png";
+                            String imageVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + listening.getConversations().get(0).getImages().get(0).getIndex();
                             URL imageUrl = this.getClass().getResource(imageVal);
-                            String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + "L1-C1.mp3";
+                            String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + listening.getConversations().get(0).getAudios().get(0).getIndex();
                             URL audioUrl = this.getClass().getResource(audioVal);
                             conversationPanel = new ConversationPanel(bodyBounds, imageUrl, audioUrl);
                             bodyPanel = conversationPanel;
@@ -439,19 +457,10 @@ public class TestFrame extends JFrame implements ActionListener {
                             bodyPanel = lhPanel;
                         } else if (bodyPanel instanceof ListeningHintsPanel) {
                             conversationPanel.stopAudio();
-                            ChoiceQuestionGroup cqg;
                             try {
-                                XStream xs = new XStream();
-                                xs.alias("question-group", ChoiceQuestionGroup.class);
-                                xs.alias("question", ChoiceQuestion.class);
-                                xs.alias("option", ChoiceOption.class);
-                                String val = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + "L1-C1-Q.xml";
-                                URL xml = this.getClass().getResource(val);
-                                cqg = (ChoiceQuestionGroup) xs.fromXML(new File(xml.toURI()));
-                                ChoiceQuestion cq = cqg.getQuestions().get(0);
-                                String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + cq.getAudio();
+                                MChoiceQuestion cq = listening.getConversations().get(0).getQuestions().get(1);
+                                String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + cq.getAudio().getIndex();
                                 URL audioUrl = this.getClass().getResource(audioVal);
-
                                 cqPanel = new ConversationQuestionPanel(bodyBounds, cq, audioUrl);
                             } catch (Exception e) {
                                 e.printStackTrace();

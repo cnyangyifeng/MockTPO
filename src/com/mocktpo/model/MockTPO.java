@@ -4,13 +4,13 @@ import java.util.List;
 
 public class MockTPO {
 
-    private List<Test> tests;
+    private List<MTest> tests;
 
-    public List<Test> getTests() {
+    public List<MTest> getTests() {
         return this.tests;
     }
 
-    public void setTests(List<Test> tests) {
+    public void setTests(List<MTest> tests) {
         this.tests = tests;
     }
 }

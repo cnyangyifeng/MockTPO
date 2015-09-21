@@ -1,7 +1,7 @@
 package com.mocktpo.ui.windows;
 
+import com.mocktpo.model.MTest;
 import com.mocktpo.model.MockTPO;
-import com.mocktpo.model.Test;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
@@ -205,17 +205,17 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         try {
             XStream xs = new XStream();
             xs.alias("mocktpo", MockTPO.class);
-            xs.alias("test", Test.class);
+            xs.alias("test", MTest.class);
             String val = GlobalConstants.TESTS_ROOT + GlobalConstants.MOCKTPO_FILE;
             URL xml = this.getClass().getResource(val);
             this.tpo = (MockTPO) xs.fromXML(new File(xml.toURI()));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<Test> tests = this.tpo.getTests();
+        List<MTest> tests = this.tpo.getTests();
 
         String val = "<table>";
-        for (Test test : tests) {
+        for (MTest test : tests) {
             if ("local".equals(test.getStatus())) {
                 val += "<tr class='local'><td>" + test.getName() + "</td>";
                 val += "<td><a class='reload' href='reload'>100%</a></td>";

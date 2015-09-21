@@ -1,7 +1,7 @@
 package com.mocktpo.ui.tests.listening;
 
-import com.mocktpo.model.ChoiceOption;
-import com.mocktpo.model.ChoiceQuestion;
+import com.mocktpo.model.MChoiceOption;
+import com.mocktpo.model.MChoiceQuestion;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
@@ -41,10 +41,10 @@ public class ConversationQuestionPanel extends BodyPanel implements ActionListen
     private Player audioPlayer;
     private Timer timer;
 
-    private ChoiceQuestion question;
+    private MChoiceQuestion question;
     private URL audioUrl;
 
-    public ConversationQuestionPanel(Rectangle bounds, ChoiceQuestion question, URL audioUrl) {
+    public ConversationQuestionPanel(Rectangle bounds, MChoiceQuestion question, URL audioUrl) {
         super(bounds);
         this.question = question;
         this.audioUrl = audioUrl;
@@ -85,10 +85,10 @@ public class ConversationQuestionPanel extends BodyPanel implements ActionListen
 
         this.optionsPanel.setBackground(new Color(255, 255, 255));
 
-        List<ChoiceOption> options = this.question.getOptions();
+        List<MChoiceOption> options = this.question.getOptions();
         ButtonGroup buttonGroup = new ButtonGroup();
         for (int i = 0; i < options.size(); i++) {
-            ChoiceOption option = options.get(i);
+            MChoiceOption option = options.get(i);
 
             JRadioButton radioButton = new JRadioButton(option.getText());
             radioButton.setBounds(0, OPTION_BUTTON_HEIGHT * i + LayoutConstants.MARGIN * i * 2, OPTION_BUTTON_WIDTH, OPTION_BUTTON_HEIGHT);

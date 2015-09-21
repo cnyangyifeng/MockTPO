@@ -1,11 +1,11 @@
 package com.mocktpo.model;
 
-public class ChoiceOption {
+public class MChoiceOption {
 
     private String index;
     private String text;
 
-    public ChoiceOption(String index, String text) {
+    public MChoiceOption(String index, String text) {
         this.index = index;
         this.text = text;
     }
@@ -24,5 +24,10 @@ public class ChoiceOption {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return this.index;
     }
 }

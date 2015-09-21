@@ -2,11 +2,20 @@ package com.mocktpo.model;
 
 public class Test {
 
-    private String name;
     private String index;
+    private String name;
+    private String status;
 
-    public Test(String name, String index) {
+    public Test(String index, String name) {
+        this.index = index;
         this.name = name;
+    }
+
+    public String getIndex() {
+        return this.index;
+    }
+
+    public void setIndex(String index) {
         this.index = index;
     }
 
@@ -18,11 +27,11 @@ public class Test {
         this.name = name;
     }
 
-    public String getIndex() {
-        return this.index;
+    public String getStatus() {
+        return this.status;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

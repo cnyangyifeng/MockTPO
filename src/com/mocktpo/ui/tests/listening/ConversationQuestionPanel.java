@@ -5,6 +5,8 @@ import com.mocktpo.model.ChoiceQuestion;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.media.*;
 import javax.media.format.AudioFormat;
@@ -18,6 +20,8 @@ import java.net.URL;
 import java.util.List;
 
 public class ConversationQuestionPanel extends BodyPanel implements ActionListener, ItemListener {
+
+    private static final Logger logger = LogManager.getLogger();
 
     public static final int SUBJECT_LABEL_WIDTH = 800;
     public static final int SUBJECT_LABEL_HEIGHT = 80;
@@ -150,7 +154,7 @@ public class ConversationQuestionPanel extends BodyPanel implements ActionListen
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             JRadioButton radioButton = (JRadioButton) e.getSource();
-            System.out.println(radioButton.getName() + " " + radioButton.getText());
+            logger.info("{}: {} answer: {}, user choice: {}.", this.question.getIndex(), this.question.getSubject(), this.question.getAnswer(), radioButton.getName());
         }
     }
 }

@@ -25,10 +25,10 @@ public class PauseDialog extends JDialog implements ActionListener {
     public static final int PAUSE_DESCRIPTION_PANE_WIDTH = 418;
     public static final int PAUSE_DESCRIPTION_PANE_HEIGHT = 260;
 
-    public static final int PAUSE_GO_BUTTON_WIDTH = 84;
+    public static final int PAUSE_GO_BUTTON_WIDTH = 74;
     public static final int PAUSE_GO_BUTTON_HEIGHT = 34;
 
-    public static final int PAUSE_CANCEL_BUTTON_WIDTH = 84;
+    public static final int PAUSE_CANCEL_BUTTON_WIDTH = 74;
     public static final int PAUSE_CANCEL_BUTTON_HEIGHT = 34;
 
     /**************************************************
@@ -78,13 +78,13 @@ public class PauseDialog extends JDialog implements ActionListener {
 
         this.setPauseLabel();
         this.setPauseDescriptionPane();
-        this.setPauseGoButton();
         this.setPauseCancelButton();
+        this.setPauseGoButton();
 
         this.bodyPanel.add(this.pauseLabel);
         this.bodyPanel.add(this.pauseDescriptionPane);
-        this.bodyPanel.add(this.pauseGoButton);
         this.bodyPanel.add(this.pauseCancelButton);
+        this.bodyPanel.add(this.pauseGoButton);
     }
 
     private void setPauseLabel() {
@@ -112,34 +112,14 @@ public class PauseDialog extends JDialog implements ActionListener {
         this.pauseDescriptionPane.setText("<div class='desc'>You may now pause this test and resume work at any later time; however the score you obtain may not be an accurate indication of a score you would earn in a timed test. When you resume the test, you will return to the question from which you left. Are you sure you wish to pause the test? Click on Return to continue working. Click on Continue to pause the test.</div>");
     }
 
-    private void setPauseGoButton() {
-        this.pauseGoButton = new MButton();
-
-        int x = this.bodyPanel.getWidth() / 2 - PAUSE_GO_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
-        int y = this.pauseDescriptionPane.getY() + PAUSE_DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.pauseGoButton.setBounds(x, y, PAUSE_GO_BUTTON_WIDTH, PAUSE_GO_BUTTON_HEIGHT);
-
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
-        this.pauseGoButton.setIcon(icon);
-        this.pauseGoButton.setText(null);
-        this.pauseGoButton.setMargin(new Insets(0, 0, 0, 0));
-        this.pauseGoButton.setBorder(null);
-        this.pauseGoButton.setBorderPainted(false);
-        this.pauseGoButton.setFocusPainted(false);
-        this.pauseGoButton.setContentAreaFilled(false);
-
-        this.pauseGoButton.setActionCommand("doPauseGo");
-        this.pauseGoButton.addActionListener(this);
-    }
-
     private void setPauseCancelButton() {
         this.pauseCancelButton = new MButton();
 
-        int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;
+        int x = this.bodyPanel.getWidth() / 2 - PAUSE_CANCEL_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
         int y = this.pauseDescriptionPane.getY() + PAUSE_DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
         this.pauseCancelButton.setBounds(x, y, PAUSE_CANCEL_BUTTON_WIDTH, PAUSE_CANCEL_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_return.png"));
         this.pauseCancelButton.setIcon(icon);
         this.pauseCancelButton.setText(null);
         this.pauseCancelButton.setMargin(new Insets(0, 0, 0, 0));
@@ -150,6 +130,26 @@ public class PauseDialog extends JDialog implements ActionListener {
 
         this.pauseCancelButton.setActionCommand("doPauseCancel");
         this.pauseCancelButton.addActionListener(this);
+    }
+
+    private void setPauseGoButton() {
+        this.pauseGoButton = new MButton();
+
+        int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;
+        int y = this.pauseDescriptionPane.getY() + PAUSE_DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
+        this.pauseGoButton.setBounds(x, y, PAUSE_GO_BUTTON_WIDTH, PAUSE_GO_BUTTON_HEIGHT);
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_continue.png"));
+        this.pauseGoButton.setIcon(icon);
+        this.pauseGoButton.setText(null);
+        this.pauseGoButton.setMargin(new Insets(0, 0, 0, 0));
+        this.pauseGoButton.setBorder(null);
+        this.pauseGoButton.setBorderPainted(false);
+        this.pauseGoButton.setFocusPainted(false);
+        this.pauseGoButton.setContentAreaFilled(false);
+
+        this.pauseGoButton.setActionCommand("doPauseGo");
+        this.pauseGoButton.addActionListener(this);
     }
 
     /**************************************************

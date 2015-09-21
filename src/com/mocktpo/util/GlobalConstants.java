@@ -6,6 +6,8 @@ public interface GlobalConstants {
     String AUDIO_ROOT = "/resources/audio/";
     String TESTS_ROOT = "/resources/tests/";
 
+    String MOCKTPO_FILE = "mocktpo.xml";
+
     String READING_DIR = "/reading/";
     String LISTENING_DIR = "/listening/";
     String SPEAKING_DIR = "/speaking/";

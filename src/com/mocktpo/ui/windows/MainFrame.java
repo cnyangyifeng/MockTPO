@@ -1,5 +1,6 @@
 package com.mocktpo.ui.windows;
 
+import com.mocktpo.model.MockTPO;
 import com.mocktpo.model.Test;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
@@ -7,6 +8,9 @@ import com.mocktpo.ui.widgets.HeaderPanel;
 import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
+import com.thoughtworks.xstream.XStream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -16,10 +20,13 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 public class MainFrame extends JFrame implements ActionListener, HyperlinkListener {
+
+    private static final Logger logger = LogManager.getLogger();
 
     public static final int EXIT_APPLICATION_BUTTON_WIDTH = 84;
     public static final int EXIT_APPLICATION_BUTTON_HEIGHT = 34;
@@ -41,6 +48,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
     private JScrollPane bodyScrollPane;
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
+
+    private MockTPO tpo;
 
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
@@ -190,25 +199,33 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule("table { color: #666666; font-family: Georgia; font-size: 14px; font-weight: normal; margin-bottom: 20px; width: 100%; } tr { border-bottom: 1px #dddddd dashed; } td { height: 50px; margin-left: 10px; } a.action { color: #3c4d82; text-decoration: none; }");
+        style.addRule("table { font-family: Georgia; font-size: 14px; font-weight: normal; margin-bottom: 20px; width: 100%; } tr { border-bottom: 1px #dddddd dashed; } tr.local { color: #333333; } tr.web { color: #999999; } td { height: 50px; margin-left: 10px; } a { text-decoration: none; color: #3c4d82; } a.reload { color: #333333; }");
         bodyPane.setEditorKit(kit);
-        List<Test> tests = new ArrayList<Test>();
-        tests.add(new Test("TOEFL iBT Complete Practice Test V30", "TPO30"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V29", "TPO29"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V28", "TPO28"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V27", "TPO27"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V26", "TPO26"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V25", "TPO25"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V24", "TPO24"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V23", "TPO23"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V22", "TPO22"));
-        tests.add(new Test("TOEFL iBT Complete Practice Test V21", "TPO21"));
+
+        try {
+            XStream xs = new XStream();
+            xs.alias("mocktpo", MockTPO.class);
+            xs.alias("test", Test.class);
+            String val = GlobalConstants.TESTS_ROOT + GlobalConstants.MOCKTPO_FILE;
+            URL xml = this.getClass().getResource(val);
+            this.tpo = (MockTPO) xs.fromXML(new File(xml.toURI()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<Test> tests = this.tpo.getTests();
+
         String val = "<table>";
         for (Test test : tests) {
-            val += "<tr><td>" + test.getName() + "</td>";
-            val += "<td><a class='action' href=''>Download</a></td>";
-            val += "<td><a class='action' href='" + test.getIndex() + "'>New Test</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class='action' href='" + test.getIndex() + "'>Continue</a></td>";
-            val += "<td><a class='action' href='" + test.getIndex() + "'>Reports</a></td></tr>";
+            if ("local".equals(test.getStatus())) {
+                val += "<tr class='local'><td>" + test.getName() + "</td>";
+                val += "<td><a class='reload' href='reload'>100%</a></td>";
+                val += "<td><a href='new#" + test.getIndex() + "'>New Test</a></td>";
+                val += "<td><a class='local' href='continue#" + test.getIndex() + "'>Continue</a></td>";
+                val += "<td><a href='reports'>Reports</a></td></tr>";
+            } else if ("web".equals(test.getStatus())) {
+                val += "<tr class='web'><td>" + test.getName() + "</td>";
+                val += "<td><a href='" + "download" + "'>Download</a></td></tr>";
+            }
         }
         val += "</table>";
         bodyPane.setText(val);
@@ -263,17 +280,32 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
     public void hyperlinkUpdate(HyperlinkEvent e) {
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                    GraphicsDevice device = ge.getDefaultScreenDevice();
-                    testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this, e.getDescription());
-                    device.setFullScreenWindow(testFrame);
-                    testFrame.setVisible(true);
-                    setVisible(false);
-                }
-            });
+            String action = e.getDescription();
+            switch (action) {
+                case "reload":
+                    break;
+                case "download":
+                    break;
+                default:
+                    String[] arr = action.split("#");
+                    if (arr[0].equals("new")) {
+                        logger.info("New Test: {}", arr[1]);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                                GraphicsDevice device = ge.getDefaultScreenDevice();
+                                testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this, arr[1]);
+                                device.setFullScreenWindow(testFrame);
+                                testFrame.setVisible(true);
+                                setVisible(false);
+                            }
+                        });
+                    } else if (arr[0].equals("continue")) {
+                        logger.info("Continue Test: {}", arr[1]);
+                    }
+                    break;
+            }
         }
     }
 }

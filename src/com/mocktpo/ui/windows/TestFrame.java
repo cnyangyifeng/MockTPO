@@ -199,6 +199,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
         this.pauseTestButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test_hi.png"));
+        this.pauseTestButton.setRolloverIcon(rolloverIcon);
         this.pauseTestButton.setText(null);
         this.pauseTestButton.setMargin(new Insets(0, 0, 0, 0));
         this.pauseTestButton.setBorder(null);
@@ -219,6 +221,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "section_exit.png"));
         this.sectionExitButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "section_exit_hi.png"));
+        this.sectionExitButton.setRolloverIcon(rolloverIcon);
         this.sectionExitButton.setText(null);
         this.sectionExitButton.setMargin(new Insets(0, 0, 0, 0));
         this.sectionExitButton.setBorder(null);
@@ -445,7 +449,6 @@ public class TestFrame extends JFrame implements ActionListener {
                                 URL xml = this.getClass().getResource(val);
                                 cqg = (ChoiceQuestionGroup) xs.fromXML(new File(xml.toURI()));
                                 ChoiceQuestion cq = cqg.getQuestions().get(0);
-                                System.out.println(cq.getAudio());
                                 String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + cq.getAudio();
                                 URL audioUrl = this.getClass().getResource(audioVal);
 

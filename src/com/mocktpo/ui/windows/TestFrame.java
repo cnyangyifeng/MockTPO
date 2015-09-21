@@ -1,5 +1,6 @@
 package com.mocktpo.ui.windows;
 
+import com.mocktpo.MApplication;
 import com.mocktpo.model.*;
 import com.mocktpo.ui.dialogs.PauseDialog;
 import com.mocktpo.ui.tests.listening.*;
@@ -77,7 +78,7 @@ public class TestFrame extends JFrame implements ActionListener {
     private ListeningSectionDirectionsPanel lsdPanel;
     private ConversationPanel conversationPanel;
     private ListeningHintsPanel lhPanel;
-    private ConversationQuestionPanel cqPanel;
+    private ChoiceQuestionPanel cqPanel;
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
 
@@ -86,10 +87,10 @@ public class TestFrame extends JFrame implements ActionListener {
     private String testIndex;
     private MListening listening;
 
-    public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame, String testIndex) {
+    public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc);
         this.mainFrame = mainFrame;
-        this.testIndex = testIndex;
+        this.testIndex = (String) MApplication.settings.get("testIndex");
         initComponents();
     }
 
@@ -444,24 +445,20 @@ public class TestFrame extends JFrame implements ActionListener {
                             lsdPanel.startAudio();
                         } else if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
                             lsdPanel.stopAudio();
-                            String imageVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + listening.getConversations().get(0).getImages().get(0).getIndex();
-                            URL imageUrl = this.getClass().getResource(imageVal);
-                            String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + listening.getConversations().get(0).getAudios().get(0).getIndex();
-                            URL audioUrl = this.getClass().getResource(audioVal);
-                            conversationPanel = new ConversationPanel(bodyBounds, imageUrl, audioUrl);
+                            MConversation c = listening.getConversations().get(0);
+                            conversationPanel = new ConversationPanel(bodyBounds, c);
                             bodyPanel = conversationPanel;
                             conversationPanel.startAudio();
                         } else if (bodyPanel instanceof ConversationPanel) {
                             conversationPanel.stopAudio();
-                            lhPanel = new ListeningHintsPanel(bodyBounds, "Now get ready to answer the questions. You may use your notes to help you answer.");
+                            String hints = "Now get ready to answer the questions. You may use your notes to help you answer.";
+                            lhPanel = new ListeningHintsPanel(bodyBounds, hints);
                             bodyPanel = lhPanel;
                         } else if (bodyPanel instanceof ListeningHintsPanel) {
                             conversationPanel.stopAudio();
                             try {
                                 MChoiceQuestion cq = listening.getConversations().get(0).getQuestions().get(1);
-                                String audioVal = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + cq.getAudio().getIndex();
-                                URL audioUrl = this.getClass().getResource(audioVal);
-                                cqPanel = new ConversationQuestionPanel(bodyBounds, cq, audioUrl);
+                                cqPanel = new ChoiceQuestionPanel(bodyBounds, cq);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

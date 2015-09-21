@@ -1,5 +1,6 @@
 package com.mocktpo.ui.tests.listening;
 
+import com.mocktpo.MApplication;
 import com.mocktpo.model.MChoiceOption;
 import com.mocktpo.model.MChoiceQuestion;
 import com.mocktpo.ui.widgets.BodyPanel;
@@ -16,10 +17,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.net.URL;
 import java.util.List;
 
-public class ConversationQuestionPanel extends BodyPanel implements ActionListener, ItemListener {
+public class ChoiceQuestionPanel extends BodyPanel implements ActionListener, ItemListener {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -42,12 +42,10 @@ public class ConversationQuestionPanel extends BodyPanel implements ActionListen
     private Timer timer;
 
     private MChoiceQuestion question;
-    private URL audioUrl;
 
-    public ConversationQuestionPanel(Rectangle bounds, MChoiceQuestion question, URL audioUrl) {
+    public ChoiceQuestionPanel(Rectangle bounds, MChoiceQuestion question) {
         super(bounds);
         this.question = question;
-        this.audioUrl = audioUrl;
         this.initComponents();
     }
 
@@ -114,7 +112,8 @@ public class ConversationQuestionPanel extends BodyPanel implements ActionListen
         Format output = new AudioFormat(AudioFormat.LINEAR);
         PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
         try {
-            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(this.audioUrl));
+            String audioVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + question.getAudio().getIndex();
+            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(this.getClass().getResource(audioVal)));
         } catch (Exception e) {
             e.printStackTrace();
         }

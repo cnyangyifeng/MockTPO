@@ -1,5 +1,6 @@
 package com.mocktpo.ui.windows;
 
+import com.mocktpo.MApplication;
 import com.mocktpo.model.MTest;
 import com.mocktpo.model.MockTPO;
 import com.mocktpo.ui.widgets.BodyPanel;
@@ -290,12 +291,13 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
                     String[] arr = action.split("#");
                     if (arr[0].equals("new")) {
                         logger.info("New Test: {}", arr[1]);
+                        MApplication.settings.put("testIndex", arr[1]);
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
                                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                                 GraphicsDevice device = ge.getDefaultScreenDevice();
-                                testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this, arr[1]);
+                                testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
                                 device.setFullScreenWindow(testFrame);
                                 testFrame.setVisible(true);
                                 setVisible(false);

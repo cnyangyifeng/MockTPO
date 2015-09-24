@@ -1,8 +1,9 @@
 <listening>
     <index>TPO25-L</index>
-    <conversations>
-        <conversation>
+    <sections>
+        <section>
             <index>TPO25-L-C1</index>
+            <type>conversation</type>
             <images>
                 <image>
                     <index>TPO25-L-C1-I1.png</index>
@@ -145,61 +146,6 @@
                     </options>
                 </question>
             </questions>
-        </conversation>
-    </conversations>
-    <lectures>
-        <lecture>
-            <index>TPO25-L-L1</index>
-            <images>
-                <image>
-                    <index>TPO25-L-L1-I1.png</index>
-                </image>
-                <image>
-                    <index>TPO25-L-L1-I2.png</index>
-                </image>
-                <image>
-                    <index>TPO25-L-L1-I3.png</index>
-                </image>
-                <image>
-                    <index>TPO25-L-L1-I4.png</index>
-                </image>
-                <image>
-                    <index>TPO25-L-L1-I5.png</index>
-                </image>
-            </images>
-            <audios>
-                <audio>
-                    <index>TPO25-L-L1-A1.mp3</index>
-                </audio>
-            </audios>
-            <questions>
-                <question>
-                    <index>TPO25-L-L1-Q1</index>
-                    <subject>What is the conversation mainly about?</subject>
-                    <audio>
-                        <index>TPO25-L-L1-Q1.mp3</index>
-                    </audio>
-                    <answer>A</answer>
-                    <options>
-                        <option>
-                            <index>A</index>
-                            <text>The student's eligibility to graduate next semester</text>
-                        </option>
-                        <option>
-                            <index>B</index>
-                            <text>The student's difficulties in registering for classes</text>
-                        </option>
-                        <option>
-                            <index>C</index>
-                            <text>A difficult class the student must take next semester</text>
-                        </option>
-                        <option>
-                            <index>D</index>
-                            <text>Possible elective choices in the student's degree program</text>
-                        </option>
-                    </options>
-                </question>
-            </questions>
-        </lecture>
-    </lectures>
+        </section>
+    </sections>
 </listening>

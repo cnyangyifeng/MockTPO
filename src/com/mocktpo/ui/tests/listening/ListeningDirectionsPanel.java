@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-public class ListeningSectionDirectionsPanel extends BodyPanel implements ActionListener {
+public class ListeningDirectionsPanel extends BodyPanel implements ActionListener {
 
     /**************************************************
      * Properties
@@ -23,7 +23,7 @@ public class ListeningSectionDirectionsPanel extends BodyPanel implements Action
     private Player audioPlayer;
     private Timer timer;
 
-    public ListeningSectionDirectionsPanel(Rectangle bounds) {
+    public ListeningDirectionsPanel(Rectangle bounds) {
         super(bounds);
         this.initComponents();
     }

@@ -5,8 +5,7 @@ import java.util.List;
 public class MListening {
 
     private String index;
-    private List<MConversation> conversations;
-    private List<MLecture> lectures;
+    private List<MListeningSection> sections;
 
     public String getIndex() {
         return this.index;
@@ -16,20 +15,12 @@ public class MListening {
         this.index = index;
     }
 
-    public List<MConversation> getConversations() {
-        return this.conversations;
+    public List<MListeningSection> getSections() {
+        return sections;
     }
 
-    public void setConversations(List<MConversation> conversations) {
-        this.conversations = conversations;
-    }
-
-    public List<MLecture> getLectures() {
-        return this.lectures;
-    }
-
-    public void setLectures(List<MLecture> lectures) {
-        this.lectures = lectures;
+    public void setSections(List<MListeningSection> sections) {
+        this.sections = sections;
     }
 
     @Override

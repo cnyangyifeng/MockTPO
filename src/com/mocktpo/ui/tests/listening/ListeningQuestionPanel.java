@@ -19,7 +19,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
 
-public class ChoiceQuestionPanel extends BodyPanel implements ActionListener, ItemListener {
+public class ListeningQuestionPanel extends BodyPanel implements ActionListener, ItemListener {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -43,7 +43,7 @@ public class ChoiceQuestionPanel extends BodyPanel implements ActionListener, It
 
     private MChoiceQuestion question;
 
-    public ChoiceQuestionPanel(Rectangle bounds, MChoiceQuestion question) {
+    public ListeningQuestionPanel(Rectangle bounds, MChoiceQuestion question) {
         super(bounds);
         this.question = question;
         this.initComponents();

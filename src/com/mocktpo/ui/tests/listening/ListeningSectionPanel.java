@@ -1,7 +1,7 @@
 package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.MApplication;
-import com.mocktpo.model.MConversation;
+import com.mocktpo.model.MListeningSection;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ConversationPanel extends BodyPanel implements ActionListener {
+public class ListeningSectionPanel extends BodyPanel implements ActionListener {
 
     public static final int CONVERSATION_LABEL_WIDTH = 600;
     public static final int CONVERSATION_LABEL_HEIGHT = 450;
@@ -30,11 +30,11 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
     private Player audioPlayer;
     private Timer timer;
 
-    private MConversation conversation;
+    private MListeningSection listeningSection;
 
-    public ConversationPanel(Rectangle bounds, MConversation conversation) {
+    public ListeningSectionPanel(Rectangle bounds, MListeningSection listeningSection) {
         super(bounds);
-        this.conversation = conversation;
+        this.listeningSection = listeningSection;
         this.initComponents();
     }
 
@@ -56,7 +56,7 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
         int x = (this.getWidth() - CONVERSATION_LABEL_WIDTH) / 2;
         this.conversationLabel.setBounds(x, LayoutConstants.MARGIN * 5, CONVERSATION_LABEL_WIDTH, CONVERSATION_LABEL_HEIGHT);
 
-        String imageVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.conversation.getImages().get(0).getIndex();
+        String imageVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getImages().get(0).getIndex();
         ImageIcon icon = new ImageIcon(this.getClass().getResource(imageVal));
         this.conversationLabel.setIcon(icon);
     }
@@ -81,7 +81,7 @@ public class ConversationPanel extends BodyPanel implements ActionListener {
         Format output = new AudioFormat(AudioFormat.LINEAR);
         PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
         try {
-            String audioVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.conversation.getAudios().get(0).getIndex();
+            String audioVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getAudios().get(0).getIndex();
             this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(this.getClass().getResource(audioVal)));
         } catch (Exception e) {
             e.printStackTrace();

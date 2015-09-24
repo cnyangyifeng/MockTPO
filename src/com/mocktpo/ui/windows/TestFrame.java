@@ -75,10 +75,10 @@ public class TestFrame extends JFrame implements ActionListener {
     private BodyPanel bodyPanel;
     private HeadsetPanel headsetPanel;
     private ChangingVolumePanel cvPanel;
-    private ListeningSectionDirectionsPanel lsdPanel;
-    private ConversationPanel conversationPanel;
+    private ListeningDirectionsPanel lsdPanel;
+    private ListeningSectionPanel listeningSectionPanel;
     private ListeningHintsPanel lhPanel;
-    private ChoiceQuestionPanel cqPanel;
+    private ListeningQuestionPanel cqPanel;
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
 
@@ -127,8 +127,7 @@ public class TestFrame extends JFrame implements ActionListener {
     private void configData() {
         XStream xs = new XStream();
         xs.alias("listening", MListening.class);
-        xs.alias("conversation", MConversation.class);
-        xs.alias("lecture", MLecture.class);
+        xs.alias("section", MListeningSection.class);
         xs.alias("image", MImage.class);
         xs.alias("audio", MAudio.class);
         xs.alias("question", MChoiceQuestion.class);
@@ -406,10 +405,10 @@ public class TestFrame extends JFrame implements ActionListener {
      **************************************************/
 
     public void didPauseTest() {
-        if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
+        if (bodyPanel instanceof ListeningDirectionsPanel) {
             this.lsdPanel.stopAudio();
-        } else if (bodyPanel instanceof ConversationPanel) {
-            this.conversationPanel.stopAudio();
+        } else if (bodyPanel instanceof ListeningSectionPanel) {
+            this.listeningSectionPanel.stopAudio();
         }
     }
 
@@ -440,25 +439,35 @@ public class TestFrame extends JFrame implements ActionListener {
                             cvPanel = new ChangingVolumePanel(bodyBounds);
                             bodyPanel = cvPanel;
                         } else if (bodyPanel instanceof ChangingVolumePanel) {
-                            lsdPanel = new ListeningSectionDirectionsPanel(bodyBounds);
+                            lsdPanel = new ListeningDirectionsPanel(bodyBounds);
                             bodyPanel = lsdPanel;
                             lsdPanel.startAudio();
-                        } else if (bodyPanel instanceof ListeningSectionDirectionsPanel) {
+                        } else if (bodyPanel instanceof ListeningDirectionsPanel) {
                             lsdPanel.stopAudio();
-                            MConversation c = listening.getConversations().get(0);
-                            conversationPanel = new ConversationPanel(bodyBounds, c);
-                            bodyPanel = conversationPanel;
-                            conversationPanel.startAudio();
-                        } else if (bodyPanel instanceof ConversationPanel) {
-                            conversationPanel.stopAudio();
+                            MListeningSection section = listening.getSections().get(0);
+                            listeningSectionPanel = new ListeningSectionPanel(bodyBounds, section);
+                            bodyPanel = listeningSectionPanel;
+                            listeningSectionPanel.startAudio();
+                        } else if (bodyPanel instanceof ListeningSectionPanel) {
+                            listeningSectionPanel.stopAudio();
                             String hints = "Now get ready to answer the questions. You may use your notes to help you answer.";
                             lhPanel = new ListeningHintsPanel(bodyBounds, hints);
                             bodyPanel = lhPanel;
                         } else if (bodyPanel instanceof ListeningHintsPanel) {
-                            conversationPanel.stopAudio();
+                            listeningSectionPanel.stopAudio();
                             try {
-                                MChoiceQuestion cq = listening.getConversations().get(0).getQuestions().get(1);
-                                cqPanel = new ChoiceQuestionPanel(bodyBounds, cq);
+                                MChoiceQuestion cq = listening.getSections().get(0).getQuestions().get(0);
+                                cqPanel = new ListeningQuestionPanel(bodyBounds, cq);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            bodyPanel = cqPanel;
+                            cqPanel.startAudio();
+                        } else if (bodyPanel instanceof ListeningQuestionPanel) {
+                            cqPanel.stopAudio();
+                            try {
+                                MChoiceQuestion cq = listening.getSections().get(0).getQuestions().get(1);
+                                cqPanel = new ListeningQuestionPanel(bodyBounds, cq);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

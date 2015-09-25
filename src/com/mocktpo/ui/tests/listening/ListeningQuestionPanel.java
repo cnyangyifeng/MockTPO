@@ -51,9 +51,6 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.setSubjectLabel();
         this.setOptionsPanel();
 
-        this.add(this.subjectLabel);
-        this.add(this.optionsPanel);
-
         this.setAudioPlayer();
     }
 
@@ -67,6 +64,8 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.subjectLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         this.subjectLabel.setForeground(new Color(51, 51, 51));
         this.subjectLabel.setText(this.question.getSubject());
+
+        this.add(this.subjectLabel);
     }
 
     private void setOptionsPanel() {
@@ -100,6 +99,8 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
 
             this.optionsPanel.add(radioButton);
         }
+
+        this.add(this.optionsPanel);
     }
 
     private void setAudioPlayer() {

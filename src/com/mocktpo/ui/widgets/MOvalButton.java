@@ -7,10 +7,12 @@ public class MOvalButton extends MButton {
     public static final int TEXT_WIDTH = 36;
 
     private String text;
+    private boolean enabled;
 
-    public MOvalButton(String text) {
+    public MOvalButton(String text, boolean enabled) {
         super();
         this.text = text;
+        this.enabled = enabled;
     }
 
     @Override
@@ -25,7 +27,12 @@ public class MOvalButton extends MButton {
         hints.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         g2d.setRenderingHints(hints);
 
-        Color bg = new Color(75, 95, 143);
+        Color bg;
+        if (enabled) {
+            bg = new Color(75, 95, 143);
+        } else {
+            bg = new Color(102, 102, 102);
+        }
         g2d.setPaint(bg);
         g2d.translate(0, 5);
         double theta = Math.toRadians(-20);
@@ -40,5 +47,11 @@ public class MOvalButton extends MButton {
         g2d.setFont(new Font("Arial", Font.PLAIN, 11));
         int x = (this.getWidth() - TEXT_WIDTH) / 2;
         g2d.drawString(this.text, x, h / 2);
+    }
+
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        this.enabled = enabled;
+        this.repaint();
     }
 }

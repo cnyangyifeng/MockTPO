@@ -40,9 +40,6 @@ public class ListeningSectionPanel extends BodyPanel implements ActionListener {
         this.setConversationLabel();
         this.setConversationProgressBar();
 
-        this.add(this.conversationLabel);
-        this.add(this.conversationProgressBar);
-
         this.setAudioPlayer();
     }
 
@@ -55,6 +52,8 @@ public class ListeningSectionPanel extends BodyPanel implements ActionListener {
         String imageVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getImages().get(0).getIndex();
         ImageIcon icon = new ImageIcon(this.getClass().getResource(imageVal));
         this.conversationLabel.setIcon(icon);
+
+        this.add(this.conversationLabel);
     }
 
     private void setConversationProgressBar() {
@@ -69,6 +68,8 @@ public class ListeningSectionPanel extends BodyPanel implements ActionListener {
         this.conversationProgressBar.setValue(0);
         this.conversationProgressBar.setStringPainted(false);
         this.conversationProgressBar.setIndeterminate(false);
+
+        this.add(this.conversationProgressBar);
     }
 
     private void setAudioPlayer() {

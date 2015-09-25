@@ -22,7 +22,6 @@ public class ChangingVolumePanel extends BodyPanel {
     private void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
-        this.add(this.descriptionPane);
     }
 
     private void setDescriptionPane() {
@@ -44,6 +43,8 @@ public class ChangingVolumePanel extends BodyPanel {
         text += "<div class='cv'>You will be able to change the volume during the test if you need to.</div>";
         text += "<div class='cv-footer'>You may now change the volume.<br />When you are finished, click on Continue.</div>";
         this.descriptionPane.setText(text);
+
+        this.add(this.descriptionPane);
     }
 
     @Override

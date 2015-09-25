@@ -15,7 +15,7 @@
                 </audio>
             </audios>
             <questions>
-                <question>
+                <listening-question>
                     <index>TPO25-L-C1-Q1</index>
                     <audio>
                         <index>TPO25-L-C1-Q1.mp3</index>
@@ -40,8 +40,8 @@
                             <text>Possible elective choices in the student's degree program</text>
                         </option>
                     </options>
-                </question>
-                <question>
+                </listening-question>
+                <listening-question>
                     <index>TPO25-L-C1-Q2</index>
                     <audio>
                         <index>TPO25-L-C1-Q2.mp3</index>
@@ -66,8 +66,8 @@
                             <text>To give students a stronger background in management</text>
                         </option>
                     </options>
-                </question>
-                <question>
+                </listening-question>
+                <listening-question>
                     <index>TPO25-L-C1-Q3</index>
                     <audio>
                         <index>TPO25-L-C1-Q3.mp3</index>
@@ -92,8 +92,8 @@
                             <text>To give students a stronger background in management</text>
                         </option>
                     </options>
-                </question>
-                <question>
+                </listening-question>
+                <listening-question>
                     <index>TPO25-L-C1-Q4</index>
                     <audio>
                         <index>TPO25-L-C1-Q4.mp3</index>
@@ -118,8 +118,8 @@
                             <text>To emphasize that the student will need special permission to graduate</text>
                         </option>
                     </options>
-                </question>
-                <question>
+                </listening-question>
+                <listening-question>
                     <index>TPO25-L-C1-Q5</index>
                     <audio>
                         <index>TPO25-L-C1-Q5.mp3</index>
@@ -144,7 +144,7 @@
                             <text>To be sure that the student has taken a required class</text>
                         </option>
                     </options>
-                </question>
+                </listening-question>
             </questions>
         </section>
     </sections>

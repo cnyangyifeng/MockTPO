@@ -55,16 +55,11 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
     private void initComponents() {
         this.globalSettings();
-
         this.setLayout(null);
 
         this.setHeaderPanel();
         this.setBodyPanel();
         this.setFooterPanel();
-
-        this.getContentPane().add(this.headerPanel);
-        this.getContentPane().add(this.bodyPanel);
-        this.getContentPane().add(this.footerPanel);
     }
 
     private void globalSettings() {
@@ -96,9 +91,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         this.setTitlePane();
         this.setExitApplicationButton();
 
-        this.headerPanel.add(this.logoLabel);
-        this.headerPanel.add(this.titlePane);
-        this.headerPanel.add(this.exitApplicationButton);
+        this.getContentPane().add(this.headerPanel);
     }
 
     private void setLogoLabel() {
@@ -108,6 +101,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "logo.png"));
         this.logoLabel.setIcon(icon);
+
+        this.headerPanel.add(this.logoLabel);
     }
 
     private void setTitlePane() {
@@ -125,6 +120,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         style.addRule(".title { font-family: Arial; font-size: 24px; font-weight: bold; color: #ffffff; }");
         this.titlePane.setEditorKit(kit);
         this.titlePane.setText("<div class='title'>MockTPO</div>");
+
+        this.headerPanel.add(this.titlePane);
     }
 
     private void setExitApplicationButton() {
@@ -145,6 +142,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
         this.exitApplicationButton.setActionCommand("doExitApplication");
         this.exitApplicationButton.addActionListener(this);
+
+        this.headerPanel.add(this.exitApplicationButton);
     }
 
     /**************************************************
@@ -159,8 +158,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         this.setSloganPane();
         this.setBodyScrollPane();
 
-        this.bodyPanel.add(this.sloganPane);
-        this.bodyPanel.add(this.bodyScrollPane);
+        this.getContentPane().add(this.bodyPanel);
     }
 
     private void setSloganPane() {
@@ -179,6 +177,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         this.sloganPane.setEditorKit(kit);
         this.sloganPane.setText("<div class='slogan'>MockTPO is a TOEFL Practice Offline Application</div" +
                 "<div class='slogan-desc'> only for <span class='highlighted'>noncommercial</span> use. Please contact <a href='' class='author'>me</a> to report bugs and check updates.</div>");
+
+        this.bodyPanel.add(this.sloganPane);
     }
 
     private void setBodyScrollPane() {
@@ -230,6 +230,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         bodyPane.addHyperlinkListener(this);
 
         this.bodyScrollPane.setViewportView(bodyPane);
+
+        this.bodyPanel.add(this.bodyScrollPane);
     }
 
     /**************************************************
@@ -245,7 +247,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
         this.setCopyrightPane();
 
-        this.footerPanel.add(this.copyrightPane);
+        this.getContentPane().add(this.footerPanel);
     }
 
     private void setCopyrightPane() {
@@ -263,6 +265,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         style.addRule(".copyright { color: #ffffff; font-family: Arial; font-size: 8px; font-weight: bold; text-align: center; }");
         this.copyrightPane.setEditorKit(kit);
         this.copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
+
+        this.footerPanel.add(this.copyrightPane);
     }
 
     /**************************************************
@@ -271,6 +275,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
     public void actionPerformed(ActionEvent e) {
         if ("doExitApplication".equals(e.getActionCommand())) {
+            logger.info("'Exit Application' button pressed.");
             System.exit(0);
         }
     }

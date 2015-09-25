@@ -8,6 +8,8 @@ import com.mocktpo.ui.widgets.*;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 import com.thoughtworks.xstream.XStream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
@@ -20,6 +22,8 @@ import java.net.URL;
 import java.util.List;
 
 public class TestFrame extends JFrame implements ActionListener {
+
+    private static final Logger logger = LogManager.getLogger();
 
     public static final int PAUSE_TEST_BUTTON_WIDTH = 84;
     public static final int PAUSE_TEST_BUTTON_HEIGHT = 34;
@@ -58,8 +62,6 @@ public class TestFrame extends JFrame implements ActionListener {
     private boolean NEXT_BUTTON_ENABLED = false;
     private boolean OK_BUTTON_ENABLED = false;
     private boolean HELP_BUTTON_ENABLED = false;
-    private boolean VOLUME_BUTTON_ENABLED = false;
-    private boolean CONTINUE_BUTTON_ENABLED = true;
 
     private MainFrame mainFrame;
     private HeaderPanel headerPanel;
@@ -83,7 +85,7 @@ public class TestFrame extends JFrame implements ActionListener {
     private HeadsetPanel headsetPanel;
     private ChangingVolumePanel cvPanel;
     private ListeningDirectionsPanel ldPanel;
-    private ListeningSectionPanel listeningSectionPanel;
+    private ListeningSectionPanel lsPanel;
     private ListeningHintsPanel lhPanel;
     private ListeningQuestionPanel lqPanel;
     private FooterPanel footerPanel;
@@ -103,16 +105,11 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private void initComponents() {
         this.globalSettings();
-
         this.setLayout(null);
 
         this.setHeaderPanel();
         this.setBodyPanel();
         this.setFooterPanel();
-
-        this.getContentPane().add(headerPanel);
-        this.getContentPane().add(bodyPanel);
-        this.getContentPane().add(footerPanel);
     }
 
     private void globalSettings() {
@@ -137,7 +134,7 @@ public class TestFrame extends JFrame implements ActionListener {
         xs.alias("section", MListeningSection.class);
         xs.alias("image", MImage.class);
         xs.alias("audio", MAudio.class);
-        xs.alias("question", MListeningQuestion.class);
+        xs.alias("listening-question", MListeningQuestion.class);
         xs.alias("option", MChoiceOption.class);
 
         String val = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + GlobalConstants.CONF_FILE;
@@ -155,9 +152,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private void setHeaderPanel() {
         this.headerPanel = new HeaderPanel();
-
         this.headerPanel.setBounds(0, 0, this.getWidth(), LayoutConstants.HEADER_PANEL_HEIGHT);
-
         this.headerPanel.setLayout(null);
 
         this.setLogoLabel();
@@ -167,22 +162,11 @@ public class TestFrame extends JFrame implements ActionListener {
 
         this.setQuestionNumberPane();
 
-        this.setNextButton();
-        this.setOkButton();
-        this.setHelpButton();
-        this.setVolumeButton();
-        this.setContinueButton();
+        this.setControlButtons();
 
         this.setTimerLabel();
 
-        this.headerPanel.add(this.logoLabel);
-        this.headerPanel.add(this.titlePane);
-        this.headerPanel.add(this.pauseTestButton);
-        this.headerPanel.add(this.sectionExitButton);
-
-        this.headerPanel.add(this.questionNumberPane);
-
-        this.headerPanel.add(this.timerLabel);
+        this.getContentPane().add(headerPanel);
     }
 
     private void setLogoLabel() {
@@ -192,6 +176,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "logo.png"));
         this.logoLabel.setIcon(icon);
+
+        this.headerPanel.add(this.logoLabel);
     }
 
     private void setTitlePane() {
@@ -209,6 +195,8 @@ public class TestFrame extends JFrame implements ActionListener {
         style.addRule(".title { font-family: Arial; font-size: 11px; font-weight: bold; color: #ffffff; margin-top: 3px; }");
         this.titlePane.setEditorKit(kit);
         this.titlePane.setText("<div class='title'>TOEFL iBT Complete<br />Practice Test V25 Listening</div>");
+
+        this.headerPanel.add(this.titlePane);
     }
 
     private void setPauseTestButton() {
@@ -231,6 +219,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
         this.pauseTestButton.setActionCommand("doPauseTest");
         this.pauseTestButton.addActionListener(this);
+
+        this.headerPanel.add(this.pauseTestButton);
     }
 
     private void setSectionExitButton() {
@@ -253,6 +243,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
         this.sectionExitButton.setActionCommand("doSectionExit");
         this.sectionExitButton.addActionListener(this);
+
+        this.headerPanel.add(this.sectionExitButton);
     }
 
     private void setQuestionNumberPane() {
@@ -270,11 +262,44 @@ public class TestFrame extends JFrame implements ActionListener {
         style.addRule(".question { font-family: Arial; font-size: 11px; font-weight: bold; color: #f5f5f5; text-align: center; }");
         this.questionNumberPane.setEditorKit(kit);
         this.questionNumberPane.setText("<div class='question'>Question 4 of 17</div>");
+
+        this.headerPanel.add(this.questionNumberPane);
+    }
+
+    private void setControlButtons() {
+        this.setNextButton();
+        this.setOkButton();
+        this.setHelpButton();
+        this.setVolumeButton();
+        this.setContinueButton();
+    }
+
+    private void clearControlButtons() {
+        if (this.nextButton != null) {
+            this.headerPanel.remove(this.nextButton);
+            this.nextButton = null;
+        }
+        if (this.okButton != null) {
+            this.headerPanel.remove(this.okButton);
+            this.okButton = null;
+        }
+        if (this.helpButton != null) {
+            this.headerPanel.remove(this.helpButton);
+            this.helpButton = null;
+        }
+        if (this.volumeButton != null) {
+            this.headerPanel.remove(this.volumeButton);
+            this.volumeButton = null;
+        }
+        if (this.continueButton != null) {
+            this.headerPanel.remove(this.continueButton);
+            this.continueButton = null;
+        }
     }
 
     private void setNextButton() {
         if (HELP_OK_NEXT_BUTTON_ON) {
-            this.nextButton = new MOvalButton(" NEXT ");
+            this.nextButton = new MOvalButton(" NEXT ", false);
 
             int x = this.headerPanel.getWidth() - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN;
             this.nextButton.setBounds(x, 0, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT);
@@ -285,13 +310,18 @@ public class TestFrame extends JFrame implements ActionListener {
             this.nextButton.setFocusPainted(false);
             this.nextButton.setContentAreaFilled(false);
 
+            this.nextButton.setEnabled(NEXT_BUTTON_ENABLED);
+
+            this.nextButton.setActionCommand("doNext");
+            this.nextButton.addActionListener(this);
+
             this.headerPanel.add(this.nextButton);
         }
     }
 
     private void setOkButton() {
         if (HELP_OK_NEXT_BUTTON_ON) {
-            this.okButton = new MOvalButton("  OK  ");
+            this.okButton = new MOvalButton("  OK  ", false);
 
             int x = this.headerPanel.getWidth() - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
             this.okButton.setBounds(x, 0, OK_BUTTON_WIDTH, OK_BUTTON_HEIGHT);
@@ -302,13 +332,18 @@ public class TestFrame extends JFrame implements ActionListener {
             this.okButton.setFocusPainted(false);
             this.okButton.setContentAreaFilled(false);
 
+            this.okButton.setEnabled(OK_BUTTON_ENABLED);
+
+            this.okButton.setActionCommand("doOk");
+            this.okButton.addActionListener(this);
+
             this.headerPanel.add(this.okButton);
         }
     }
 
     private void setHelpButton() {
         if (HELP_OK_NEXT_BUTTON_ON) {
-            this.helpButton = new MOvalButton(" HELP ");
+            this.helpButton = new MOvalButton(" HELP ", false);
 
             int x = this.headerPanel.getWidth() - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 3;
             this.helpButton.setBounds(x, 0, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT);
@@ -319,13 +354,18 @@ public class TestFrame extends JFrame implements ActionListener {
             this.helpButton.setFocusPainted(false);
             this.helpButton.setContentAreaFilled(false);
 
+            this.helpButton.setEnabled(HELP_BUTTON_ENABLED);
+
+            this.helpButton.setActionCommand("doHelp");
+            this.helpButton.addActionListener(this);
+
             this.headerPanel.add(this.helpButton);
         }
     }
 
     private void setVolumeButton() {
         if (VOLUME_BUTTON_ON && HELP_OK_NEXT_BUTTON_ON) {
-            this.volumeButton = new MOvalButton("VOLUME");
+            this.volumeButton = new MOvalButton("VOLUME", true);
 
             int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
             this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
@@ -335,8 +375,13 @@ public class TestFrame extends JFrame implements ActionListener {
             this.volumeButton.setBorderPainted(false);
             this.volumeButton.setFocusPainted(false);
             this.volumeButton.setContentAreaFilled(false);
+
+            this.volumeButton.setActionCommand("doVolume");
+            this.volumeButton.addActionListener(this);
+
+            this.headerPanel.add(this.volumeButton);
         } else if (VOLUME_BUTTON_ON && !HELP_OK_NEXT_BUTTON_ON) {
-            this.volumeButton = new MOvalButton("VOLUME");
+            this.volumeButton = new MOvalButton("VOLUME", true);
 
             int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN;
             this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
@@ -346,6 +391,9 @@ public class TestFrame extends JFrame implements ActionListener {
             this.volumeButton.setBorderPainted(false);
             this.volumeButton.setFocusPainted(false);
             this.volumeButton.setContentAreaFilled(false);
+
+            this.volumeButton.setActionCommand("doVolume");
+            this.volumeButton.addActionListener(this);
 
             this.headerPanel.add(this.volumeButton);
         }
@@ -425,6 +473,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.timerLabel.setFont(new Font("Arial", Font.BOLD, 14));
         this.timerLabel.setForeground(new Color(245, 245, 245));
         this.timerLabel.setText("00:07:35");
+
+        this.headerPanel.add(this.timerLabel);
     }
 
     /**************************************************
@@ -437,6 +487,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.bodyPanel = new BodyPanel(this.bodyBounds);
         this.headsetPanel = new HeadsetPanel(this.bodyBounds);
         this.bodyPanel = this.headsetPanel;
+
+        this.getContentPane().add(bodyPanel);
     }
 
     /**************************************************
@@ -452,7 +504,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
         this.setCopyrightPane();
 
-        this.footerPanel.add(this.copyrightPane);
+        this.getContentPane().add(footerPanel);
     }
 
     private void setCopyrightPane() {
@@ -470,6 +522,8 @@ public class TestFrame extends JFrame implements ActionListener {
         style.addRule(".copyright { color: #ffffff; font-family: Arial; font-size: 8px; font-weight: bold; text-align: center; }");
         this.copyrightPane.setEditorKit(kit);
         this.copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
+
+        this.footerPanel.add(this.copyrightPane);
     }
 
     /**************************************************
@@ -480,7 +534,7 @@ public class TestFrame extends JFrame implements ActionListener {
         if (bodyPanel instanceof ListeningDirectionsPanel) {
             this.ldPanel.stopAudio();
         } else if (bodyPanel instanceof ListeningSectionPanel) {
-            this.listeningSectionPanel.stopAudio();
+            this.lsPanel.stopAudio();
         }
     }
 
@@ -494,6 +548,7 @@ public class TestFrame extends JFrame implements ActionListener {
         String ac = e.getActionCommand();
         switch (ac) {
             case "doPauseTest":
+                logger.info("'Pause Test' button pressed.");
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -503,8 +558,10 @@ public class TestFrame extends JFrame implements ActionListener {
                 });
                 break;
             case "doSectionExit":
+                logger.info("'Section Exit' button pressed.");
                 break;
             case "doContinue":
+                logger.info("'Continue' button pressed.");
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -512,47 +569,42 @@ public class TestFrame extends JFrame implements ActionListener {
                         if (bodyPanel instanceof HeadsetPanel) {
                             cvPanel = new ChangingVolumePanel(bodyBounds);
                             bodyPanel = cvPanel;
+
+                            clearControlButtons();
+                            CONTINUE_BUTTON_ON = true;
+                            VOLUME_BUTTON_ON = true;
+
+                            setControlButtons();
                         } else if (bodyPanel instanceof ChangingVolumePanel) {
                             ldPanel = new ListeningDirectionsPanel(bodyBounds);
                             bodyPanel = ldPanel;
+
+                            clearControlButtons();
+                            CONTINUE_BUTTON_ON = true;
+                            VOLUME_BUTTON_ON = true;
+                            HELP_OK_NEXT_BUTTON_ON = true;
+                            HELP_BUTTON_ENABLED = false;
+                            OK_BUTTON_ENABLED = false;
+                            NEXT_BUTTON_ENABLED = false;
+                            setControlButtons();
+
                             ldPanel.startAudio();
                         } else if (bodyPanel instanceof ListeningDirectionsPanel) {
                             ldPanel.stopAudio();
                             MListeningSection section = listening.getSections().get(0);
-                            listeningSectionPanel = new ListeningSectionPanel(bodyBounds, section);
-                            bodyPanel = listeningSectionPanel;
-                            listeningSectionPanel.startAudio();
-                        } else if (bodyPanel instanceof ListeningSectionPanel) {
-                            listeningSectionPanel.stopAudio();
-                            String hints = "Now get ready to answer the questions. You may use your notes to help you answer.";
-                            lhPanel = new ListeningHintsPanel(bodyBounds, hints);
-                            bodyPanel = lhPanel;
-                        } else if (bodyPanel instanceof ListeningHintsPanel) {
-                            listeningSectionPanel.stopAudio();
-                            try {
-                                List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
-                                MListeningQuestion lq = questions.get(nextQuestion);
-                                lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
-                                nextQuestion++;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            bodyPanel = lqPanel;
-                            lqPanel.startAudio();
-                        } else if (bodyPanel instanceof ListeningQuestionPanel) {
-                            lqPanel.stopAudio();
-                            try {
-                                List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
-                                if (nextQuestion < questions.size()) {
-                                    MListeningQuestion lq = questions.get(nextQuestion);
-                                    lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
-                                    nextQuestion++;
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            bodyPanel = lqPanel;
-                            lqPanel.startAudio();
+                            lsPanel = new ListeningSectionPanel(bodyBounds, section);
+                            bodyPanel = lsPanel;
+
+                            clearControlButtons();
+                            CONTINUE_BUTTON_ON = false;
+                            VOLUME_BUTTON_ON = true;
+                            HELP_OK_NEXT_BUTTON_ON = true;
+                            HELP_BUTTON_ENABLED = false;
+                            OK_BUTTON_ENABLED = false;
+                            NEXT_BUTTON_ENABLED = true;
+                            setControlButtons();
+
+                            lsPanel.startAudio();
                         }
                         getContentPane().add(bodyPanel);
                         repaint();
@@ -560,57 +612,59 @@ public class TestFrame extends JFrame implements ActionListener {
                 });
                 break;
             case "doVolume":
+                logger.info("'Volume' button pressed.");
                 break;
             case "doHelp":
+                logger.info("'Help' button pressed.");
                 break;
             case "doOk":
+                logger.info("'Ok' button pressed.");
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         getContentPane().remove(bodyPanel);
-                        if (bodyPanel instanceof HeadsetPanel) {
-                            cvPanel = new ChangingVolumePanel(bodyBounds);
-                            bodyPanel = cvPanel;
-                        } else if (bodyPanel instanceof ChangingVolumePanel) {
-                            ldPanel = new ListeningDirectionsPanel(bodyBounds);
-                            bodyPanel = ldPanel;
-                            ldPanel.startAudio();
-                        } else if (bodyPanel instanceof ListeningDirectionsPanel) {
-                            ldPanel.stopAudio();
-                            MListeningSection section = listening.getSections().get(0);
-                            listeningSectionPanel = new ListeningSectionPanel(bodyBounds, section);
-                            bodyPanel = listeningSectionPanel;
-                            listeningSectionPanel.startAudio();
-                        } else if (bodyPanel instanceof ListeningSectionPanel) {
-                            listeningSectionPanel.stopAudio();
-                            String hints = "Now get ready to answer the questions. You may use your notes to help you answer.";
-                            lhPanel = new ListeningHintsPanel(bodyBounds, hints);
-                            bodyPanel = lhPanel;
-                        } else if (bodyPanel instanceof ListeningHintsPanel) {
-                            listeningSectionPanel.stopAudio();
-                            try {
-                                List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
-                                MListeningQuestion lq = questions.get(nextQuestion);
-                                lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
-                                nextQuestion++;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            bodyPanel = lqPanel;
-                            lqPanel.startAudio();
-                        } else if (bodyPanel instanceof ListeningQuestionPanel) {
+                        if (bodyPanel instanceof ListeningQuestionPanel) {
                             lqPanel.stopAudio();
                             try {
                                 List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
                                 if (nextQuestion < questions.size()) {
-                                    MListeningQuestion lq = questions.get(nextQuestion);
+                                    MListeningQuestion lq = questions.get(nextQuestion++);
                                     lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
-                                    nextQuestion++;
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             bodyPanel = lqPanel;
+
+                            clearControlButtons();
+                            CONTINUE_BUTTON_ON = false;
+                            VOLUME_BUTTON_ON = true;
+                            HELP_OK_NEXT_BUTTON_ON = true;
+                            OK_BUTTON_ENABLED = false;
+                            NEXT_BUTTON_ENABLED = true;
+                            setControlButtons();
+
+                            lqPanel.startAudio();
+                        } else if (bodyPanel instanceof ListeningSectionPanel) {
+                            // will be removed. Users cannot continue until audio playing ends automatically.
+                            lsPanel.stopAudio();
+                            try {
+                                List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
+                                MListeningQuestion lq = questions.get(nextQuestion++);
+                                lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            bodyPanel = lqPanel;
+
+                            clearControlButtons();
+                            CONTINUE_BUTTON_ON = false;
+                            VOLUME_BUTTON_ON = true;
+                            HELP_OK_NEXT_BUTTON_ON = true;
+                            OK_BUTTON_ENABLED = false;
+                            NEXT_BUTTON_ENABLED = true;
+                            setControlButtons();
+
                             lqPanel.startAudio();
                         }
                         getContentPane().add(bodyPanel);
@@ -619,6 +673,17 @@ public class TestFrame extends JFrame implements ActionListener {
                 });
                 break;
             case "doNext":
+                logger.info("'Next' button pressed.");
+                if (bodyPanel instanceof ListeningQuestionPanel || bodyPanel instanceof ListeningSectionPanel) {
+                    clearControlButtons();
+                    CONTINUE_BUTTON_ON = false;
+                    VOLUME_BUTTON_ON = true;
+                    HELP_OK_NEXT_BUTTON_ON = true;
+                    OK_BUTTON_ENABLED = true;
+                    NEXT_BUTTON_ENABLED = false;
+                    setControlButtons();
+                }
+                repaint();
                 break;
             default:
                 break;

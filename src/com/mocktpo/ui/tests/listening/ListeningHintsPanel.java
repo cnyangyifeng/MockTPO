@@ -25,7 +25,6 @@ public class ListeningHintsPanel extends BodyPanel {
     private void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
-        this.add(this.descriptionPane);
     }
 
     private void setDescriptionPane() {
@@ -46,6 +45,7 @@ public class ListeningHintsPanel extends BodyPanel {
         String text = "<div class='hints'>" + this.hints + "</div>";
         this.descriptionPane.setText(text);
 
+        this.add(this.descriptionPane);
     }
 
     @Override

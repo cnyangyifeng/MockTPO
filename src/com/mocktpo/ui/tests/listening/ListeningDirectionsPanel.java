@@ -27,7 +27,6 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
     private void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
-        this.add(this.descriptionPane);
         this.setAudioPlayer();
     }
 
@@ -58,6 +57,8 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
         text += "<div class='lsd'>In an actual test, and if you are using <b>Timed Mode</b>, a clock at the top of the screen will show you how much time is remaining. The clock will not count down while you are listening. The clock will count down only while you are answering the questions.</div>";
         text += "<div class='lsd-footer'>(Click on <b>Continue</b> at any time to dismiss these directions.)</div>";
         this.descriptionPane.setText(text);
+
+        this.add(this.descriptionPane);
     }
 
     @Override

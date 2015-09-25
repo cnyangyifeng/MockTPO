@@ -29,7 +29,6 @@ public class HeadsetPanel extends BodyPanel {
     private void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
-        this.add(this.descriptionPane);
     }
 
     private void setDescriptionPane() {
@@ -51,6 +50,8 @@ public class HeadsetPanel extends BodyPanel {
         text += "<div class='hs-body'><img src='" + imgUrl + "' /></div>";
         text += "<div class='hs-footer'>Click on <b>Continue</b> to go on.</div>";
         this.descriptionPane.setText(text);
+
+        this.add(this.descriptionPane);
     }
 
     @Override

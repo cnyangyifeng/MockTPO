@@ -10,12 +10,14 @@ import java.awt.*;
 
 public class HeadsetPanel extends BodyPanel {
 
+    public static final boolean NEXT_BUTTON_VISIBILITY = false;
+    public static final boolean OK_BUTTON_VISIBILITY = false;
+    public static final boolean HELP_BUTTON_VISIBILITY = false;
+    public static final boolean VOLUME_BUTTON_VISIBILITY = false;
+    public static final boolean CONTINUE_BUTTON_VISIBILITY = true;
+
     public static final int DESCRIPTION_PANE_WIDTH = 600;
     public static final int DESCRIPTION_PANE_HEIGHT = 480;
-
-    /**************************************************
-     * Properties
-     **************************************************/
 
     private JEditorPane descriptionPane;
 
@@ -26,9 +28,7 @@ public class HeadsetPanel extends BodyPanel {
 
     private void initComponents() {
         this.setLayout(null);
-
         this.setDescriptionPane();
-
         this.add(this.descriptionPane);
     }
 
@@ -61,9 +61,7 @@ public class HeadsetPanel extends BodyPanel {
         int height = this.getHeight();
 
         Graphics2D g2d = (Graphics2D) g;
-
         Color bg = new Color(238, 213, 204);
-
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
     }

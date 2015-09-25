@@ -4,11 +4,11 @@ import java.util.List;
 
 public class MListeningSection {
 
-    private String index;
-    private String type;
-    private List<MImage> images;
-    private List<MAudio> audios;
-    private List<MChoiceQuestion> questions;
+    protected String index;
+    protected String type;
+    protected List<MImage> images;
+    protected List<MAudio> audios;
+    protected List<MListeningQuestion> questions;
 
     public String getIndex() {
         return this.index;
@@ -42,11 +42,11 @@ public class MListeningSection {
         this.audios = audios;
     }
 
-    public List<MChoiceQuestion> getQuestions() {
+    public List<MListeningQuestion> getQuestions() {
         return this.questions;
     }
 
-    public void setQuestions(List<MChoiceQuestion> questions) {
+    public void setQuestions(List<MListeningQuestion> questions) {
         this.questions = questions;
     }
 

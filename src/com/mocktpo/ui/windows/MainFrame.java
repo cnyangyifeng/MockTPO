@@ -35,10 +35,6 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
     public static final int SLOGAN_PANE_HEIGHT = 80;
     public static final int BODY_TABLE_PANE_WIDTH = 1000;
 
-    /**************************************************
-     * Properties
-     **************************************************/
-
     private TestFrame testFrame;
     private HeaderPanel headerPanel;
     private JLabel logoLabel;

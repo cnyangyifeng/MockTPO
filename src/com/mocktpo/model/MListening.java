@@ -4,8 +4,8 @@ import java.util.List;
 
 public class MListening {
 
-    private String index;
-    private List<MListeningSection> sections;
+    protected String index;
+    protected List<MListeningSection> sections;
 
     public String getIndex() {
         return this.index;

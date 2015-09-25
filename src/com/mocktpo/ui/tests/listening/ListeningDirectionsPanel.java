@@ -15,10 +15,6 @@ import java.net.URL;
 
 public class ListeningDirectionsPanel extends BodyPanel implements ActionListener {
 
-    /**************************************************
-     * Properties
-     **************************************************/
-
     private JEditorPane descriptionPane;
     private Player audioPlayer;
     private Timer timer;
@@ -30,11 +26,8 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
 
     private void initComponents() {
         this.setLayout(null);
-
         this.setDescriptionPane();
-
         this.add(this.descriptionPane);
-
         this.setAudioPlayer();
     }
 
@@ -75,9 +68,7 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
         int height = this.getHeight();
 
         Graphics2D g2d = (Graphics2D) g;
-
         Color bg = new Color(242, 232, 200); // #f2e8c8
-
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
     }

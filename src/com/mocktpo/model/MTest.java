@@ -2,9 +2,9 @@ package com.mocktpo.model;
 
 public class MTest {
 
-    private String index;
-    private String name;
-    private String status;
+    protected String index;
+    protected String name;
+    protected String status;
 
     public MTest(String index, String name) {
         this.index = index;

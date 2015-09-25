@@ -2,7 +2,7 @@ package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.MApplication;
 import com.mocktpo.model.MChoiceOption;
-import com.mocktpo.model.MChoiceQuestion;
+import com.mocktpo.model.MListeningQuestion;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
@@ -32,18 +32,14 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     public static final int OPTION_BUTTON_WIDTH = 800;
     public static final int OPTION_BUTTON_HEIGHT = 40;
 
-    /**************************************************
-     * Properties
-     **************************************************/
-
     private JLabel subjectLabel;
     private JPanel optionsPanel;
     private Player audioPlayer;
     private Timer timer;
 
-    private MChoiceQuestion question;
+    private MListeningQuestion question;
 
-    public ListeningQuestionPanel(Rectangle bounds, MChoiceQuestion question) {
+    public ListeningQuestionPanel(Rectangle bounds, MListeningQuestion question) {
         super(bounds);
         this.question = question;
         this.initComponents();

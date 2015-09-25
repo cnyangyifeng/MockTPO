@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 public class TestFrame extends JFrame implements ActionListener {
 
@@ -50,9 +51,15 @@ public class TestFrame extends JFrame implements ActionListener {
     // public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 70;
     // public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 50;
 
-    /**************************************************
-     * Properties
-     **************************************************/
+    private boolean HELP_OK_NEXT_BUTTON_ON = false;
+    private boolean VOLUME_BUTTON_ON = false;
+    private boolean CONTINUE_BUTTON_ON = true;
+
+    private boolean NEXT_BUTTON_ENABLED = false;
+    private boolean OK_BUTTON_ENABLED = false;
+    private boolean HELP_BUTTON_ENABLED = false;
+    private boolean VOLUME_BUTTON_ENABLED = false;
+    private boolean CONTINUE_BUTTON_ENABLED = true;
 
     private MainFrame mainFrame;
     private HeaderPanel headerPanel;
@@ -75,10 +82,10 @@ public class TestFrame extends JFrame implements ActionListener {
     private BodyPanel bodyPanel;
     private HeadsetPanel headsetPanel;
     private ChangingVolumePanel cvPanel;
-    private ListeningDirectionsPanel lsdPanel;
+    private ListeningDirectionsPanel ldPanel;
     private ListeningSectionPanel listeningSectionPanel;
     private ListeningHintsPanel lhPanel;
-    private ListeningQuestionPanel cqPanel;
+    private ListeningQuestionPanel lqPanel;
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
 
@@ -130,7 +137,7 @@ public class TestFrame extends JFrame implements ActionListener {
         xs.alias("section", MListeningSection.class);
         xs.alias("image", MImage.class);
         xs.alias("audio", MAudio.class);
-        xs.alias("question", MChoiceQuestion.class);
+        xs.alias("question", MListeningQuestion.class);
         xs.alias("option", MChoiceOption.class);
 
         String val = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + GlobalConstants.CONF_FILE;
@@ -174,12 +181,6 @@ public class TestFrame extends JFrame implements ActionListener {
         this.headerPanel.add(this.sectionExitButton);
 
         this.headerPanel.add(this.questionNumberPane);
-
-        this.headerPanel.add(this.nextButton);
-        this.headerPanel.add(this.okButton);
-        this.headerPanel.add(this.helpButton);
-        this.headerPanel.add(this.volumeButton);
-        this.headerPanel.add(this.continueButton);
 
         this.headerPanel.add(this.timerLabel);
     }
@@ -272,75 +273,146 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     private void setNextButton() {
-        this.nextButton = new MOvalButton(" NEXT ");
+        if (HELP_OK_NEXT_BUTTON_ON) {
+            this.nextButton = new MOvalButton(" NEXT ");
 
-        int x = this.headerPanel.getWidth() - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN;
-        this.nextButton.setBounds(x, 0, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT);
+            int x = this.headerPanel.getWidth() - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN;
+            this.nextButton.setBounds(x, 0, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT);
 
-        this.nextButton.setMargin(new Insets(0, 0, 0, 0));
-        this.nextButton.setBorder(null);
-        this.nextButton.setBorderPainted(false);
-        this.nextButton.setFocusPainted(false);
-        this.nextButton.setContentAreaFilled(false);
+            this.nextButton.setMargin(new Insets(0, 0, 0, 0));
+            this.nextButton.setBorder(null);
+            this.nextButton.setBorderPainted(false);
+            this.nextButton.setFocusPainted(false);
+            this.nextButton.setContentAreaFilled(false);
+
+            this.headerPanel.add(this.nextButton);
+        }
     }
 
     private void setOkButton() {
-        this.okButton = new MOvalButton("  OK  ");
+        if (HELP_OK_NEXT_BUTTON_ON) {
+            this.okButton = new MOvalButton("  OK  ");
 
-        int x = this.headerPanel.getWidth() - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
-        this.okButton.setBounds(x, 0, OK_BUTTON_WIDTH, OK_BUTTON_HEIGHT);
+            int x = this.headerPanel.getWidth() - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
+            this.okButton.setBounds(x, 0, OK_BUTTON_WIDTH, OK_BUTTON_HEIGHT);
 
-        this.okButton.setMargin(new Insets(0, 0, 0, 0));
-        this.okButton.setBorder(null);
-        this.okButton.setBorderPainted(false);
-        this.okButton.setFocusPainted(false);
-        this.okButton.setContentAreaFilled(false);
+            this.okButton.setMargin(new Insets(0, 0, 0, 0));
+            this.okButton.setBorder(null);
+            this.okButton.setBorderPainted(false);
+            this.okButton.setFocusPainted(false);
+            this.okButton.setContentAreaFilled(false);
+
+            this.headerPanel.add(this.okButton);
+        }
     }
 
     private void setHelpButton() {
-        this.helpButton = new MOvalButton(" HELP ");
+        if (HELP_OK_NEXT_BUTTON_ON) {
+            this.helpButton = new MOvalButton(" HELP ");
 
-        int x = this.headerPanel.getWidth() - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 3;
-        this.helpButton.setBounds(x, 0, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT);
+            int x = this.headerPanel.getWidth() - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 3;
+            this.helpButton.setBounds(x, 0, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT);
 
-        this.helpButton.setMargin(new Insets(0, 0, 0, 0));
-        this.helpButton.setBorder(null);
-        this.helpButton.setBorderPainted(false);
-        this.helpButton.setFocusPainted(false);
-        this.helpButton.setContentAreaFilled(false);
+            this.helpButton.setMargin(new Insets(0, 0, 0, 0));
+            this.helpButton.setBorder(null);
+            this.helpButton.setBorderPainted(false);
+            this.helpButton.setFocusPainted(false);
+            this.helpButton.setContentAreaFilled(false);
+
+            this.headerPanel.add(this.helpButton);
+        }
     }
 
     private void setVolumeButton() {
-        this.volumeButton = new MOvalButton("VOLUME");
+        if (VOLUME_BUTTON_ON && HELP_OK_NEXT_BUTTON_ON) {
+            this.volumeButton = new MOvalButton("VOLUME");
 
-        int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
-        this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
+            int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
+            this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
 
-        this.volumeButton.setMargin(new Insets(0, 0, 0, 0));
-        this.volumeButton.setBorder(null);
-        this.volumeButton.setBorderPainted(false);
-        this.volumeButton.setFocusPainted(false);
-        this.volumeButton.setContentAreaFilled(false);
+            this.volumeButton.setMargin(new Insets(0, 0, 0, 0));
+            this.volumeButton.setBorder(null);
+            this.volumeButton.setBorderPainted(false);
+            this.volumeButton.setFocusPainted(false);
+            this.volumeButton.setContentAreaFilled(false);
+        } else if (VOLUME_BUTTON_ON && !HELP_OK_NEXT_BUTTON_ON) {
+            this.volumeButton = new MOvalButton("VOLUME");
+
+            int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN;
+            this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
+
+            this.volumeButton.setMargin(new Insets(0, 0, 0, 0));
+            this.volumeButton.setBorder(null);
+            this.volumeButton.setBorderPainted(false);
+            this.volumeButton.setFocusPainted(false);
+            this.volumeButton.setContentAreaFilled(false);
+
+            this.headerPanel.add(this.volumeButton);
+        }
     }
 
     private void setContinueButton() {
-        this.continueButton = new MButton();
+        if (CONTINUE_BUTTON_ON && VOLUME_BUTTON_ON && HELP_OK_NEXT_BUTTON_ON) {
+            this.continueButton = new MButton();
 
-        int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
-        int y = LayoutConstants.MARGIN * 3;
-        this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
+            int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
+            int y = LayoutConstants.MARGIN * 3;
+            this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "continue.png"));
-        this.continueButton.setIcon(icon);
-        this.continueButton.setText(null);
-        this.continueButton.setMargin(new Insets(0, 0, 0, 0));
-        this.continueButton.setBorder(null);
-        this.continueButton.setBorderPainted(false);
-        this.continueButton.setFocusPainted(false);
-        this.continueButton.setContentAreaFilled(false);
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "continue.png"));
+            this.continueButton.setIcon(icon);
+            this.continueButton.setText(null);
+            this.continueButton.setMargin(new Insets(0, 0, 0, 0));
+            this.continueButton.setBorder(null);
+            this.continueButton.setBorderPainted(false);
+            this.continueButton.setFocusPainted(false);
+            this.continueButton.setContentAreaFilled(false);
 
-        this.continueButton.setActionCommand("doContinue");
-        this.continueButton.addActionListener(this);
+            this.continueButton.setActionCommand("doContinue");
+            this.continueButton.addActionListener(this);
+
+            this.headerPanel.add(this.continueButton);
+        } else if (CONTINUE_BUTTON_ON && VOLUME_BUTTON_ON && !HELP_OK_NEXT_BUTTON_ON) {
+            this.continueButton = new MButton();
+
+            int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
+            int y = LayoutConstants.MARGIN * 3;
+            this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
+
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "continue.png"));
+            this.continueButton.setIcon(icon);
+            this.continueButton.setText(null);
+            this.continueButton.setMargin(new Insets(0, 0, 0, 0));
+            this.continueButton.setBorder(null);
+            this.continueButton.setBorderPainted(false);
+            this.continueButton.setFocusPainted(false);
+            this.continueButton.setContentAreaFilled(false);
+
+            this.continueButton.setActionCommand("doContinue");
+            this.continueButton.addActionListener(this);
+
+            this.headerPanel.add(this.continueButton);
+        } else if (CONTINUE_BUTTON_ON && !VOLUME_BUTTON_ON && !HELP_OK_NEXT_BUTTON_ON) {
+            this.continueButton = new MButton();
+
+            int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - LayoutConstants.MARGIN;
+            int y = LayoutConstants.MARGIN * 3;
+            this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
+
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "continue.png"));
+            this.continueButton.setIcon(icon);
+            this.continueButton.setText(null);
+            this.continueButton.setMargin(new Insets(0, 0, 0, 0));
+            this.continueButton.setBorder(null);
+            this.continueButton.setBorderPainted(false);
+            this.continueButton.setFocusPainted(false);
+            this.continueButton.setContentAreaFilled(false);
+
+            this.continueButton.setActionCommand("doContinue");
+            this.continueButton.addActionListener(this);
+
+            this.headerPanel.add(this.continueButton);
+        }
     }
 
     private void setTimerLabel() {
@@ -406,11 +478,13 @@ public class TestFrame extends JFrame implements ActionListener {
 
     public void didPauseTest() {
         if (bodyPanel instanceof ListeningDirectionsPanel) {
-            this.lsdPanel.stopAudio();
+            this.ldPanel.stopAudio();
         } else if (bodyPanel instanceof ListeningSectionPanel) {
             this.listeningSectionPanel.stopAudio();
         }
     }
+
+    private int nextQuestion = 0;
 
     /**************************************************
      * Listeners
@@ -439,11 +513,11 @@ public class TestFrame extends JFrame implements ActionListener {
                             cvPanel = new ChangingVolumePanel(bodyBounds);
                             bodyPanel = cvPanel;
                         } else if (bodyPanel instanceof ChangingVolumePanel) {
-                            lsdPanel = new ListeningDirectionsPanel(bodyBounds);
-                            bodyPanel = lsdPanel;
-                            lsdPanel.startAudio();
+                            ldPanel = new ListeningDirectionsPanel(bodyBounds);
+                            bodyPanel = ldPanel;
+                            ldPanel.startAudio();
                         } else if (bodyPanel instanceof ListeningDirectionsPanel) {
-                            lsdPanel.stopAudio();
+                            ldPanel.stopAudio();
                             MListeningSection section = listening.getSections().get(0);
                             listeningSectionPanel = new ListeningSectionPanel(bodyBounds, section);
                             bodyPanel = listeningSectionPanel;
@@ -456,28 +530,95 @@ public class TestFrame extends JFrame implements ActionListener {
                         } else if (bodyPanel instanceof ListeningHintsPanel) {
                             listeningSectionPanel.stopAudio();
                             try {
-                                MChoiceQuestion cq = listening.getSections().get(0).getQuestions().get(0);
-                                cqPanel = new ListeningQuestionPanel(bodyBounds, cq);
+                                List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
+                                MListeningQuestion lq = questions.get(nextQuestion);
+                                lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
+                                nextQuestion++;
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            bodyPanel = cqPanel;
-                            cqPanel.startAudio();
+                            bodyPanel = lqPanel;
+                            lqPanel.startAudio();
                         } else if (bodyPanel instanceof ListeningQuestionPanel) {
-                            cqPanel.stopAudio();
+                            lqPanel.stopAudio();
                             try {
-                                MChoiceQuestion cq = listening.getSections().get(0).getQuestions().get(1);
-                                cqPanel = new ListeningQuestionPanel(bodyBounds, cq);
+                                List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
+                                if (nextQuestion < questions.size()) {
+                                    MListeningQuestion lq = questions.get(nextQuestion);
+                                    lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
+                                    nextQuestion++;
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            bodyPanel = cqPanel;
-                            cqPanel.startAudio();
+                            bodyPanel = lqPanel;
+                            lqPanel.startAudio();
                         }
                         getContentPane().add(bodyPanel);
                         repaint();
                     }
                 });
+                break;
+            case "doVolume":
+                break;
+            case "doHelp":
+                break;
+            case "doOk":
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        getContentPane().remove(bodyPanel);
+                        if (bodyPanel instanceof HeadsetPanel) {
+                            cvPanel = new ChangingVolumePanel(bodyBounds);
+                            bodyPanel = cvPanel;
+                        } else if (bodyPanel instanceof ChangingVolumePanel) {
+                            ldPanel = new ListeningDirectionsPanel(bodyBounds);
+                            bodyPanel = ldPanel;
+                            ldPanel.startAudio();
+                        } else if (bodyPanel instanceof ListeningDirectionsPanel) {
+                            ldPanel.stopAudio();
+                            MListeningSection section = listening.getSections().get(0);
+                            listeningSectionPanel = new ListeningSectionPanel(bodyBounds, section);
+                            bodyPanel = listeningSectionPanel;
+                            listeningSectionPanel.startAudio();
+                        } else if (bodyPanel instanceof ListeningSectionPanel) {
+                            listeningSectionPanel.stopAudio();
+                            String hints = "Now get ready to answer the questions. You may use your notes to help you answer.";
+                            lhPanel = new ListeningHintsPanel(bodyBounds, hints);
+                            bodyPanel = lhPanel;
+                        } else if (bodyPanel instanceof ListeningHintsPanel) {
+                            listeningSectionPanel.stopAudio();
+                            try {
+                                List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
+                                MListeningQuestion lq = questions.get(nextQuestion);
+                                lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
+                                nextQuestion++;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            bodyPanel = lqPanel;
+                            lqPanel.startAudio();
+                        } else if (bodyPanel instanceof ListeningQuestionPanel) {
+                            lqPanel.stopAudio();
+                            try {
+                                List<MListeningQuestion> questions = listening.getSections().get(0).getQuestions();
+                                if (nextQuestion < questions.size()) {
+                                    MListeningQuestion lq = questions.get(nextQuestion);
+                                    lqPanel = new ListeningQuestionPanel(bodyBounds, lq);
+                                    nextQuestion++;
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            bodyPanel = lqPanel;
+                            lqPanel.startAudio();
+                        }
+                        getContentPane().add(bodyPanel);
+                        repaint();
+                    }
+                });
+                break;
+            case "doNext":
                 break;
             default:
                 break;

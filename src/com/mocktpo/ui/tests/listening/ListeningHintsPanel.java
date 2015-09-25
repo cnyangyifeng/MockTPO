@@ -13,10 +13,6 @@ public class ListeningHintsPanel extends BodyPanel {
     public static final int DESCRIPTION_PANE_WIDTH = 500;
     public static final int DESCRIPTION_PANE_HEIGHT = 380;
 
-    /**************************************************
-     * Properties
-     **************************************************/
-
     private JEditorPane descriptionPane;
     private String hints;
 
@@ -28,9 +24,7 @@ public class ListeningHintsPanel extends BodyPanel {
 
     private void initComponents() {
         this.setLayout(null);
-
         this.setDescriptionPane();
-
         this.add(this.descriptionPane);
     }
 
@@ -62,9 +56,7 @@ public class ListeningHintsPanel extends BodyPanel {
         int height = this.getHeight();
 
         Graphics2D g2d = (Graphics2D) g;
-
         Color bg = new Color(255, 255, 255); // #ffffff
-
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
     }

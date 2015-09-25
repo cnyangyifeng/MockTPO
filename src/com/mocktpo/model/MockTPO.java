@@ -4,7 +4,7 @@ import java.util.List;
 
 public class MockTPO {
 
-    private List<MTest> tests;
+    protected List<MTest> tests;
 
     public List<MTest> getTests() {
         return this.tests;

@@ -12,10 +12,6 @@ public class ChangingVolumePanel extends BodyPanel {
     public static final int DESCRIPTION_PANE_WIDTH = 680;
     public static final int DESCRIPTION_PANE_HEIGHT = 600;
 
-    /**************************************************
-     * Properties
-     **************************************************/
-
     private JEditorPane descriptionPane;
 
     public ChangingVolumePanel(Rectangle bounds) {
@@ -25,9 +21,7 @@ public class ChangingVolumePanel extends BodyPanel {
 
     private void initComponents() {
         this.setLayout(null);
-
         this.setDescriptionPane();
-
         this.add(this.descriptionPane);
     }
 
@@ -60,9 +54,7 @@ public class ChangingVolumePanel extends BodyPanel {
         int height = this.getHeight();
 
         Graphics2D g2d = (Graphics2D) g;
-
         Color bg = new Color(242, 232, 200); // #f2e8c8
-
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
     }

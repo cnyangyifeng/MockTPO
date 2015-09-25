@@ -21,10 +21,6 @@ public class ListeningSectionPanel extends BodyPanel implements ActionListener {
     public static final int CONVERSATION_PROGRESS_BAR_WIDTH = 320;
     public static final int CONVERSATION_PROGRESS_BAR_HEIGHT = 6;
 
-    /**************************************************
-     * Properties
-     **************************************************/
-
     private JLabel conversationLabel;
     private JProgressBar conversationProgressBar;
     private Player audioPlayer;

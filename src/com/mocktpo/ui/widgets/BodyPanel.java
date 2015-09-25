@@ -23,9 +23,7 @@ public class BodyPanel extends JPanel {
         int height = this.getHeight();
 
         Graphics2D g2d = (Graphics2D) g;
-
         Color bg = new Color(255, 255, 255); // #ffffff
-
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
     }

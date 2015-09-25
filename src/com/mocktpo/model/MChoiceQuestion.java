@@ -4,11 +4,10 @@ import java.util.List;
 
 public class MChoiceQuestion {
 
-    private String index;
-    private MAudio audio;
-    private String subject;
-    private String answer;
-    private List<MChoiceOption> options;
+    protected String index;
+    protected String subject;
+    protected String answer;
+    protected List<MChoiceOption> options;
 
     public String getIndex() {
         return this.index;
@@ -16,14 +15,6 @@ public class MChoiceQuestion {
 
     public void setIndex(String index) {
         this.index = index;
-    }
-
-    public MAudio getAudio() {
-        return this.audio;
-    }
-
-    public void setAudio(MAudio audio) {
-        this.audio = audio;
     }
 
     public String getSubject() {

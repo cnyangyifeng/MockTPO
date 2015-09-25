@@ -10,12 +10,6 @@ import java.awt.*;
 
 public class HeadsetPanel extends BodyPanel {
 
-    public static final boolean NEXT_BUTTON_VISIBILITY = false;
-    public static final boolean OK_BUTTON_VISIBILITY = false;
-    public static final boolean HELP_BUTTON_VISIBILITY = false;
-    public static final boolean VOLUME_BUTTON_VISIBILITY = false;
-    public static final boolean CONTINUE_BUTTON_VISIBILITY = true;
-
     public static final int DESCRIPTION_PANE_WIDTH = 600;
     public static final int DESCRIPTION_PANE_HEIGHT = 480;
 

@@ -125,7 +125,8 @@ public class ListeningSectionPanel extends BodyPanel implements ActionListener {
                 public void run() {
                     if (now < duration) {
                         int progress = (int) ((now * 100) / duration);
-                        if (progress < 99) {
+                        if (progress < 95) {
+                            // 95% might bring bugs.
                             conversationProgressBar.setValue(progress);
                         } else {
                             conversationProgressBar.setValue(100);

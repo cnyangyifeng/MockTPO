@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import javax.media.*;
 import javax.media.format.AudioFormat;
 import javax.swing.*;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,8 +25,8 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
 
     private static final Logger logger = LogManager.getLogger();
 
-    public static final int SUBJECT_LABEL_WIDTH = 800;
-    public static final int SUBJECT_LABEL_HEIGHT = 80;
+    public static final int SUBJECT_PANE_WIDTH = 800;
+    public static final int SUBJECT_PANE_HEIGHT = 80;
 
     public static final int OPTIONS_PANEL_WIDTH = 800;
     public static final int OPTIONS_PANEL_HEIGHT = 200;
@@ -32,7 +34,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     public static final int OPTION_BUTTON_WIDTH = 800;
     public static final int OPTION_BUTTON_HEIGHT = 40;
 
-    private JLabel subjectLabel;
+    private JEditorPane subjectPane;
     private JPanel optionsPanel;
     private Player audioPlayer;
     private Timer timer;
@@ -48,24 +50,36 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     private void initComponents() {
         this.setLayout(null);
 
-        this.setSubjectLabel();
-        this.setOptionsPanel();
+        this.setSubjectPane();
 
         this.setAudioPlayer();
     }
 
-    private void setSubjectLabel() {
-        this.subjectLabel = new JLabel();
+    private void setSubjectPane() {
+        this.subjectPane = new JEditorPane();
 
-        int x = (this.getWidth() - SUBJECT_LABEL_WIDTH) / 2;
-        int y = (this.getHeight() - SUBJECT_LABEL_HEIGHT - OPTIONS_PANEL_HEIGHT) / 2;
-        this.subjectLabel.setBounds(x, y, SUBJECT_LABEL_WIDTH, SUBJECT_LABEL_HEIGHT);
+        int x = (this.getWidth() - SUBJECT_PANE_WIDTH) / 2;
+        int y = (this.getHeight() - SUBJECT_PANE_HEIGHT - OPTIONS_PANEL_HEIGHT) / 2;
+        this.subjectPane.setBounds(x, y, SUBJECT_PANE_WIDTH, SUBJECT_PANE_HEIGHT);
 
-        this.subjectLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        this.subjectLabel.setForeground(new Color(51, 51, 51));
-        this.subjectLabel.setText(this.question.getSubject());
+        this.subjectPane.setEditable(false);
+        this.subjectPane.setOpaque(true);
+        this.subjectPane.setBackground(new Color(255, 255, 255));
 
-        this.add(this.subjectLabel);
+        HTMLEditorKit kit = new HTMLEditorKit();
+        StyleSheet style = kit.getStyleSheet();
+        style.addRule(".subject { color: #333333; font-family: Arial; font-size: 14px; }");
+        this.subjectPane.setEditorKit(kit);
+        String subject = this.question.getSubject();
+        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "earphone.png").toString();
+        if (subject.contains("[earphone]")) {
+            subject = subject.replace("[earphone]", "&nbsp;&nbsp;<img src='" + imgUrl + "' />");
+        }
+        String text = "<div class='subject'>" + subject + "</div>";
+        logger.info(text);
+        this.subjectPane.setText(text);
+
+        this.add(this.subjectPane);
     }
 
     private void setOptionsPanel() {
@@ -73,7 +87,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.optionsPanel.setLayout(null);
 
         int x = (this.getWidth() - OPTIONS_PANEL_WIDTH) / 2;
-        int y = (this.getHeight() - SUBJECT_LABEL_HEIGHT - OPTIONS_PANEL_HEIGHT) / 2 + SUBJECT_LABEL_HEIGHT;
+        int y = (this.getHeight() - SUBJECT_PANE_HEIGHT - OPTIONS_PANEL_HEIGHT) / 2 + SUBJECT_PANE_HEIGHT;
         this.optionsPanel.setBounds(x, y, OPTIONS_PANEL_WIDTH, OPTIONS_PANEL_HEIGHT);
 
         this.optionsPanel.setBackground(new Color(255, 255, 255));
@@ -139,8 +153,12 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    if (now >= duration) {
+                    int progress = (int) ((now * 100) / duration);
+                    if (progress > 95) {
+                        // 95% might bring bugs.
                         timer.stop();
+                        setOptionsPanel();
+                        repaint();
                     }
                 }
             });

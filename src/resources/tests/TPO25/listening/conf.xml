@@ -1,24 +1,24 @@
 <listening>
-    <index>TPO25-L</index>
+    <index>TPO25L</index>
     <sections>
         <section>
-            <index>TPO25-L-C1</index>
+            <index>TPO25L1</index>
             <type>conversation</type>
             <images>
                 <image>
-                    <index>TPO25-L-C1-I1.png</index>
+                    <index>p1.png</index>
                 </image>
             </images>
             <audios>
                 <audio>
-                    <index>TPO25-L-C1-A1.mp3</index>
+                    <index>a1.mp3</index>
                 </audio>
             </audios>
             <questions>
                 <listening-question>
-                    <index>TPO25-L-C1-Q1</index>
+                    <index>Q1</index>
                     <audio>
-                        <index>TPO25-L-C1-Q1.mp3</index>
+                        <index>q1.mp3</index>
                     </audio>
                     <subject>What is the conversation mainly about?</subject>
                     <answer>A</answer>
@@ -42,9 +42,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-C1-Q2</index>
+                    <index>Q2</index>
                     <audio>
-                        <index>TPO25-L-C1-Q2.mp3</index>
+                        <index>q2.mp3</index>
                     </audio>
                     <subject>According to the woman, why was the program's curriculum changed?</subject>
                     <answer>B</answer>
@@ -68,9 +68,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-C1-Q3</index>
+                    <index>Q3</index>
                     <audio>
-                        <index>TPO25-L-C1-Q3.mp3</index>
+                        <index>q3.mp3</index>
                     </audio>
                     <subject>What does the woman imply about the new departmental requirements?</subject>
                     <answer>A</answer>
@@ -94,9 +94,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-C1-Q4</index>
+                    <index>Q4</index>
                     <audio>
-                        <index>TPO25-L-C1-Q4.mp3</index>
+                        <index>q4.mp3</index>
                     </audio>
                     <subject>Why does the woman mention writing a letter?</subject>
                     <answer>C</answer>
@@ -120,9 +120,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-C1-Q5</index>
+                    <index>Q5</index>
                     <audio>
-                        <index>TPO25-L-C1-Q5.mp3</index>
+                        <index>q5.mp3</index>
                     </audio>
                     <subject>Why does the woman say this: [earphone]</subject>
                     <answer>D</answer>
@@ -148,23 +148,23 @@
             </questions>
         </section>
         <section>
-            <index>TPO25-L-L1</index>
+            <index>TPO25L2</index>
             <type>lecture</type>
             <images>
                 <image>
-                    <index>TPO25-L-L1-I1.png</index>
+                    <index>p2.png</index>
                 </image>
             </images>
             <audios>
                 <audio>
-                    <index>TPO25-L-L1-A1.mp3</index>
+                    <index>a2.mp3</index>
                 </audio>
             </audios>
             <questions>
                 <listening-question>
-                    <index>TPO25-L-L1-Q6</index>
+                    <index>Q6</index>
                     <audio>
-                        <index>TPO25-L-L1-Q6.mp3</index>
+                        <index>q6.mp3</index>
                     </audio>
                     <subject>What is the main purpose of the lecture?</subject>
                     <answer>A</answer>
@@ -188,9 +188,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-L1-Q7</index>
+                    <index>Q7</index>
                     <audio>
-                        <index>TPO25-L-L1-Q7.mp3</index>
+                        <index>q7.mp3</index>
                     </audio>
                     <subject>According to the professor, what problem is assisted migration intended to overcome?
                     </subject>
@@ -216,9 +216,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-L1-Q8</index>
+                    <index>Q8</index>
                     <audio>
-                        <index>TPO25-L-L1-Q8.mp3</index>
+                        <index>q8.mp3</index>
                     </audio>
                     <subject>What point does the professor make when she discusses the cane toad?</subject>
                     <answer>A</answer>
@@ -242,9 +242,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-L1-Q9</index>
+                    <index>Q9</index>
                     <audio>
-                        <index>TPO25-L-L1-Q9.mp3</index>
+                        <index>q9.mp3</index>
                     </audio>
                     <subject>What does the professor imply when she mentions translocating networks of species?
                     </subject>
@@ -271,9 +271,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-L1-Q10</index>
+                    <index>Q10</index>
                     <audio>
-                        <index>TPO25-L-L1-Q10.mp3</index>
+                        <index>q10.mp3</index>
                     </audio>
                     <subject>Why does the professor imply about the government's role in regulating assisted migration
                         in the United States?
@@ -299,9 +299,9 @@
                     </options>
                 </listening-question>
                 <listening-question>
-                    <index>TPO25-L-L1-Q11</index>
+                    <index>Q11</index>
                     <audio>
-                        <index>TPO25-L-L1-Q11.mp3</index>
+                        <index>q11.mp3</index>
                     </audio>
                     <subject>What is the professor's attitude toward the effort to save the Florida torreya?</subject>
                     <answer>D</answer>

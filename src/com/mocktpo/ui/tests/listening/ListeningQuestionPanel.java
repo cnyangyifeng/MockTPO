@@ -26,7 +26,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     private static final Logger logger = LogManager.getLogger();
 
     public static final int SUBJECT_PANE_WIDTH = 800;
-    public static final int SUBJECT_PANE_HEIGHT = 80;
+    public static final int SUBJECT_PANE_HEIGHT = 60;
 
     public static final int OPTIONS_PANEL_WIDTH = 800;
     public static final int OPTIONS_PANEL_HEIGHT = 200;
@@ -68,12 +68,12 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".subject { color: #333333; font-family: Arial; font-size: 14px; }");
+        style.addRule(".subject { color: #333333; font-family: Arial; font-size: 14px; } img {}");
         this.subjectPane.setEditorKit(kit);
         String subject = this.question.getSubject();
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "earphone.png").toString();
         if (subject.contains("[earphone]")) {
-            subject = subject.replace("[earphone]", "&nbsp;&nbsp;<img src='" + imgUrl + "' />");
+            subject = subject.replace("[earphone]", "&nbsp;&nbsp;<img class='' src='" + imgUrl + "' />");
         }
         String text = "<div class='subject'>" + subject + "</div>";
         logger.info(text);

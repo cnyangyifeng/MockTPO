@@ -23,17 +23,13 @@ import java.util.List;
 
 public class ListeningQuestionPanel extends BodyPanel implements ActionListener, ItemListener {
 
-    private static final Logger logger = LogManager.getLogger();
-
     public static final int SUBJECT_PANE_WIDTH = 800;
     public static final int SUBJECT_PANE_HEIGHT = 60;
-
     public static final int OPTIONS_PANEL_WIDTH = 800;
     public static final int OPTIONS_PANEL_HEIGHT = 200;
-
     public static final int OPTION_BUTTON_WIDTH = 800;
     public static final int OPTION_BUTTON_HEIGHT = 40;
-
+    private static final Logger logger = LogManager.getLogger();
     private JEditorPane subjectPane;
     private JPanel optionsPanel;
     private Player audioPlayer;

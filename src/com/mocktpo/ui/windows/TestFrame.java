@@ -23,38 +23,28 @@ import java.util.List;
 
 public class TestFrame extends JFrame implements ActionListener {
 
-    private static final Logger logger = LogManager.getLogger();
-
     public static final int PAUSE_TEST_BUTTON_WIDTH = 84;
     public static final int PAUSE_TEST_BUTTON_HEIGHT = 34;
-
     public static final int SECTION_EXIT_BUTTON_WIDTH = 84;
     public static final int SECTION_EXIT_BUTTON_HEIGHT = 34;
-
     public static final int QUESTION_NUMBER_PANE_WIDTH = 200;
     public static final int QUESTION_NUMBER_PANE_HEIGHT = 20;
-
     public static final int NEXT_BUTTON_WIDTH = 70;
     public static final int NEXT_BUTTON_HEIGHT = 50;
-
     public static final int OK_BUTTON_WIDTH = 70;
     public static final int OK_BUTTON_HEIGHT = 50;
-
     public static final int HELP_BUTTON_WIDTH = 70;
     public static final int HELP_BUTTON_HEIGHT = 50;
-
     public static final int VOLUME_BUTTON_WIDTH = 70;
     public static final int VOLUME_BUTTON_HEIGHT = 50;
-
     public static final int CONTINUE_BUTTON_WIDTH = 74;
     public static final int CONTINUE_BUTTON_HEIGHT = 34;
-
     public static final int TIMER_LABEL_WIDTH = 60;
     public static final int TIMER_LABEL_HEIGHT = 20;
+    private static final Logger logger = LogManager.getLogger();
 
     // public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 70;
     // public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 50;
-
     private boolean HELP_OK_NEXT_BUTTON_ON = false;
     private boolean VOLUME_BUTTON_ON = false;
     private boolean CONTINUE_BUTTON_ON = true;
@@ -95,6 +85,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private String testIndex;
     private MListening listening;
+    private int nextQuestion = 0;
 
     public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc);
@@ -537,8 +528,6 @@ public class TestFrame extends JFrame implements ActionListener {
             this.lsPanel.stopAudio();
         }
     }
-
-    private int nextQuestion = 0;
 
     /**************************************************
      * Listeners

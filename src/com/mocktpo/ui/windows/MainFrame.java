@@ -27,14 +27,12 @@ import java.util.List;
 
 public class MainFrame extends JFrame implements ActionListener, HyperlinkListener {
 
-    private static final Logger logger = LogManager.getLogger();
-
     public static final int EXIT_APPLICATION_BUTTON_WIDTH = 84;
     public static final int EXIT_APPLICATION_BUTTON_HEIGHT = 34;
     public static final int SLOGAN_PANE_WIDTH = 1000;
     public static final int SLOGAN_PANE_HEIGHT = 80;
     public static final int BODY_TABLE_PANE_WIDTH = 1000;
-
+    private static final Logger logger = LogManager.getLogger();
     private TestFrame testFrame;
     private HeaderPanel headerPanel;
     private JLabel logoLabel;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <install4j version="6.0.3" transformSequenceNumber="5">
-  <directoryPresets config="../../IdeaProjects/MockTPO/out/production/MockTPO" />
+  <directoryPresets config="../out/production/MockTPO" />
   <application name="MockTPO" distributionSourceDir="" applicationId="7142-6849-0165-9065" mediaDir=".." mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}" compression="6" lzmaCompression="true" pack200Compression="true" excludeSignedFromPacking="true" commonExternalFiles="false" createMd5Sums="true" shrinkRuntime="true" shortName="MockTPO" publisher="YANG YIFENG" publisherWeb="http://www.mocktpo.com" version="1.0" allPathsRelative="true" backupOnSave="false" autoSave="false" convertDotsToUnderscores="true" macSignature="????" macVolumeId="9d820872533e2e21" javaMinVersion="1.7" javaMaxVersion="1.8" allowBetaVM="false" jdkMode="runtimeJre" jdkName="">
     <languages skipLanguageSelection="false" languageSelectionInPrincipalLanguage="false">
       <principalLanguage id="en" customLocalizationFile="" />
@@ -22,18 +22,18 @@
       <mountPoint id="27" root="" location="" mode="755" />
     </mountPoints>
     <entries>
-      <dirEntry mountPoint="27" file="../../IdeaProjects/MockTPO/out/production/MockTPO" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="MockTPO" excludeSuffixes="" dirMode="755" overrideDirMode="false">
+      <dirEntry mountPoint="27" file="../out/production/MockTPO" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="MockTPO" excludeSuffixes="" dirMode="755" overrideDirMode="false">
         <exclude />
       </dirEntry>
     </entries>
     <components />
   </files>
   <launchers>
-    <launcher name="MockTPO" id="25" customizedId="" external="false" excludeFromMenu="false" unixMode="755" menuName="" icnsFile="../../IdeaProjects/MockTPO/out/production/MockTPO/icon.icns" customMacBundleIdentifier="false" macBundleIdentifier="" swtApp="false" fileset="" macBundleBinary="JavaApplicationStub" addMacEntitlements="false" macEntitlementsFile="" useCustomMacosExecutableName="false" customMacosExecutableName="">
-      <executable name="MockTPO" type="1" iconSet="true" iconFile="../../IdeaProjects/MockTPO/out/production/MockTPO/icon.ico" executableDir="" redirectStderr="true" stderrFile="error.log" stderrMode="overwrite" redirectStdout="false" stdoutFile="output.log" stdoutMode="overwrite" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="true" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="asInvoker" checkConsoleParameter="false" globalSingleInstance="false" singleInstanceActivate="true" dpiAware="false">
+    <launcher name="MockTPO" id="25" customizedId="" external="false" excludeFromMenu="false" unixMode="755" menuName="" icnsFile="../out/production/MockTPO/icon.icns" customMacBundleIdentifier="false" macBundleIdentifier="" swtApp="false" fileset="" macBundleBinary="JavaApplicationStub" addMacEntitlements="false" macEntitlementsFile="" useCustomMacosExecutableName="false" customMacosExecutableName="">
+      <executable name="MockTPO" type="1" iconSet="true" iconFile="../out/production/MockTPO/icon.ico" executableDir="" redirectStderr="true" stderrFile="error.log" stderrMode="overwrite" redirectStdout="false" stdoutFile="output.log" stdoutMode="overwrite" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="true" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="asInvoker" checkConsoleParameter="false" globalSingleInstance="false" singleInstanceActivate="true" dpiAware="false">
         <versionInfo include="false" fileVersion="" fileDescription="" legalCopyright="" internalName="" productName="" />
       </executable>
-      <splashScreen show="true" width="0" height="0" bitmapFile="../../IdeaProjects/MockTPO/out/production/MockTPO/splash.png" windowsNative="true" textOverlay="false">
+      <splashScreen show="true" width="0" height="0" bitmapFile="../out/production/MockTPO/splash.png" windowsNative="true" textOverlay="false">
         <text>
           <statusLine x="20" y="20" text="" fontSize="8" fontColor="0,0,0" bold="false" />
           <versionLine x="20" y="40" text="version ${compiler:sys.version}" fontSize="8" fontColor="0,0,0" bold="false" />
@@ -58,7 +58,7 @@
         <content />
       </infoPlist>
       <iconImageFiles>
-        <file path="../../IdeaProjects/MockTPO/out/production/MockTPO/icon.png" />
+        <file path="../out/production/MockTPO/icon.png" />
       </iconImageFiles>
     </launcher>
   </launchers>

@@ -1,4 +1,0 @@
-# List of generated media files. The columns are tab-separated:
-# id | media file type | display name | media file path
-26	macos	Mac OS X Single Bundle	/Users/yyf/IdeaProjects/MockTPO/bin/MockTPO_macos_1_0.dmg
-74	windows	Windows	/Users/yyf/IdeaProjects/MockTPO/bin/MockTPO_windows_1_0.exe

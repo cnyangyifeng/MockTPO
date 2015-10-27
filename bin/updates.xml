@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updateDescriptor baseUrl="">
+    <entry targetMediaFileId="26" updatableVersionMin="" updatableVersionMax="" fileName="MockTPO_macos_1_0.dmg"
+           newVersion="1.0" newMediaFileId="26" fileSize="47288455" bundledJre="macosx-amd64-1.8.0_60" archive="false">
+        <comment language="en"/>
+    </entry>
+    <entry targetMediaFileId="74" updatableVersionMin="" updatableVersionMax="" fileName="MockTPO_windows_1_0.exe"
+           newVersion="1.0" newMediaFileId="74" fileSize="10620416" bundledJre="" archive="false">
+        <comment language="en"/>
+    </entry>
+</updateDescriptor>

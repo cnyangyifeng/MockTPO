@@ -33,7 +33,7 @@ public class FTPUtils {
     }
 
     public static void main(String[] args) {
-        String remoteFile = "/Users/yyf/MockTPO/tests/TPO25.zip";
+        String remoteFile = "/MockTPO/tests/TPO25.zip";
         String localFile = FTPUtils.class.getResource(GlobalConstants.TESTS_DIR).getPath() + "TPO25.zip";
         try {
             FTPUtils.download(remoteFile, localFile);

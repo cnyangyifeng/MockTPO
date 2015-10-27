@@ -2,9 +2,9 @@ package com.mocktpo.util;
 
 public interface GlobalConstants {
 
-    String FTP_HOST = "localhost";
-    String FTP_USERNAME = "yyf";
-    String FTP_PASSWORD = "itdreamer";
+    String FTP_HOST = "123.57.77.54";
+    String FTP_USERNAME = "mocktpo";
+    String FTP_PASSWORD = "MengMa2015";
 
     String APPLICATION_DIR = "/";
     String RESOURCES_DIR = "/resources/";

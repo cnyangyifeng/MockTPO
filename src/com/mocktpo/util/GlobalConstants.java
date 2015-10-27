@@ -2,12 +2,18 @@ package com.mocktpo.util;
 
 public interface GlobalConstants {
 
-    String IMAGES_ROOT = "/resources/images/";
-    String AUDIO_ROOT = "/resources/audios/";
-    String TESTS_ROOT = "/resources/tests/";
+    String APPLICATION_DIR = "/";
+    String RESOURCES_DIR = "/resources/";
+    String AUDIOS_DIR = "/resources/audios/";
+    String IMAGES_DIR = "/resources/images/";
+    String TESTS_DIR = "/tests/";
 
-    String MOCKTPO_FILE = "mocktpo.xml";
-    String CONF_FILE = "conf.xml";
+    String MOCKTPO_CONF_FILE = "mocktpo.xml";
+    String TEST_CONF_FILE = "test.xml";
+    String LISTENING_CONF_FILE = "listening.xml";
+    String READING_CONF_FILE = "reading.xml";
+    String SPEAKING_CONF_FILE = "speaking.xml";
+    String WRITING_CONF_FILE = "writing.xml";
 
     String READING_DIR = "/reading/";
     String LISTENING_DIR = "/listening/";

@@ -48,7 +48,7 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
         text += "<div class='lsd'>After each conversation or lecture, you will answer some questions about it. The questions typically ask about the main idea and supporting details. Some questions ask about a speaker's purpose or attitude. Answer the questions based on what is stated or implied by the speakers.</div>";
         text += "<div class='lsd'>You may take notes while you listen. You may use your notes to help you answer the questions. Your notes will <b>not</b> be scored.</div>";
         text += "<div class='lsd'>If you need to change the volume while you listen, click on the <b>Volume</b> icon at the top of the screen.</div>";
-        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "earphone.png").toString();
+        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "earphone.png").toString();
         text += "<div class='lsd'>In some questions you will see this icon: <img src='" + imgUrl + "' />This means that you will hear, but not see, part of the question.</div>";
         text += "<div class='lsd'>Some of the questions have special directions. These directions appear in a gray box on the screen.</div>";
         text += "<div class='lsd'>Most questions are worth 1 point. If a question is worth more than 1 point, it will have special directions that indicate how many points you can receive.</div>";
@@ -75,7 +75,7 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
     }
 
     private void setAudioPlayer() {
-        URL url = this.getClass().getResource(GlobalConstants.AUDIO_ROOT + "listening_section_directions.mp3");
+        URL url = this.getClass().getResource(GlobalConstants.AUDIOS_DIR + "listening_section_directions.mp3");
         Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
         Format input2 = new AudioFormat(AudioFormat.MPEG);
         Format output = new AudioFormat(AudioFormat.LINEAR);

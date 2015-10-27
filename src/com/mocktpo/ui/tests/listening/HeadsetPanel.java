@@ -40,7 +40,7 @@ public class HeadsetPanel extends BodyPanel {
         style.addRule(".hs-header { color: #333333; font-family: Arial; font-size: 12px; margin-bottom: 20px; text-align: center; } .hs-body { margin-bottom: 20px; text-align: center; } .hs-footer { color: #333333; font-family: Arial; font-size: 12px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='hs-header'>Now put on your headset.</div>";
-        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "headset.png").toString();
+        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "headset.png").toString();
         text += "<div class='hs-body'><img src='" + imgUrl + "' /></div>";
         text += "<div class='hs-footer'>Click on <b>Continue</b> to go on.</div>";
         this.descriptionPane.setText(text);

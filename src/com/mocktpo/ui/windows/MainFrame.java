@@ -97,7 +97,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
         this.logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "logo.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "logo.png"));
         this.logoLabel.setIcon(icon);
 
         this.headerPanel.add(this.logoLabel);
@@ -128,7 +128,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         int x = LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - EXIT_APPLICATION_BUTTON_HEIGHT - LayoutConstants.MARGIN;
         this.exitApplicationButton.setBounds(x, y, EXIT_APPLICATION_BUTTON_WIDTH, EXIT_APPLICATION_BUTTON_HEIGHT);
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "exit_application.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit_application.png"));
 
         this.exitApplicationButton.setIcon(icon);
         this.exitApplicationButton.setText(null);
@@ -201,7 +201,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
             XStream xs = new XStream();
             xs.alias("mocktpo", MockTPO.class);
             xs.alias("test", MTest.class);
-            String val = GlobalConstants.TESTS_ROOT + GlobalConstants.MOCKTPO_FILE;
+            String val = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
             URL xml = this.getClass().getResource(val);
             this.tpo = (MockTPO) xs.fromXML(new File(xml.toURI()));
         } catch (Exception e) {

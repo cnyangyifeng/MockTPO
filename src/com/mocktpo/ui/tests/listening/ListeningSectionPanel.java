@@ -49,7 +49,7 @@ public class ListeningSectionPanel extends BodyPanel implements ActionListener {
         int x = (this.getWidth() - CONVERSATION_LABEL_WIDTH) / 2;
         this.conversationLabel.setBounds(x, LayoutConstants.MARGIN * 5, CONVERSATION_LABEL_WIDTH, CONVERSATION_LABEL_HEIGHT);
 
-        String imageVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getImages().get(0).getIndex();
+        String imageVal = GlobalConstants.TESTS_DIR + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getImages().get(0).getIndex();
         ImageIcon icon = new ImageIcon(this.getClass().getResource(imageVal));
         this.conversationLabel.setIcon(icon);
 
@@ -78,7 +78,7 @@ public class ListeningSectionPanel extends BodyPanel implements ActionListener {
         Format output = new AudioFormat(AudioFormat.LINEAR);
         PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
         try {
-            String audioVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getAudios().get(0).getIndex();
+            String audioVal = GlobalConstants.TESTS_DIR + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getAudios().get(0).getIndex();
             this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(this.getClass().getResource(audioVal)));
         } catch (Exception e) {
             e.printStackTrace();

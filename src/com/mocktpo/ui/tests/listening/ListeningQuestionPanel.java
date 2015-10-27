@@ -67,7 +67,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         style.addRule(".subject { color: #333333; font-family: Arial; font-size: 14px; } img {}");
         this.subjectPane.setEditorKit(kit);
         String subject = this.question.getSubject();
-        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "earphone.png").toString();
+        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "earphone.png").toString();
         if (subject.contains("[earphone]")) {
             subject = subject.replace("[earphone]", "&nbsp;&nbsp;<img class='' src='" + imgUrl + "' />");
         }
@@ -99,9 +99,9 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
             radioButton.setFont(new Font("Arial", Font.PLAIN, 16));
             radioButton.setForeground(new Color(51, 51, 51));
             radioButton.setName(option.getIndex());
-            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "unchecked.png"));
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "unchecked.png"));
             radioButton.setIcon(icon);
-            ImageIcon selectedIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "checked.png"));
+            ImageIcon selectedIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "checked.png"));
             radioButton.setSelectedIcon(selectedIcon);
             radioButton.addItemListener(this);
 
@@ -119,7 +119,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         Format output = new AudioFormat(AudioFormat.LINEAR);
         PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
         try {
-            String audioVal = GlobalConstants.TESTS_ROOT + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + question.getAudio().getIndex();
+            String audioVal = GlobalConstants.TESTS_DIR + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + question.getAudio().getIndex();
             this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(this.getClass().getResource(audioVal)));
         } catch (Exception e) {
             e.printStackTrace();

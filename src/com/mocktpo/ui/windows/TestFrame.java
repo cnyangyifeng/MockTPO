@@ -128,7 +128,7 @@ public class TestFrame extends JFrame implements ActionListener {
         xs.alias("listening-question", MListeningQuestion.class);
         xs.alias("option", MChoiceOption.class);
 
-        String val = GlobalConstants.TESTS_ROOT + testIndex + GlobalConstants.LISTENING_DIR + GlobalConstants.CONF_FILE;
+        String val = GlobalConstants.TESTS_DIR + testIndex + GlobalConstants.LISTENING_DIR + GlobalConstants.LISTENING_CONF_FILE;
         URL xml = this.getClass().getResource(val);
         try {
             this.listening = (MListening) xs.fromXML(new File(xml.toURI()));
@@ -165,7 +165,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
         this.logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "logo.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "logo.png"));
         this.logoLabel.setIcon(icon);
 
         this.headerPanel.add(this.logoLabel);
@@ -197,9 +197,9 @@ public class TestFrame extends JFrame implements ActionListener {
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - PAUSE_TEST_BUTTON_HEIGHT - LayoutConstants.MARGIN;
         this.pauseTestButton.setBounds(x, y, PAUSE_TEST_BUTTON_WIDTH, PAUSE_TEST_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "pause_test.png"));
         this.pauseTestButton.setIcon(icon);
-        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "pause_test_hi.png"));
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "pause_test_hi.png"));
         this.pauseTestButton.setRolloverIcon(rolloverIcon);
         this.pauseTestButton.setText(null);
         this.pauseTestButton.setMargin(new Insets(0, 0, 0, 0));
@@ -221,9 +221,9 @@ public class TestFrame extends JFrame implements ActionListener {
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - SECTION_EXIT_BUTTON_HEIGHT - LayoutConstants.MARGIN;
         this.sectionExitButton.setBounds(x, y, SECTION_EXIT_BUTTON_WIDTH, SECTION_EXIT_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "section_exit.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "section_exit.png"));
         this.sectionExitButton.setIcon(icon);
-        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "section_exit_hi.png"));
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "section_exit_hi.png"));
         this.sectionExitButton.setRolloverIcon(rolloverIcon);
         this.sectionExitButton.setText(null);
         this.sectionExitButton.setMargin(new Insets(0, 0, 0, 0));
@@ -398,7 +398,7 @@ public class TestFrame extends JFrame implements ActionListener {
             int y = LayoutConstants.MARGIN * 3;
             this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
 
-            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "continue.png"));
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
             this.continueButton.setIcon(icon);
             this.continueButton.setText(null);
             this.continueButton.setMargin(new Insets(0, 0, 0, 0));
@@ -418,7 +418,7 @@ public class TestFrame extends JFrame implements ActionListener {
             int y = LayoutConstants.MARGIN * 3;
             this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
 
-            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "continue.png"));
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
             this.continueButton.setIcon(icon);
             this.continueButton.setText(null);
             this.continueButton.setMargin(new Insets(0, 0, 0, 0));
@@ -438,7 +438,7 @@ public class TestFrame extends JFrame implements ActionListener {
             int y = LayoutConstants.MARGIN * 3;
             this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
 
-            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_ROOT + "continue.png"));
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
             this.continueButton.setIcon(icon);
             this.continueButton.setText(null);
             this.continueButton.setMargin(new Insets(0, 0, 0, 0));

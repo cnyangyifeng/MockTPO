@@ -396,7 +396,7 @@
     </windows>
   </mediaSets>
   <buildIds buildAll="false">
-    <mediaSet refId="74" />
+    <mediaSet refId="26" />
   </buildIds>
   <buildOptions verbose="false" faster="false" disableSigning="false" disableJreBundling="false" debug="false" />
 </install4j>

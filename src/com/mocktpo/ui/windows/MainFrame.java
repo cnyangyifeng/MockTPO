@@ -7,6 +7,7 @@ import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
 import com.mocktpo.ui.widgets.MButton;
+import com.mocktpo.util.FTPUtils;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 import com.thoughtworks.xstream.XStream;
@@ -32,7 +33,9 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
     public static final int SLOGAN_PANE_WIDTH = 1000;
     public static final int SLOGAN_PANE_HEIGHT = 80;
     public static final int BODY_TABLE_PANE_WIDTH = 1000;
+
     private static final Logger logger = LogManager.getLogger();
+
     private TestFrame testFrame;
     private HeaderPanel headerPanel;
     private JLabel logoLabel;
@@ -213,13 +216,13 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         for (MTest test : tests) {
             if ("local".equals(test.getStatus())) {
                 val += "<tr class='local'><td>" + test.getName() + "</td>";
-                val += "<td><a class='reload' href='reload'>100%</a></td>";
+                val += "<td><a class='reload' href='reload#" + test.getIndex() + "'>100%</a></td>";
                 val += "<td><a href='new#" + test.getIndex() + "'>New Test</a></td>";
                 val += "<td><a class='local' href='continue#" + test.getIndex() + "'>Continue</a></td>";
-                val += "<td><a href='reports'>Reports</a></td></tr>";
+                val += "<td><a href='reports#" + test.getIndex() + "'>Reports</a></td></tr>";
             } else if ("web".equals(test.getStatus())) {
                 val += "<tr class='web'><td>" + test.getName() + "</td>";
-                val += "<td><a href='" + "download" + "'>Download</a></td></tr>";
+                val += "<td><a href='download#" + test.getIndex() + "'>Download</a></td></tr>";
             }
         }
         val += "</table>";
@@ -280,31 +283,44 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
     public void hyperlinkUpdate(HyperlinkEvent e) {
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            String action = e.getDescription();
+            String[] arr = e.getDescription().split("#");
+            String action = arr[0];
+            String param = arr[1];
             switch (action) {
                 case "reload":
                     break;
                 case "download":
-                    break;
-                default:
-                    String[] arr = action.split("#");
-                    if (arr[0].equals("new")) {
-                        logger.info("New Test: {}", arr[1]);
-                        MApplication.settings.put("testIndex", arr[1]);
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                                GraphicsDevice device = ge.getDefaultScreenDevice();
-                                testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
-                                device.setFullScreenWindow(testFrame);
-                                testFrame.setVisible(true);
-                                setVisible(false);
+                    logger.info("Download: {}", param);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            String remoteFile = GlobalConstants.REMOTE_TESTS_DIR + param + GlobalConstants.POSTFIX_ZIP;
+                            String localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + param + GlobalConstants.POSTFIX_ZIP;
+                            try {
+                                FTPUtils.download(remoteFile, localFile);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        });
-                    } else if (arr[0].equals("continue")) {
-                        logger.info("Continue Test: {}", arr[1]);
-                    }
+                        }
+                    });
+                    break;
+                case "new":
+                    logger.info("New Test: {}", param);
+                    MApplication.settings.put("testIndex", param);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                            GraphicsDevice device = ge.getDefaultScreenDevice();
+                            testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
+                            device.setFullScreenWindow(testFrame);
+                            testFrame.setVisible(true);
+                            setVisible(false);
+                        }
+                    });
+                    break;
+                case "continue":
+                    logger.info("Continue Test: {}", param);
                     break;
             }
         }

@@ -11,8 +11,12 @@ import com.mocktpo.util.FTPUtils;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 import com.thoughtworks.xstream.XStream;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -22,7 +26,7 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 
@@ -32,7 +36,7 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
     public static final int EXIT_APPLICATION_BUTTON_HEIGHT = 34;
     public static final int SLOGAN_PANE_WIDTH = 1000;
     public static final int SLOGAN_PANE_HEIGHT = 80;
-    public static final int BODY_TABLE_PANE_WIDTH = 1000;
+    public static final int BODY_SCROLL_PANE_WIDTH = 1000;
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -44,10 +48,15 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
     private BodyPanel bodyPanel;
     private JEditorPane sloganPane;
     private JScrollPane bodyScrollPane;
+    private JEditorPane tablePane;
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
 
     private MockTPO tpo;
+
+    private String remoteFile;
+    private String localFile;
+    private int progress;
 
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
@@ -188,17 +197,19 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         int x = this.sloganPane.getX();
         int y = this.sloganPane.getY() + this.sloganPane.getHeight() + LayoutConstants.MARGIN * 5;
         int height = this.bodyPanel.getHeight() - y - LayoutConstants.MARGIN * 10;
-        this.bodyScrollPane.setBounds(x, y, BODY_TABLE_PANE_WIDTH, height);
+        this.bodyScrollPane.setBounds(x, y, BODY_SCROLL_PANE_WIDTH, height);
 
-        JEditorPane bodyPane = new JEditorPane();
+        this.tablePane = new JEditorPane();
 
-        bodyPane.setEditable(false);
-        bodyPane.setOpaque(false);
+        this.tablePane.setBounds(0, 0, BODY_SCROLL_PANE_WIDTH, height);
+
+        this.tablePane.setEditable(false);
+        this.tablePane.setOpaque(false);
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule("table { font-family: Georgia; font-size: 14px; font-weight: normal; margin-bottom: 20px; width: 100%; } tr { border-bottom: 1px #dddddd dashed; } tr.local { color: #333333; } tr.web { color: #999999; } td { height: 50px; margin-left: 10px; } a { text-decoration: none; color: #3c4d82; } a.reload { color: #333333; }");
-        bodyPane.setEditorKit(kit);
+        style.addRule("table { font-family: Georgia; font-size: 14px; font-weight: normal; margin-bottom: 20px; width: 100%; } tr { border-bottom: 1px #dddddd dashed; } tr.local { color: #333333; } tr.web { color: #999999; } td { height: 50px; margin-left: 10px; } a { text-decoration: none; color: #3c4d82; } .download { color: #333333; } .download:hover { color: #0099ff; }");
+        this.tablePane.setEditorKit(kit);
 
         try {
             XStream xs = new XStream();
@@ -216,21 +227,21 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         for (MTest test : tests) {
             if ("local".equals(test.getStatus())) {
                 val += "<tr class='local'><td>" + test.getName() + "</td>";
-                val += "<td><a class='reload' href='reload#" + test.getIndex() + "'>100%</a></td>";
+                val += "<td><a class='web' href='download#" + test.getIndex() + "'>Download</a></td>";
                 val += "<td><a href='new#" + test.getIndex() + "'>New Test</a></td>";
                 val += "<td><a class='local' href='continue#" + test.getIndex() + "'>Continue</a></td>";
                 val += "<td><a href='reports#" + test.getIndex() + "'>Reports</a></td></tr>";
             } else if ("web".equals(test.getStatus())) {
                 val += "<tr class='web'><td>" + test.getName() + "</td>";
-                val += "<td><a href='download#" + test.getIndex() + "'>Download</a></td></tr>";
+                val += "<td colspan='4'><a class='web' href='download#" + test.getIndex() + "'>Download</a></td></tr>";
             }
         }
         val += "</table>";
-        bodyPane.setText(val);
+        this.tablePane.setText(val);
 
-        bodyPane.addHyperlinkListener(this);
+        this.tablePane.addHyperlinkListener(this);
 
-        this.bodyScrollPane.setViewportView(bodyPane);
+        this.bodyScrollPane.setViewportView(this.tablePane);
 
         this.bodyPanel.add(this.bodyScrollPane);
     }
@@ -291,33 +302,65 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
                     break;
                 case "download":
                     logger.info("Download: {}", param);
-                    SwingUtilities.invokeLater(new Runnable() {
+                    this.remoteFile = GlobalConstants.REMOTE_TESTS_DIR + param + GlobalConstants.POSTFIX_ZIP;
+                    this.localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + param + GlobalConstants.POSTFIX_ZIP;
+                    new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            String remoteFile = GlobalConstants.REMOTE_TESTS_DIR + param + GlobalConstants.POSTFIX_ZIP;
-                            String localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + param + GlobalConstants.POSTFIX_ZIP;
+                            InputStream is = FTPUtils.download(remoteFile);
+                            File file = new File(localFile);
+                            OutputStream os;
                             try {
-                                FTPUtils.download(remoteFile, localFile);
+                                os = new BufferedOutputStream(new FileOutputStream(file));
+                                byte[] bytes = new byte[65536]; // 64k
+                                int c;
+                                long fileSize = FTPUtils.getFileSize(remoteFile);
+                                if (fileSize <= 0) {
+                                    logger.info("Downloadable file not found.");
+                                    return;
+                                }
+                                long step = fileSize / 100;
+                                long localSize = 0L;
+                                while ((c = is.read(bytes)) != -1) {
+                                    os.write(bytes, 0, c);
+                                    localSize += c;
+                                    progress = (int) (localSize / step);
+                                    logger.info("Downloading: {}%", progress);
+                                    if (progress <= 100) {
+                                        SwingUtilities.invokeLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Document doc = Jsoup.parseBodyFragment(tablePane.getText());
+                                                Elements links = doc.getElementsByTag("a");
+                                                for (org.jsoup.nodes.Element link : links) {
+                                                    String href = link.attr("href");
+                                                    if (e.getDescription().equals(href)) {
+                                                        String text = progress + "%";
+                                                        link.text(text);
+                                                        tablePane.setText(doc.toString());
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                                IOUtils.closeQuietly(os);
+                                IOUtils.closeQuietly(is);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
-                    });
+                    }).start();
                     break;
                 case "new":
                     logger.info("New Test: {}", param);
                     MApplication.settings.put("testIndex", param);
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                            GraphicsDevice device = ge.getDefaultScreenDevice();
-                            testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
-                            device.setFullScreenWindow(testFrame);
-                            testFrame.setVisible(true);
-                            setVisible(false);
-                        }
-                    });
+                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                    GraphicsDevice device = ge.getDefaultScreenDevice();
+                    testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
+                    device.setFullScreenWindow(testFrame);
+                    testFrame.setVisible(true);
+                    setVisible(false);
                     break;
                 case "continue":
                     logger.info("Continue Test: {}", param);

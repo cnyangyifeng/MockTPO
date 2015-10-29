@@ -107,14 +107,9 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
         if ("startAudio".equals(e.getActionCommand())) {
             long duration = this.audioPlayer.getDuration().getNanoseconds();
             long now = this.audioPlayer.getMediaTime().getNanoseconds();
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (now >= duration) {
-                        timer.stop();
-                    }
-                }
-            });
+            if (now >= duration) {
+                timer.stop();
+            }
         }
     }
 }

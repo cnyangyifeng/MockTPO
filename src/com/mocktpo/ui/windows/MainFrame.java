@@ -21,6 +21,11 @@ import org.jsoup.select.Elements;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
@@ -29,8 +34,9 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Vector;
 
-public class MainFrame extends JFrame implements ActionListener, HyperlinkListener {
+public class MainFrame extends JFrame implements ActionListener, ListSelectionListener, HyperlinkListener {
 
     public static final int EXIT_APPLICATION_BUTTON_WIDTH = 84;
     public static final int EXIT_APPLICATION_BUTTON_HEIGHT = 34;
@@ -47,8 +53,11 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
     private MButton exitApplicationButton;
     private BodyPanel bodyPanel;
     private JEditorPane sloganPane;
+
+    private JEditorPane tablePane; // TO BE REMOVED
     private JScrollPane bodyScrollPane;
-    private JEditorPane tablePane;
+    private JTable bodyTable;
+
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
 
@@ -166,7 +175,8 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         this.bodyPanel = new BodyPanel(bounds);
 
         this.setSloganPane();
-        this.setBodyScrollPane();
+        // this.setBodyScrollPane();
+        this.setBodyTable();
 
         this.getContentPane().add(this.bodyPanel);
     }
@@ -225,16 +235,11 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
 
         String val = "<table>";
         for (MTest test : tests) {
-            if ("local".equals(test.getStatus())) {
-                val += "<tr class='local'><td>" + test.getName() + "</td>";
-                val += "<td><a class='web' href='download#" + test.getIndex() + "'>Download</a></td>";
-                val += "<td><a href='new#" + test.getIndex() + "'>New Test</a></td>";
-                val += "<td><a class='local' href='continue#" + test.getIndex() + "'>Continue</a></td>";
-                val += "<td><a href='reports#" + test.getIndex() + "'>Reports</a></td></tr>";
-            } else if ("web".equals(test.getStatus())) {
-                val += "<tr class='web'><td>" + test.getName() + "</td>";
-                val += "<td colspan='4'><a class='web' href='download#" + test.getIndex() + "'>Download</a></td></tr>";
-            }
+            val += "<tr class='local'><td>" + test.getName() + "</td>";
+            val += "<td><a class='web' href='download#" + test.getIndex() + "'>Download</a></td>";
+            val += "<td><a href='new#" + test.getIndex() + "'>New Test</a></td>";
+            val += "<td><a class='local' href='continue#" + test.getIndex() + "'>Continue</a></td>";
+            val += "<td><a href='reports#" + test.getIndex() + "'>Reports</a></td></tr>";
         }
         val += "</table>";
         this.tablePane.setText(val);
@@ -242,6 +247,78 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         this.tablePane.addHyperlinkListener(this);
 
         this.bodyScrollPane.setViewportView(this.tablePane);
+
+        this.bodyPanel.add(this.bodyScrollPane);
+    }
+
+    private void setBodyTable() {
+
+        // Set table model
+
+        String[] columnNames = {"TPO" /* Index */, "Description" /* Name */, "Download", "Test" /* Next */, "Reports"};
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(columnNames);
+
+        try {
+            XStream xs = new XStream();
+            xs.alias("mocktpo", MockTPO.class);
+            xs.alias("test", MTest.class);
+            String val = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
+            URL xml = this.getClass().getResource(val);
+            this.tpo = (MockTPO) xs.fromXML(new File(xml.toURI()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<MTest> tests = this.tpo.getTests();
+        for (MTest test : tests) {
+            Vector<String> v = new Vector<String>();
+            v.add(0, test.getIndex());
+            v.add(1, test.getName());
+            v.add(2, test.getDownload());
+            v.add(3, test.getNext());
+            v.add(4, test.getReports());
+            tableModel.addRow(v);
+        }
+
+        this.bodyTable = new JTable(tableModel);
+
+        // Set table header
+
+        JTableHeader tableHeader = this.bodyTable.getTableHeader();
+        tableHeader.setPreferredSize(new Dimension(BODY_SCROLL_PANE_WIDTH, 50));
+        tableHeader.setFont(new Font("Arial", Font.BOLD, 16));
+        tableHeader.setForeground(new Color(102, 102, 102)); // #666666
+
+        // Set table layout
+
+        this.bodyTable.setRowHeight(50);
+        this.bodyTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        TableColumnModel columnModel = this.bodyTable.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(100);
+        columnModel.getColumn(1).setPreferredWidth(450);
+        columnModel.getColumn(2).setPreferredWidth(150);
+        columnModel.getColumn(3).setPreferredWidth(150);
+        columnModel.getColumn(4).setPreferredWidth(150);
+
+        this.bodyTable.setFont(new Font("Georgia", Font.PLAIN, 16));
+        this.bodyTable.setForeground(new Color(51, 51, 51));
+        this.bodyTable.setGridColor(new Color(245,/**/ 245, 245)); // #f5f5f5
+        this.bodyTable.setFocusable(false);
+        this.bodyTable.setSelectionBackground(new Color(245, 245, 245)); // #f5f5f5
+        this.bodyTable.setSelectionForeground(new Color(60, 77, 130)); // #3c4d82
+        this.bodyTable.setCellSelectionEnabled(true);
+
+        ListSelectionModel selectionModel = this.bodyTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        selectionModel.addListSelectionListener(this);
+
+        this.bodyScrollPane = new JScrollPane();
+        int x = this.sloganPane.getX();
+        int y = this.sloganPane.getY() + this.sloganPane.getHeight() + LayoutConstants.MARGIN * 5;
+        int height = this.bodyPanel.getHeight() - y - LayoutConstants.MARGIN * 10;
+        this.bodyScrollPane.setBounds(x, y, BODY_SCROLL_PANE_WIDTH, height);
+
+        this.bodyScrollPane.setViewportView(this.bodyTable);
 
         this.bodyPanel.add(this.bodyScrollPane);
     }
@@ -289,7 +366,87 @@ public class MainFrame extends JFrame implements ActionListener, HyperlinkListen
         if ("doExitApplication".equals(e.getActionCommand())) {
             logger.info("'Exit Application' button pressed.");
             System.exit(0);
+        } else if ("doDownload".equals(e.getActionCommand())) {
+            logger.info("'Download' button pressed. Downloading {}.", this.bodyTable.getValueAt(this.bodyTable.getSelectedRow(), 2));
         }
+    }
+
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting()) {
+            int row = this.bodyTable.getSelectedRow();
+            int column = this.bodyTable.getSelectedColumn();
+
+            logger.info("Table cell ( row: {}, column: {} ) selected.", row, column);
+
+            if (column == 2) {
+                // Download
+                this.doDownload(row, column);
+            } else if (column == 3) {
+                // Next
+                this.doNext(row);
+            } else if (column == 4) {
+                // Reports
+                this.doReports(row);
+            }
+        }
+    }
+
+    private void doDownload(final int selectedRow, final int selectedColumn) {
+
+        logger.info("Download.");
+
+        String tpo = this.bodyTable.getValueAt(selectedRow, 0).toString();
+
+        this.remoteFile = GlobalConstants.REMOTE_TESTS_DIR + tpo + GlobalConstants.POSTFIX_ZIP;
+        this.localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + tpo + GlobalConstants.POSTFIX_ZIP;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                InputStream is = FTPUtils.download(remoteFile);
+                File file = new File(localFile);
+                OutputStream os;
+                try {
+                    os = new BufferedOutputStream(new FileOutputStream(file));
+                    byte[] bytes = new byte[65536]; // 64k
+                    int c;
+                    long fileSize = FTPUtils.getFileSize(remoteFile);
+                    if (fileSize <= 0) {
+                        logger.info("Downloadable file not found.");
+                        return;
+                    }
+                    long step = fileSize / 100;
+                    long localSize = 0L;
+                    while ((c = is.read(bytes)) != -1) {
+                        os.write(bytes, 0, c);
+                        localSize += c;
+                        progress = (int) (localSize / step);
+                        logger.info("Downloading: {}%", progress);
+                        if (progress <= 100) {
+                            bodyTable.setValueAt(progress + "%", selectedRow, selectedColumn);
+
+//                            SwingUtilities.invokeLater(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    bodyTable.setValueAt(progress + "%", selectedRow, selectedColumn);
+//                                }
+//                            });
+                        }
+                    }
+                    IOUtils.closeQuietly(os);
+                    IOUtils.closeQuietly(is);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void doNext(int selectedRow) {
+        logger.info("Next.");
+    }
+
+    private void doReports(int selectedRow) {
+        logger.info("Reports.");
     }
 
     public void hyperlinkUpdate(HyperlinkEvent e) {

@@ -4,7 +4,9 @@ public class MTest {
 
     protected String index;
     protected String name;
-    protected String status;
+    protected String download;
+    protected String next;
+    protected String reports;
 
     public MTest(String index, String name) {
         this.index = index;
@@ -12,7 +14,7 @@ public class MTest {
     }
 
     public String getIndex() {
-        return this.index;
+        return index;
     }
 
     public void setIndex(String index) {
@@ -20,19 +22,35 @@ public class MTest {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getStatus() {
-        return this.status;
+    public String getDownload() {
+        return download;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDownload(String download) {
+        this.download = download;
+    }
+
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
+    }
+
+    public String getReports() {
+        return reports;
+    }
+
+    public void setReports(String reports) {
+        this.reports = reports;
     }
 
     @Override

@@ -74,7 +74,6 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
             subject = subject.replace("[earphone]", "&nbsp;&nbsp;<img class='' src='" + imgUrl + "' />");
         }
         String text = "<div class='subject'>" + subject + "</div>";
-        logger.info(text);
         this.subjectPane.setText(text);
 
         this.add(this.subjectPane);
@@ -131,7 +130,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     public void startAudio() {
         this.audioPlayer.start();
         this.timer = new Timer(1000, this);
-        this.timer.setActionCommand("startAudio");
+        this.timer.setActionCommand("doStartAudio");
         this.timer.start();
     }
 
@@ -145,7 +144,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
      **************************************************/
 
     public void actionPerformed(ActionEvent e) {
-        if ("startAudio".equals(e.getActionCommand())) {
+        if ("doStartAudio".equals(e.getActionCommand())) {
             long duration = this.audioPlayer.getDuration().getNanoseconds();
             long now = this.audioPlayer.getMediaTime().getNanoseconds();
             SwingUtilities.invokeLater(new Runnable() {

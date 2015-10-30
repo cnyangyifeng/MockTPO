@@ -90,7 +90,7 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
     public void startAudio() {
         this.audioPlayer.start();
         this.timer = new Timer(1000, this);
-        this.timer.setActionCommand("startAudio");
+        this.timer.setActionCommand("doStartAudio");
         this.timer.start();
     }
 
@@ -104,7 +104,7 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
      **************************************************/
 
     public void actionPerformed(ActionEvent e) {
-        if ("startAudio".equals(e.getActionCommand())) {
+        if ("doStartAudio".equals(e.getActionCommand())) {
             long duration = this.audioPlayer.getDuration().getNanoseconds();
             long now = this.audioPlayer.getMediaTime().getNanoseconds();
             if (now >= duration) {

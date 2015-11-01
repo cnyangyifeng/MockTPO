@@ -380,10 +380,16 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
                     IOUtils.closeQuietly(os);
                     IOUtils.closeQuietly(is);
                     // Unzip
-                    String localPath = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + testIndex;
+                    String localPath = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath();
+                    logger.info(localPath);
                     boolean unzipped = UnzipUtils.unzip(localFile, localPath);
                     if (unzipped) {
                         // Set test enabled
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                bodyTable.setValueAt("Ready", selectedRow, selectedColumn);
+                            }
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

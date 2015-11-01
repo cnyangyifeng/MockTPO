@@ -10,21 +10,27 @@ import java.util.zip.ZipInputStream;
 
 public class UnzipUtils {
 
-    public static void unzip(String zipFile, String localPath) throws Exception {
-        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
-        ZipEntry entry = zis.getNextEntry();
-        while (entry != null) {
-            File file = new File(localPath, entry.getName());
-            if (entry.isDirectory()) {
-                file.mkdirs();
-            } else {
-                FileOutputStream fos = new FileOutputStream(file);
-                IOUtils.copy(zis, fos);
-                IOUtils.closeQuietly(fos);
+    public static boolean unzip(String zipFile, String localPath) {
+        try {
+            ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+            ZipEntry entry = zis.getNextEntry();
+            while (entry != null) {
+                File file = new File(localPath, entry.getName());
+                if (entry.isDirectory()) {
+                    file.mkdirs();
+                } else {
+                    FileOutputStream fos = new FileOutputStream(file);
+                    IOUtils.copy(zis, fos);
+                    IOUtils.closeQuietly(fos);
+                }
+                zis.closeEntry();
+                entry = zis.getNextEntry();
             }
-            zis.closeEntry();
-            entry = zis.getNextEntry();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
     public static void main(String[] args) {

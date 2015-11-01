@@ -10,7 +10,7 @@ import java.io.*;
 
 public class FTPUtils {
 
-    public static void download(String remoteFile, String localFile) {
+    public static boolean download(String remoteFile, String localFile) {
         FTPClient ftp = new FTPClient();
         try {
             ftp.connect(GlobalConstants.FTP_HOST);
@@ -25,14 +25,15 @@ public class FTPUtils {
             ftp.retrieveFile(remoteFile, os);
             IOUtils.closeQuietly(os);
             ftp.logout();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public static InputStream download(String remoteFile) {
         FTPClient ftp = new FTPClient();
-        InputStream is = null;
         try {
             ftp.connect(GlobalConstants.FTP_HOST);
             int reply = ftp.getReplyCode();
@@ -41,11 +42,11 @@ public class FTPUtils {
             }
             ftp.login(GlobalConstants.FTP_USERNAME, GlobalConstants.FTP_PASSWORD);
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
-            is = ftp.retrieveFileStream(remoteFile);
+            return ftp.retrieveFileStream(remoteFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return is;
+        return null;
     }
 
     public static long getFileSize(String remoteFile) {

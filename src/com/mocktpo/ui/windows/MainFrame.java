@@ -10,17 +10,13 @@ import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.util.FTPUtils;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
+import com.mocktpo.util.UnzipUtils;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -36,7 +32,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Vector;
 
-public class MainFrame extends JFrame implements ActionListener, ListSelectionListener, HyperlinkListener {
+public class MainFrame extends JFrame implements ActionListener, ListSelectionListener {
+
+    // Constants
 
     public static final int EXIT_APPLICATION_BUTTON_WIDTH = 84;
     public static final int EXIT_APPLICATION_BUTTON_HEIGHT = 34;
@@ -44,7 +42,11 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
     public static final int SLOGAN_PANE_HEIGHT = 80;
     public static final int BODY_SCROLL_PANE_WIDTH = 1000;
 
+    // Logger
+
     private static final Logger logger = LogManager.getLogger();
+
+    // Components
 
     private TestFrame testFrame;
     private HeaderPanel headerPanel;
@@ -54,18 +56,15 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
     private BodyPanel bodyPanel;
     private JEditorPane sloganPane;
 
-    private JEditorPane tablePane; // TO BE REMOVED
     private JScrollPane bodyScrollPane;
     private JTable bodyTable;
 
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
 
-    private MockTPO tpo;
+    // Variables
 
-    private String remoteFile;
-    private String localFile;
-    private int progress;
+    private MockTPO mockTPO;
 
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
@@ -175,8 +174,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         this.bodyPanel = new BodyPanel(bounds);
 
         this.setSloganPane();
-        // this.setBodyScrollPane();
-        this.setBodyTable();
+        this.setBodyScrollPane();
 
         this.getContentPane().add(this.bodyPanel);
     }
@@ -202,59 +200,6 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
     }
 
     private void setBodyScrollPane() {
-        this.bodyScrollPane = new JScrollPane();
-
-        int x = this.sloganPane.getX();
-        int y = this.sloganPane.getY() + this.sloganPane.getHeight() + LayoutConstants.MARGIN * 5;
-        int height = this.bodyPanel.getHeight() - y - LayoutConstants.MARGIN * 10;
-        this.bodyScrollPane.setBounds(x, y, BODY_SCROLL_PANE_WIDTH, height);
-
-        this.tablePane = new JEditorPane();
-
-        this.tablePane.setBounds(0, 0, BODY_SCROLL_PANE_WIDTH, height);
-
-        this.tablePane.setEditable(false);
-        this.tablePane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule("table { font-family: Georgia; font-size: 14px; font-weight: normal; margin-bottom: 20px; width: 100%; } tr { border-bottom: 1px #dddddd dashed; } tr.local { color: #333333; } tr.web { color: #999999; } td { height: 50px; margin-left: 10px; } a { text-decoration: none; color: #3c4d82; } .download { color: #333333; } .download:hover { color: #0099ff; }");
-        this.tablePane.setEditorKit(kit);
-
-        try {
-            XStream xs = new XStream();
-            xs.alias("mocktpo", MockTPO.class);
-            xs.alias("test", MTest.class);
-            String val = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
-            URL xml = this.getClass().getResource(val);
-            this.tpo = (MockTPO) xs.fromXML(new File(xml.toURI()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        List<MTest> tests = this.tpo.getTests();
-
-        String val = "<table>";
-        for (MTest test : tests) {
-            val += "<tr class='local'><td>" + test.getName() + "</td>";
-            val += "<td><a class='web' href='download#" + test.getIndex() + "'>Download</a></td>";
-            val += "<td><a href='new#" + test.getIndex() + "'>New Test</a></td>";
-            val += "<td><a class='local' href='continue#" + test.getIndex() + "'>Continue</a></td>";
-            val += "<td><a href='reports#" + test.getIndex() + "'>Reports</a></td></tr>";
-        }
-        val += "</table>";
-        this.tablePane.setText(val);
-
-        this.tablePane.addHyperlinkListener(this);
-
-        this.bodyScrollPane.setViewportView(this.tablePane);
-
-        this.bodyPanel.add(this.bodyScrollPane);
-    }
-
-    private void setBodyTable() {
-
-        // Set table model
-
         String[] columnNames = {"TPO" /* Index */, "Description" /* Name */, "Download", "Test" /* Next */, "Reports"};
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(columnNames);
@@ -265,18 +210,18 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
             xs.alias("test", MTest.class);
             String val = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
             URL xml = this.getClass().getResource(val);
-            this.tpo = (MockTPO) xs.fromXML(new File(xml.toURI()));
+            this.mockTPO = (MockTPO) xs.fromXML(new File(xml.toURI()));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<MTest> tests = this.tpo.getTests();
+        List<MTest> tests = this.mockTPO.getTests();
         for (MTest test : tests) {
             Vector<String> v = new Vector<String>();
             v.add(0, test.getIndex());
             v.add(1, test.getName());
-            v.add(2, test.getDownload());
-            v.add(3, test.getNext());
-            v.add(4, test.getReports());
+            v.add(2, "Download");
+            v.add(3, "Test"); // "Next"
+            v.add(4, "Reports");
             tableModel.addRow(v);
         }
 
@@ -285,7 +230,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         // Set table header
 
         JTableHeader tableHeader = this.bodyTable.getTableHeader();
-        tableHeader.setPreferredSize(new Dimension(BODY_SCROLL_PANE_WIDTH, 50));
+        tableHeader.setPreferredSize(new Dimension(BODY_SCROLL_PANE_WIDTH, 40));
         tableHeader.setFont(new Font("Arial", Font.BOLD, 16));
         tableHeader.setForeground(new Color(102, 102, 102)); // #666666
 
@@ -300,13 +245,18 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         columnModel.getColumn(3).setPreferredWidth(150);
         columnModel.getColumn(4).setPreferredWidth(150);
 
+        // Set table styles
+
         this.bodyTable.setFont(new Font("Georgia", Font.PLAIN, 16));
         this.bodyTable.setForeground(new Color(51, 51, 51));
         this.bodyTable.setGridColor(new Color(245,/**/ 245, 245)); // #f5f5f5
         this.bodyTable.setFocusable(false);
+        this.bodyTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.bodyTable.setSelectionBackground(new Color(245, 245, 245)); // #f5f5f5
         this.bodyTable.setSelectionForeground(new Color(60, 77, 130)); // #3c4d82
         this.bodyTable.setCellSelectionEnabled(true);
+
+        // Set selection listener
 
         ListSelectionModel selectionModel = this.bodyTable.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -366,8 +316,6 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         if ("doExitApplication".equals(e.getActionCommand())) {
             logger.info("'Exit Application' button pressed.");
             System.exit(0);
-        } else if ("doDownload".equals(e.getActionCommand())) {
-            logger.info("'Download' button pressed. Downloading {}.", this.bodyTable.getValueAt(this.bodyTable.getSelectedRow(), 2));
         }
     }
 
@@ -376,7 +324,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
             int row = this.bodyTable.getSelectedRow();
             int column = this.bodyTable.getSelectedColumn();
 
-            logger.info("Table cell ( row: {}, column: {} ) selected.", row, column);
+            logger.debug("Table cell ({}, {}) selected.", row, column);
 
             if (column == 2) {
                 // Download
@@ -392,13 +340,13 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
     }
 
     private void doDownload(final int selectedRow, final int selectedColumn) {
+        String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
+        String remoteFile = GlobalConstants.REMOTE_TESTS_DIR + testIndex + GlobalConstants.POSTFIX_ZIP;
+        String localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + testIndex + GlobalConstants.POSTFIX_ZIP;
+        this.bodyTable.setValueAt("0%", selectedRow, selectedColumn);
 
-        logger.info("Download.");
+        // Time-consuming task
 
-        String tpo = this.bodyTable.getValueAt(selectedRow, 0).toString();
-
-        this.remoteFile = GlobalConstants.REMOTE_TESTS_DIR + tpo + GlobalConstants.POSTFIX_ZIP;
-        this.localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + tpo + GlobalConstants.POSTFIX_ZIP;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -419,21 +367,24 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
                     while ((c = is.read(bytes)) != -1) {
                         os.write(bytes, 0, c);
                         localSize += c;
-                        progress = (int) (localSize / step);
-                        logger.info("Downloading: {}%", progress);
-                        if (progress <= 100) {
-                            bodyTable.setValueAt(progress + "%", selectedRow, selectedColumn);
-
-//                            SwingUtilities.invokeLater(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    bodyTable.setValueAt(progress + "%", selectedRow, selectedColumn);
-//                                }
-//                            });
+                        int downloadProgress = (int) (localSize / step);
+                        logger.info("Downloading {}: {}%", testIndex, downloadProgress);
+                        if (downloadProgress <= 100) {
+                            SwingUtilities.invokeLater(new Runnable() {
+                                public void run() {
+                                    bodyTable.setValueAt(downloadProgress + "%", selectedRow, selectedColumn);
+                                }
+                            });
                         }
                     }
                     IOUtils.closeQuietly(os);
                     IOUtils.closeQuietly(is);
+                    // Unzip
+                    String localPath = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + testIndex;
+                    boolean unzipped = UnzipUtils.unzip(localFile, localPath);
+                    if (unzipped) {
+                        // Set test enabled
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -442,87 +393,21 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
     }
 
     private void doNext(int selectedRow) {
-        logger.info("Next.");
+        String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
+        MApplication.settings.put("testIndex", testIndex);
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = ge.getDefaultScreenDevice();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
+                device.setFullScreenWindow(testFrame);
+                testFrame.setVisible(true);
+                setVisible(false);
+            }
+        });
     }
 
     private void doReports(int selectedRow) {
         logger.info("Reports.");
-    }
-
-    public void hyperlinkUpdate(HyperlinkEvent e) {
-        if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            String[] arr = e.getDescription().split("#");
-            String action = arr[0];
-            String param = arr[1];
-            switch (action) {
-                case "reload":
-                    break;
-                case "download":
-                    logger.info("Download: {}", param);
-                    this.remoteFile = GlobalConstants.REMOTE_TESTS_DIR + param + GlobalConstants.POSTFIX_ZIP;
-                    this.localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + param + GlobalConstants.POSTFIX_ZIP;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            InputStream is = FTPUtils.download(remoteFile);
-                            File file = new File(localFile);
-                            OutputStream os;
-                            try {
-                                os = new BufferedOutputStream(new FileOutputStream(file));
-                                byte[] bytes = new byte[65536]; // 64k
-                                int c;
-                                long fileSize = FTPUtils.getFileSize(remoteFile);
-                                if (fileSize <= 0) {
-                                    logger.info("Downloadable file not found.");
-                                    return;
-                                }
-                                long step = fileSize / 100;
-                                long localSize = 0L;
-                                while ((c = is.read(bytes)) != -1) {
-                                    os.write(bytes, 0, c);
-                                    localSize += c;
-                                    progress = (int) (localSize / step);
-                                    logger.info("Downloading: {}%", progress);
-                                    if (progress <= 100) {
-                                        SwingUtilities.invokeLater(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Document doc = Jsoup.parseBodyFragment(tablePane.getText());
-                                                Elements links = doc.getElementsByTag("a");
-                                                for (org.jsoup.nodes.Element link : links) {
-                                                    String href = link.attr("href");
-                                                    if (e.getDescription().equals(href)) {
-                                                        String text = progress + "%";
-                                                        link.text(text);
-                                                        tablePane.setText(doc.toString());
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                                IOUtils.closeQuietly(os);
-                                IOUtils.closeQuietly(is);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
-                    break;
-                case "new":
-                    logger.info("New Test: {}", param);
-                    MApplication.settings.put("testIndex", param);
-                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                    GraphicsDevice device = ge.getDefaultScreenDevice();
-                    testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
-                    device.setFullScreenWindow(testFrame);
-                    testFrame.setVisible(true);
-                    setVisible(false);
-                    break;
-                case "continue":
-                    logger.info("Continue Test: {}", param);
-                    break;
-            }
-        }
     }
 }

@@ -23,6 +23,8 @@ import java.util.List;
 
 public class TestFrame extends JFrame implements ActionListener {
 
+    // Constants
+
     public static final int PAUSE_TEST_BUTTON_WIDTH = 84;
     public static final int PAUSE_TEST_BUTTON_HEIGHT = 34;
     public static final int SECTION_EXIT_BUTTON_WIDTH = 84;
@@ -41,7 +43,12 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int CONTINUE_BUTTON_HEIGHT = 34;
     public static final int TIMER_LABEL_WIDTH = 60;
     public static final int TIMER_LABEL_HEIGHT = 20;
+
+    // Logger
+
     private static final Logger logger = LogManager.getLogger();
+
+    // Switches
 
     // public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 70;
     // public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 50;
@@ -52,6 +59,8 @@ public class TestFrame extends JFrame implements ActionListener {
     private boolean NEXT_BUTTON_ENABLED = false;
     private boolean OK_BUTTON_ENABLED = false;
     private boolean HELP_BUTTON_ENABLED = false;
+
+    // Components
 
     private MainFrame mainFrame;
     private HeaderPanel headerPanel;
@@ -80,6 +89,8 @@ public class TestFrame extends JFrame implements ActionListener {
     private ListeningQuestionPanel lqPanel;
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
+
+    // Variables
 
     private Rectangle bodyBounds;
 

@@ -2,8 +2,6 @@ package com.mocktpo.util;
 
 public interface GlobalConstants {
 
-    String DOWNLOAD_THREAD_PREFIX = "MockTPO_D_";
-
     String POSTFIX_ZIP = ".zip";
 
     String FTP_HOST = "123.57.77.54";

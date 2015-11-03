@@ -11,61 +11,42 @@ public class FTPUtils {
 
     private static FTPClient ftp;
 
-    public static InputStream download(String remoteFile) {
+    public static InputStream download(String remoteFile) throws Exception {
         connect();
-        try {
-            ftp.setFileType(FTP.BINARY_FILE_TYPE);
-            return ftp.retrieveFileStream(remoteFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            disconnect();
-        }
-        return null;
+        ftp.setFileType(FTP.BINARY_FILE_TYPE);
+        return ftp.retrieveFileStream(remoteFile);
     }
 
-    public static long getFileSize(String remoteFile) {
+    public static long getFileSize(String remoteFile) throws Exception {
         connect();
         long fileSize = 0;
-        try {
-            FTPFile[] arr = ftp.listFiles(remoteFile);
-            if (arr != null && arr.length > 0) {
-                FTPFile file = arr[0];
-                if (file != null) {
-                    fileSize = file.getSize();
-                }
+        FTPFile[] arr = ftp.listFiles(remoteFile);
+        if (arr != null && arr.length > 0) {
+            FTPFile file = arr[0];
+            if (file != null) {
+                fileSize = file.getSize();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
         }
         return fileSize;
-    }
-
-    public static boolean connect() {
-        try {
-            ftp = new FTPClient();
-            ftp.connect(GlobalConstants.FTP_HOST);
-            int reply = ftp.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(reply)) {
-                ftp.disconnect();
-            }
-            return ftp.login(GlobalConstants.FTP_USERNAME, GlobalConstants.FTP_PASSWORD);
-        } catch (Exception e) {
-            e.printStackTrace();
-            disconnect();
-        }
-        return false;
     }
 
     public static void disconnect() {
         try {
             if (ftp != null) {
                 ftp.disconnect();
-                ftp = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void connect() throws Exception {
+        ftp = new FTPClient();
+        ftp.connect(GlobalConstants.FTP_HOST);
+        int reply = ftp.getReplyCode();
+        if (!FTPReply.isPositiveCompletion(reply)) {
+            ftp.disconnect();
+        }
+        ftp.login(GlobalConstants.FTP_USERNAME, GlobalConstants.FTP_PASSWORD);
     }
 }

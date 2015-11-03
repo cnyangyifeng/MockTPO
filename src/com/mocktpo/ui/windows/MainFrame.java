@@ -21,6 +21,7 @@ import java.awt.event.MouseListener;
 import java.io.*;
 import java.util.List;
 import java.util.Vector;
+import java.util.zip.ZipInputStream;
 
 public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
@@ -32,10 +33,13 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     public static final int SLOGAN_PANE_HEIGHT = 80;
     public static final int BODY_SCROLL_PANE_WIDTH = 1000;
 
+    private String DOWNLOAD_THREAD_PREFIX = "MockTPO_D_";
+
     public static final String DOWNLOAD_LABEL = "Download";
     public static final String TEST_LABEL = "Test";
     public static final String REPORTS_LABEL = "Reports";
     public static final String READY_LABEL = "Ready";
+    public static final String ERROR_LABEL = "Error";
 
     // Logger
 
@@ -327,10 +331,12 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
         String remoteFile = GlobalConstants.REMOTE_TESTS_DIR + testIndex + GlobalConstants.POSTFIX_ZIP;
         String localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + testIndex + GlobalConstants.POSTFIX_ZIP;
+
         // Mark the downloading threads to interrupt if necessary
+
         boolean flag = false;
         for (Thread t : Thread.getAllStackTraces().keySet()) {
-            String var = GlobalConstants.DOWNLOAD_THREAD_PREFIX + testIndex;
+            String var = DOWNLOAD_THREAD_PREFIX + testIndex;
             if (t.getName().equals(var)) {
                 this.markers[selectedRow] = true;
                 flag = true;
@@ -346,8 +352,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
             @Override
             public void run() {
                 if (markers[selectedRow]) {
-                    String var = GlobalConstants.DOWNLOAD_THREAD_PREFIX + testIndex;
-                    logger.info("downloading thread '{}' should never be started again.", var);
+                    String var = DOWNLOAD_THREAD_PREFIX + testIndex;
+                    logger.info("Only ONE downloading thread '{}' started at a time.", var);
                     return;
                 }
                 SwingUtilities.invokeLater(new Runnable() {
@@ -356,11 +362,11 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                         bodyTable.setValueAt("", selectedRow, selectedColumn + 1); // "Test" column
                     }
                 });
-                InputStream is = FTPUtils.download(remoteFile);
-                File file = new File(localFile);
+                InputStream is = null;
                 OutputStream os = null;
                 try {
-                    os = new BufferedOutputStream(new FileOutputStream(file));
+                    is = FTPUtils.download(remoteFile);
+                    os = new BufferedOutputStream(new FileOutputStream(new File(localFile)));
                     byte[] bytes = new byte[65536]; // 64k
                     int c;
                     long fileSize = FTPUtils.getFileSize(remoteFile);
@@ -378,23 +384,33 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                         if (downloadProgress <= 100) {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
-                                    bodyTable.setValueAt(downloadProgress + "%", selectedRow, selectedColumn);
+                                    bodyTable.setValueAt(downloadProgress + "%", selectedRow, selectedColumn); // "Download" column
                                 }
                             });
                         }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            bodyTable.setValueAt(ERROR_LABEL, selectedRow, selectedColumn); // "Download" column
+                            bodyTable.setValueAt("", selectedRow, selectedColumn + 1); // "Test" column
+                        }
+                    });
+                    return;
                 } finally {
                     IOUtils.closeQuietly(os);
                     IOUtils.closeQuietly(is);
+                    FTPUtils.disconnect();
                 }
 
                 // Unzip
 
-                String localPath = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath();
-                boolean unzipped = UnzipUtils.unzip(localFile, localPath);
-                if (unzipped) {
+                ZipInputStream zis = null;
+                try {
+                    zis = new ZipInputStream(new FileInputStream(localFile));
+                    String localPath = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath();
+                    UnzipUtils.unzip(zis, localPath);
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
                             bodyTable.setValueAt(READY_LABEL, selectedRow, selectedColumn); // "Download" column
@@ -405,10 +421,20 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                             XMLUtils.save(mockTPO);
                         }
                     });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            bodyTable.setValueAt(ERROR_LABEL, selectedRow, selectedColumn); // "Download" column
+                            bodyTable.setValueAt("", selectedRow, selectedColumn + 1); // "Test" column
+                        }
+                    });
+                } finally {
+                    IOUtils.closeQuietly(zis);
                 }
             }
         });
-        thread.setName(GlobalConstants.DOWNLOAD_THREAD_PREFIX + testIndex);
+        thread.setName(DOWNLOAD_THREAD_PREFIX + testIndex);
         thread.start();
     }
 

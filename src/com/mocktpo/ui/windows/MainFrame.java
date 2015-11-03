@@ -248,6 +248,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.bodyTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.bodyTable.setSelectionBackground(new Color(245, 245, 245)); // #f5f5f5
         this.bodyTable.setSelectionForeground(new Color(60, 77, 130)); // #3c4d82
+        this.bodyTable.setCellSelectionEnabled(true);
 
         // Add mouse listener
 
@@ -405,10 +406,10 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                 logger.info(localPath);
                 boolean unzipped = UnzipUtils.unzip(localFile, localPath);
                 if (unzipped) {
-                    // Set test enabled
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            bodyTable.setValueAt(READY_LABEL, selectedRow, selectedColumn);
+                            bodyTable.setValueAt(READY_LABEL, selectedRow, selectedColumn); // Download column
+                            bodyTable.setValueAt(TEST_LABEL, selectedRow, selectedColumn + 1); // Test column
                             MTest test = mockTPO.getTests().get(selectedRow);
                             test.setDownload(READY_LABEL);
                             test.setNext(TEST_LABEL);

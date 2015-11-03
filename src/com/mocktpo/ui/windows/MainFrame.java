@@ -37,6 +37,11 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     public static final int SLOGAN_PANE_HEIGHT = 80;
     public static final int BODY_SCROLL_PANE_WIDTH = 1000;
 
+    public static final String DOWNLOAD_LABEL = "Download";
+    public static final String TEST_LABEL = "Test";
+    public static final String REPORTS_LABEL = "Reports";
+    public static final String READY_LABEL = "Ready";
+
     // Logger
 
     private static final Logger logger = LogManager.getLogger();
@@ -196,9 +201,12 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     private void setBodyScrollPane() {
         String[] columnNames = {"TPO" /* Index */, "Description" /* Name */, "Download", "Test" /* Next */, "Reports"};
-        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+            }
+        };
         tableModel.setColumnIdentifiers(columnNames);
-
         this.mockTPO = XMLUtils.load();
         List<MTest> tests = this.mockTPO.getTests();
         for (MTest test : tests) {
@@ -240,7 +248,6 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.bodyTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.bodyTable.setSelectionBackground(new Color(245, 245, 245)); // #f5f5f5
         this.bodyTable.setSelectionForeground(new Color(60, 77, 130)); // #3c4d82
-        this.bodyTable.setCellSelectionEnabled(true);
 
         // Add mouse listener
 
@@ -307,8 +314,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        int column = bodyTable.columnAtPoint(e.getPoint());
-        int row = bodyTable.rowAtPoint(e.getPoint());
+        int column = this.bodyTable.columnAtPoint(e.getPoint());
+        int row = this.bodyTable.rowAtPoint(e.getPoint());
         if (column >= 0 && row >= 0) {
             logger.debug("Table cell ({}, {}) clicked.", row, column);
         }
@@ -318,7 +325,10 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
             doDownload(row, column);
         } else if (column == 3) {
             // Next
-            doNext(row);
+            String val = this.bodyTable.getValueAt(row, column).toString();
+            if (TEST_LABEL.equals(val)) {
+                doNext(row);
+            }
         } else if (column == 4) {
             // Reports
             doReports(row);
@@ -327,26 +337,18 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        int column = bodyTable.columnAtPoint(e.getPoint());
-        int row = bodyTable.rowAtPoint(e.getPoint());
-        if (column >= 0 && row >= 0) {
-            logger.debug("Table cell ({}, {}) entered.", row, column);
-        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
 
     /**************************************************
@@ -406,9 +408,10 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                     // Set test enabled
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            bodyTable.setValueAt("Ready", selectedRow, selectedColumn);
+                            bodyTable.setValueAt(READY_LABEL, selectedRow, selectedColumn);
                             MTest test = mockTPO.getTests().get(selectedRow);
-                            test.setDownload("Ready");
+                            test.setDownload(READY_LABEL);
+                            test.setNext(TEST_LABEL);
                             XMLUtils.save(mockTPO);
                         }
                     });

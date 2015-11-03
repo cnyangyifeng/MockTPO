@@ -34,6 +34,7 @@ public class FTPUtils {
         try {
             if (ftp != null) {
                 ftp.disconnect();
+                ftp = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,8 +42,10 @@ public class FTPUtils {
     }
 
     private static void connect() throws Exception {
-        ftp = new FTPClient();
-        ftp.connect(GlobalConstants.FTP_HOST);
+        if (ftp == null || ftp.isConnected()) {
+            ftp = new FTPClient();
+            ftp.connect(GlobalConstants.FTP_HOST);
+        }
         int reply = ftp.getReplyCode();
         if (!FTPReply.isPositiveCompletion(reply)) {
             ftp.disconnect();

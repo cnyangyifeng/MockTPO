@@ -3,10 +3,7 @@ package com.mocktpo.ui.windows;
 import com.mocktpo.MApplication;
 import com.mocktpo.model.MTest;
 import com.mocktpo.model.MockTPO;
-import com.mocktpo.ui.widgets.BodyPanel;
-import com.mocktpo.ui.widgets.FooterPanel;
-import com.mocktpo.ui.widgets.HeaderPanel;
-import com.mocktpo.ui.widgets.MButton;
+import com.mocktpo.ui.widgets.*;
 import com.mocktpo.util.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
@@ -14,8 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
@@ -57,7 +52,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     private JEditorPane sloganPane;
 
     private JScrollPane bodyScrollPane;
-    private JTable bodyTable;
+    private MTable bodyTable;
 
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
@@ -211,46 +206,15 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         List<MTest> tests = this.mockTPO.getTests();
         for (MTest test : tests) {
             Vector<String> v = new Vector<String>();
-            v.add(0, test.getIndex());
-            v.add(1, test.getName());
+            v.add(0, test.getIndex()); // "TPO"
+            v.add(1, test.getName()); // "Description"
             v.add(2, test.getDownload());
-            v.add(3, test.getNext()); // "Next"
+            v.add(3, test.getNext()); // "Test"
             v.add(4, test.getReports());
             tableModel.addRow(v);
         }
 
-        this.bodyTable = new JTable(tableModel);
-
-        // Set table header
-
-        JTableHeader tableHeader = this.bodyTable.getTableHeader();
-        tableHeader.setPreferredSize(new Dimension(BODY_SCROLL_PANE_WIDTH, 40));
-        tableHeader.setFont(new Font("Arial", Font.BOLD, 16));
-        tableHeader.setForeground(new Color(102, 102, 102)); // #666666
-
-        // Set table layout
-
-        this.bodyTable.setRowHeight(50);
-        this.bodyTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        TableColumnModel columnModel = this.bodyTable.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(100);
-        columnModel.getColumn(1).setPreferredWidth(450);
-        columnModel.getColumn(2).setPreferredWidth(150);
-        columnModel.getColumn(3).setPreferredWidth(150);
-        columnModel.getColumn(4).setPreferredWidth(150);
-
-        // Set table styles
-
-        this.bodyTable.setFont(new Font("Georgia", Font.PLAIN, 16));
-        this.bodyTable.setForeground(new Color(51, 51, 51));
-        this.bodyTable.setGridColor(new Color(245,/**/ 245, 245)); // #f5f5f5
-        this.bodyTable.setFocusable(false);
-        this.bodyTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.bodyTable.setSelectionBackground(new Color(245, 245, 245)); // #f5f5f5
-        this.bodyTable.setSelectionForeground(new Color(60, 77, 130)); // #3c4d82
-        this.bodyTable.setCellSelectionEnabled(true);
-
-        // Add mouse listener
+        this.bodyTable = new MTable(tableModel);
 
         this.bodyTable.addMouseListener(this);
 
@@ -360,7 +324,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
         String remoteFile = GlobalConstants.REMOTE_TESTS_DIR + testIndex + GlobalConstants.POSTFIX_ZIP;
         String localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + testIndex + GlobalConstants.POSTFIX_ZIP;
-        this.bodyTable.setValueAt("0%", selectedRow, selectedColumn);
+        this.bodyTable.setValueAt("0%", selectedRow, selectedColumn); // "Download" column
+        this.bodyTable.setValueAt("", selectedRow, selectedColumn + 1); // "Test" column
 
         // Time-consuming task
 
@@ -408,8 +373,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                 if (unzipped) {
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            bodyTable.setValueAt(READY_LABEL, selectedRow, selectedColumn); // Download column
-                            bodyTable.setValueAt(TEST_LABEL, selectedRow, selectedColumn + 1); // Test column
+                            bodyTable.setValueAt(READY_LABEL, selectedRow, selectedColumn); // "Download" column
+                            bodyTable.setValueAt(TEST_LABEL, selectedRow, selectedColumn + 1); // "Test" column
                             MTest test = mockTPO.getTests().get(selectedRow);
                             test.setDownload(READY_LABEL);
                             test.setNext(TEST_LABEL);

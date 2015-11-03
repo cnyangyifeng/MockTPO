@@ -28,13 +28,13 @@ public class UnzipUtils {
                 zis.closeEntry();
                 entry = zis.getNextEntry();
             }
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         } finally {
             IOUtils.closeQuietly(zis);
         }
-        return false;
+        return true;
     }
 
     public static void main(String[] args) {

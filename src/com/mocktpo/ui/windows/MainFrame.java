@@ -61,6 +61,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     private MockTPO mockTPO;
 
+    private volatile boolean[] markers; // Download status markers
+
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
         initComponents();
@@ -213,6 +215,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
             v.add(4, test.getReports());
             tableModel.addRow(v);
         }
+        this.markers = new boolean[tests.size()];
 
         this.bodyTable = new MTable(tableModel);
 
@@ -324,14 +327,35 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
         String remoteFile = GlobalConstants.REMOTE_TESTS_DIR + testIndex + GlobalConstants.POSTFIX_ZIP;
         String localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + testIndex + GlobalConstants.POSTFIX_ZIP;
-        this.bodyTable.setValueAt("0%", selectedRow, selectedColumn); // "Download" column
-        this.bodyTable.setValueAt("", selectedRow, selectedColumn + 1); // "Test" column
+        // Mark the downloading threads to interrupt if necessary
+        boolean flag = false;
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            String var = GlobalConstants.DOWNLOAD_THREAD_PREFIX + testIndex;
+            if (t.getName().equals(var)) {
+                this.markers[selectedRow] = true;
+                flag = true;
+            }
+        }
+        if (!flag) {
+            this.markers[selectedRow] = false;
+        }
 
         // Time-consuming task
 
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                if (markers[selectedRow]) {
+                    String var = GlobalConstants.DOWNLOAD_THREAD_PREFIX + testIndex;
+                    logger.info("downloading thread '{}' should never be started again.", var);
+                    return;
+                }
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        bodyTable.setValueAt("0%", selectedRow, selectedColumn); // "Download" column
+                        bodyTable.setValueAt("", selectedRow, selectedColumn + 1); // "Test" column
+                    }
+                });
                 InputStream is = FTPUtils.download(remoteFile);
                 File file = new File(localFile);
                 OutputStream os = null;
@@ -341,7 +365,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                     int c;
                     long fileSize = FTPUtils.getFileSize(remoteFile);
                     if (fileSize <= 0) {
-                        logger.info("Downloadable file not found.");
+                        logger.error("Downloadable file not found.");
                         return;
                     }
                     long step = fileSize / 100;
@@ -350,7 +374,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                         os.write(bytes, 0, c);
                         localSize += c;
                         int downloadProgress = (int) (localSize / step);
-                        logger.info("Downloading {}: {}%", testIndex, downloadProgress);
+                        logger.debug("Downloading {}: {}%", testIndex, downloadProgress);
                         if (downloadProgress <= 100) {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
@@ -367,8 +391,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                 }
 
                 // Unzip
+
                 String localPath = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath();
-                logger.info(localPath);
                 boolean unzipped = UnzipUtils.unzip(localFile, localPath);
                 if (unzipped) {
                     SwingUtilities.invokeLater(new Runnable() {
@@ -383,7 +407,9 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                     });
                 }
             }
-        }).start();
+        });
+        thread.setName(GlobalConstants.DOWNLOAD_THREAD_PREFIX + testIndex);
+        thread.start();
     }
 
     private void doNext(int selectedRow) {

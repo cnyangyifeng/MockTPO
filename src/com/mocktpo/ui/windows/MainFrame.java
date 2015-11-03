@@ -7,18 +7,12 @@ import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
 import com.mocktpo.ui.widgets.MButton;
-import com.mocktpo.util.FTPUtils;
-import com.mocktpo.util.GlobalConstants;
-import com.mocktpo.util.LayoutConstants;
-import com.mocktpo.util.UnzipUtils;
-import com.thoughtworks.xstream.XStream;
+import com.mocktpo.util.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
@@ -27,12 +21,13 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
-import java.net.URL;
 import java.util.List;
 import java.util.Vector;
 
-public class MainFrame extends JFrame implements ActionListener, ListSelectionListener {
+public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     // Constants
 
@@ -204,24 +199,15 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(columnNames);
 
-        try {
-            XStream xs = new XStream();
-            xs.alias("mocktpo", MockTPO.class);
-            xs.alias("test", MTest.class);
-            String val = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
-            URL xml = this.getClass().getResource(val);
-            this.mockTPO = (MockTPO) xs.fromXML(new File(xml.toURI()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.mockTPO = XMLUtils.load();
         List<MTest> tests = this.mockTPO.getTests();
         for (MTest test : tests) {
             Vector<String> v = new Vector<String>();
             v.add(0, test.getIndex());
             v.add(1, test.getName());
-            v.add(2, "Download");
-            v.add(3, "Test"); // "Next"
-            v.add(4, "Reports");
+            v.add(2, test.getDownload());
+            v.add(3, test.getNext()); // "Next"
+            v.add(4, test.getReports());
             tableModel.addRow(v);
         }
 
@@ -256,11 +242,9 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         this.bodyTable.setSelectionForeground(new Color(60, 77, 130)); // #3c4d82
         this.bodyTable.setCellSelectionEnabled(true);
 
-        // Set selection listener
+        // Add mouse listener
 
-        ListSelectionModel selectionModel = this.bodyTable.getSelectionModel();
-        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        selectionModel.addListSelectionListener(this);
+        this.bodyTable.addMouseListener(this);
 
         this.bodyScrollPane = new JScrollPane();
         int x = this.sloganPane.getX();
@@ -312,6 +296,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
      * Listeners
      **************************************************/
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if ("doExitApplication".equals(e.getActionCommand())) {
             logger.info("'Exit Application' button pressed.");
@@ -319,25 +304,54 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         }
     }
 
-    public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) {
-            int row = this.bodyTable.getSelectedRow();
-            int column = this.bodyTable.getSelectedColumn();
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
-            logger.debug("Table cell ({}, {}) selected.", row, column);
+        int column = bodyTable.columnAtPoint(e.getPoint());
+        int row = bodyTable.rowAtPoint(e.getPoint());
+        if (column >= 0 && row >= 0) {
+            logger.debug("Table cell ({}, {}) clicked.", row, column);
+        }
 
-            if (column == 2) {
-                // Download
-                this.doDownload(row, column);
-            } else if (column == 3) {
-                // Next
-                this.doNext(row);
-            } else if (column == 4) {
-                // Reports
-                this.doReports(row);
-            }
+        if (column == 2) {
+            // Download
+            doDownload(row, column);
+        } else if (column == 3) {
+            // Next
+            doNext(row);
+        } else if (column == 4) {
+            // Reports
+            doReports(row);
         }
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        int column = bodyTable.columnAtPoint(e.getPoint());
+        int row = bodyTable.rowAtPoint(e.getPoint());
+        if (column >= 0 && row >= 0) {
+            logger.debug("Table cell ({}, {}) entered.", row, column);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    /**************************************************
+     * Actions
+     **************************************************/
 
     private void doDownload(final int selectedRow, final int selectedColumn) {
         String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
@@ -352,7 +366,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
             public void run() {
                 InputStream is = FTPUtils.download(remoteFile);
                 File file = new File(localFile);
-                OutputStream os;
+                OutputStream os = null;
                 try {
                     os = new BufferedOutputStream(new FileOutputStream(file));
                     byte[] bytes = new byte[65536]; // 64k
@@ -377,22 +391,27 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
                             });
                         }
                     }
-                    IOUtils.closeQuietly(os);
-                    IOUtils.closeQuietly(is);
-                    // Unzip
-                    String localPath = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath();
-                    logger.info(localPath);
-                    boolean unzipped = UnzipUtils.unzip(localFile, localPath);
-                    if (unzipped) {
-                        // Set test enabled
-                        SwingUtilities.invokeLater(new Runnable() {
-                            public void run() {
-                                bodyTable.setValueAt("Ready", selectedRow, selectedColumn);
-                            }
-                        });
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
+                } finally {
+                    IOUtils.closeQuietly(os);
+                    IOUtils.closeQuietly(is);
+                }
+
+                // Unzip
+                String localPath = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath();
+                logger.info(localPath);
+                boolean unzipped = UnzipUtils.unzip(localFile, localPath);
+                if (unzipped) {
+                    // Set test enabled
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            bodyTable.setValueAt("Ready", selectedRow, selectedColumn);
+                            MTest test = mockTPO.getTests().get(selectedRow);
+                            test.setDownload("Ready");
+                            XMLUtils.save(mockTPO);
+                        }
+                    });
                 }
             }
         }).start();

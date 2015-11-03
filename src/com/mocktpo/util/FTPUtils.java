@@ -12,6 +12,7 @@ public class FTPUtils {
 
     public static boolean download(String remoteFile, String localFile) {
         FTPClient ftp = new FTPClient();
+        OutputStream os = null;
         try {
             ftp.connect(GlobalConstants.FTP_HOST);
             int reply = ftp.getReplyCode();
@@ -20,14 +21,15 @@ public class FTPUtils {
             }
             ftp.login(GlobalConstants.FTP_USERNAME, GlobalConstants.FTP_PASSWORD);
             File file = new File(localFile);
-            OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+            os = new BufferedOutputStream(new FileOutputStream(file));
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
             ftp.retrieveFile(remoteFile, os);
-            IOUtils.closeQuietly(os);
             ftp.logout();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(os);
         }
         return false;
     }

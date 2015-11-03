@@ -4,9 +4,9 @@ public class MTest {
 
     protected String index;
     protected String name;
-    protected boolean download;
-    protected boolean next;
-    protected boolean reports;
+    protected String download;
+    protected String next;
+    protected String reports;
 
     public MTest(String index, String name) {
         this.index = index;
@@ -29,27 +29,27 @@ public class MTest {
         this.name = name;
     }
 
-    public boolean getDownload() {
+    public String getDownload() {
         return download;
     }
 
-    public void setDownload(boolean download) {
+    public void setDownload(String download) {
         this.download = download;
     }
 
-    public boolean getNext() {
+    public String getNext() {
         return next;
     }
 
-    public void setNext(boolean next) {
+    public void setNext(String next) {
         this.next = next;
     }
 
-    public boolean getReports() {
+    public String getReports() {
         return reports;
     }
 
-    public void setReports(boolean reports) {
+    public void setReports(String reports) {
         this.reports = reports;
     }
 

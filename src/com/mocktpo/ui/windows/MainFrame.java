@@ -141,9 +141,11 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         int x = LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - EXIT_APPLICATION_BUTTON_HEIGHT - LayoutConstants.MARGIN;
         exitApplicationButton.setBounds(x, y, EXIT_APPLICATION_BUTTON_WIDTH, EXIT_APPLICATION_BUTTON_HEIGHT);
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit_application.png"));
 
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit_application.png"));
         exitApplicationButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit_application_hi.png"));
+        exitApplicationButton.setRolloverIcon(rolloverIcon);
         exitApplicationButton.setText(null);
         exitApplicationButton.setMargin(new Insets(0, 0, 0, 0));
         exitApplicationButton.setBorder(null);

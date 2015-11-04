@@ -85,7 +85,6 @@ public class TestFrame extends JFrame implements ActionListener {
     private ChangingVolumePanel cvPanel;
     private ListeningDirectionsPanel ldPanel;
     private ListeningSectionPanel lsPanel;
-    private ListeningHintsPanel lhPanel;
     private ListeningQuestionPanel lqPanel;
     private FooterPanel footerPanel;
     private JEditorPane copyrightPane;
@@ -306,6 +305,10 @@ public class TestFrame extends JFrame implements ActionListener {
             int x = this.headerPanel.getWidth() - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN;
             this.nextButton.setBounds(x, 0, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT);
 
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "next.png"));
+            this.nextButton.setIcon(icon);
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "next_hi.png"));
+            this.nextButton.setRolloverIcon(rolloverIcon);
             this.nextButton.setMargin(new Insets(0, 0, 0, 0));
             this.nextButton.setBorder(null);
             this.nextButton.setBorderPainted(false);
@@ -411,6 +414,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
             ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
             this.continueButton.setIcon(icon);
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_hi.png"));
+            this.continueButton.setRolloverIcon(rolloverIcon);
             this.continueButton.setText(null);
             this.continueButton.setMargin(new Insets(0, 0, 0, 0));
             this.continueButton.setBorder(null);
@@ -431,6 +436,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
             ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
             this.continueButton.setIcon(icon);
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_hi.png"));
+            this.continueButton.setRolloverIcon(rolloverIcon);
             this.continueButton.setText(null);
             this.continueButton.setMargin(new Insets(0, 0, 0, 0));
             this.continueButton.setBorder(null);
@@ -451,6 +458,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
             ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
             this.continueButton.setIcon(icon);
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_hi.png"));
+            this.continueButton.setRolloverIcon(rolloverIcon);
             this.continueButton.setText(null);
             this.continueButton.setMargin(new Insets(0, 0, 0, 0));
             this.continueButton.setBorder(null);
@@ -490,7 +499,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.headsetPanel = new HeadsetPanel(this.bodyBounds);
         this.bodyPanel = this.headsetPanel;
 
-        this.getContentPane().add(bodyPanel);
+        this.getContentPane().add(this.bodyPanel);
     }
 
     /**************************************************
@@ -533,9 +542,9 @@ public class TestFrame extends JFrame implements ActionListener {
      **************************************************/
 
     public void didPauseTest() {
-        if (bodyPanel instanceof ListeningDirectionsPanel) {
+        if (this.bodyPanel instanceof ListeningDirectionsPanel) {
             this.ldPanel.stopAudio();
-        } else if (bodyPanel instanceof ListeningSectionPanel) {
+        } else if (this.bodyPanel instanceof ListeningSectionPanel) {
             this.lsPanel.stopAudio();
         }
     }

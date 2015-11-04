@@ -119,8 +119,10 @@ public class PauseDialog extends JDialog implements ActionListener {
         int y = this.pauseDescriptionPane.getY() + PAUSE_DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
         this.pauseCancelButton.setBounds(x, y, PAUSE_CANCEL_BUTTON_WIDTH, PAUSE_CANCEL_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "pause_return.png"));
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return.png"));
         this.pauseCancelButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return_hi.png"));
+        this.pauseCancelButton.setRolloverIcon(rolloverIcon);
         this.pauseCancelButton.setText(null);
         this.pauseCancelButton.setMargin(new Insets(0, 0, 0, 0));
         this.pauseCancelButton.setBorder(null);
@@ -141,6 +143,8 @@ public class PauseDialog extends JDialog implements ActionListener {
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "pause_continue.png"));
         this.pauseGoButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "pause_continue_hi.png"));
+        this.pauseGoButton.setRolloverIcon(rolloverIcon);
         this.pauseGoButton.setText(null);
         this.pauseGoButton.setMargin(new Insets(0, 0, 0, 0));
         this.pauseGoButton.setBorder(null);

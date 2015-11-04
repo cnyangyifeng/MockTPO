@@ -4,6 +4,8 @@ import com.mocktpo.model.MTest;
 import com.mocktpo.model.MockTPO;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,6 +15,8 @@ import java.net.URL;
 public class XMLUtils {
 
     private static String LOCAL_FILE = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
+
+    private static final Logger logger = LogManager.getLogger();
 
     public static MockTPO load() {
         XStream xs = new XStream();
@@ -36,7 +40,9 @@ public class XMLUtils {
             URL xml = XMLUtils.class.getResource(LOCAL_FILE);
             File file = new File(xml.toURI());
             if (!file.exists()) {
-                file.createNewFile();
+                if (file.createNewFile()) {
+                    logger.debug("File 'mocktpo.xml' saved successfully.");
+                }
             }
             os = new FileOutputStream(file);
             xs.toXML(mockTPO, os);

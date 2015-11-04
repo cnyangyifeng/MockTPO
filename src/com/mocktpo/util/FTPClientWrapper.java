@@ -7,18 +7,19 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.InputStream;
 
-public class FTPUtils {
+public class FTPClientWrapper {
 
-    private static FTPClient ftp;
+    private FTPClient ftp;
 
-    public static InputStream download(String remoteFile) throws Exception {
-        connect();
+    public InputStream download(String remoteFile) throws Exception {
+        this.connect();
+        ftp.enterLocalPassiveMode();
         ftp.setFileType(FTP.BINARY_FILE_TYPE);
         return ftp.retrieveFileStream(remoteFile);
     }
 
-    public static long getFileSize(String remoteFile) throws Exception {
-        connect();
+    public long getFileSize(String remoteFile) throws Exception {
+        this.connect();
         long fileSize = 0;
         FTPFile[] arr = ftp.listFiles(remoteFile);
         if (arr != null && arr.length > 0) {
@@ -27,10 +28,11 @@ public class FTPUtils {
                 fileSize = file.getSize();
             }
         }
+        this.disconnect();
         return fileSize;
     }
 
-    public static void disconnect() {
+    public void disconnect() {
         try {
             if (ftp != null) {
                 ftp.disconnect();
@@ -41,11 +43,11 @@ public class FTPUtils {
         }
     }
 
-    private static void connect() throws Exception {
-        if (ftp == null || ftp.isConnected()) {
+    private void connect() throws Exception {
+        if (ftp == null) {
             ftp = new FTPClient();
-            ftp.connect(GlobalConstants.FTP_HOST);
         }
+        ftp.connect(GlobalConstants.FTP_HOST);
         int reply = ftp.getReplyCode();
         if (!FTPReply.isPositiveCompletion(reply)) {
             ftp.disconnect();

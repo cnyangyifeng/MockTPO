@@ -12,13 +12,14 @@ import java.net.URL;
 
 public class XMLUtils {
 
+    private static String LOCAL_FILE = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
+
     public static MockTPO load() {
         XStream xs = new XStream();
         try {
             xs.alias("mocktpo", MockTPO.class);
             xs.alias("test", MTest.class);
-            String val = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
-            URL xml = XMLUtils.class.getResource(val);
+            URL xml = XMLUtils.class.getResource(LOCAL_FILE);
             return (MockTPO) xs.fromXML(new File(xml.toURI()));
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,7 +33,7 @@ public class XMLUtils {
         try {
             xs.alias("mocktpo", MockTPO.class);
             xs.alias("test", MTest.class);
-            URL xml = XMLUtils.class.getResource(GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE);
+            URL xml = XMLUtils.class.getResource(LOCAL_FILE);
             File file = new File(xml.toURI());
             if (!file.exists()) {
                 file.createNewFile();

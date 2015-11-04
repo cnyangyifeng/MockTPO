@@ -33,11 +33,9 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     public static final int SLOGAN_PANE_HEIGHT = 80;
     public static final int BODY_SCROLL_PANE_WIDTH = 1000;
 
-    private String DOWNLOAD_THREAD_PREFIX = "MockTPO_D_";
+    public static final String DOWNLOAD_THREAD_PREFIX = "MockTPO_D_";
 
-    public static final String DOWNLOAD_LABEL = "Download";
     public static final String TEST_LABEL = "Test";
-    public static final String REPORTS_LABEL = "Reports";
     public static final String READY_LABEL = "Ready";
     public static final String ERROR_LABEL = "Error";
 
@@ -49,23 +47,17 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     private TestFrame testFrame;
     private HeaderPanel headerPanel;
-    private JLabel logoLabel;
-    private JEditorPane titlePane;
-    private MButton exitApplicationButton;
     private BodyPanel bodyPanel;
     private JEditorPane sloganPane;
-
-    private JScrollPane bodyScrollPane;
     private MTable bodyTable;
-
     private FooterPanel footerPanel;
-    private JEditorPane copyrightPane;
 
     // Variables
 
     private MockTPO mockTPO;
 
-    private volatile boolean[] markers; // Download status markers
+    private volatile boolean[] markers; // Download markers
+    private volatile boolean redownload;
 
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
@@ -114,55 +106,55 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     }
 
     private void setLogoLabel() {
-        this.logoLabel = new JLabel();
+        JLabel logoLabel = new JLabel();
 
-        this.logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
+        logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "logo.png"));
-        this.logoLabel.setIcon(icon);
+        logoLabel.setIcon(icon);
 
-        this.headerPanel.add(this.logoLabel);
+        this.headerPanel.add(logoLabel);
     }
 
     private void setTitlePane() {
-        this.titlePane = new JEditorPane();
+        JEditorPane titlePane = new JEditorPane();
 
         int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
         int y = LayoutConstants.MARGIN;
-        this.titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
+        titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
 
-        this.titlePane.setEditable(false);
-        this.titlePane.setOpaque(false);
+        titlePane.setEditable(false);
+        titlePane.setOpaque(false);
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
         style.addRule(".title { font-family: Arial; font-size: 24px; font-weight: bold; color: #ffffff; }");
-        this.titlePane.setEditorKit(kit);
-        this.titlePane.setText("<div class='title'>MockTPO</div>");
+        titlePane.setEditorKit(kit);
+        titlePane.setText("<div class='title'>MockTPO</div>");
 
-        this.headerPanel.add(this.titlePane);
+        this.headerPanel.add(titlePane);
     }
 
     private void setExitApplicationButton() {
-        this.exitApplicationButton = new MButton();
+        MButton exitApplicationButton = new MButton();
 
         int x = LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - EXIT_APPLICATION_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        this.exitApplicationButton.setBounds(x, y, EXIT_APPLICATION_BUTTON_WIDTH, EXIT_APPLICATION_BUTTON_HEIGHT);
+        exitApplicationButton.setBounds(x, y, EXIT_APPLICATION_BUTTON_WIDTH, EXIT_APPLICATION_BUTTON_HEIGHT);
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit_application.png"));
 
-        this.exitApplicationButton.setIcon(icon);
-        this.exitApplicationButton.setText(null);
-        this.exitApplicationButton.setMargin(new Insets(0, 0, 0, 0));
-        this.exitApplicationButton.setBorder(null);
-        this.exitApplicationButton.setBorderPainted(false);
-        this.exitApplicationButton.setFocusPainted(false);
-        this.exitApplicationButton.setContentAreaFilled(false);
+        exitApplicationButton.setIcon(icon);
+        exitApplicationButton.setText(null);
+        exitApplicationButton.setMargin(new Insets(0, 0, 0, 0));
+        exitApplicationButton.setBorder(null);
+        exitApplicationButton.setBorderPainted(false);
+        exitApplicationButton.setFocusPainted(false);
+        exitApplicationButton.setContentAreaFilled(false);
 
-        this.exitApplicationButton.setActionCommand("doExitApplication");
-        this.exitApplicationButton.addActionListener(this);
+        exitApplicationButton.setActionCommand("doExitApplication");
+        exitApplicationButton.addActionListener(this);
 
-        this.headerPanel.add(this.exitApplicationButton);
+        this.headerPanel.add(exitApplicationButton);
     }
 
     /**************************************************
@@ -209,6 +201,10 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         };
         tableModel.setColumnIdentifiers(columnNames);
         this.mockTPO = XMLUtils.load();
+        if (this.mockTPO == null) {
+            logger.error("Configuration file 'mocktpo.xml' not found.");
+            System.exit(-1);
+        }
         List<MTest> tests = this.mockTPO.getTests();
         for (MTest test : tests) {
             Vector<String> v = new Vector<String>();
@@ -225,15 +221,15 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
         this.bodyTable.addMouseListener(this);
 
-        this.bodyScrollPane = new JScrollPane();
+        JScrollPane bodyScrollPane = new JScrollPane();
         int x = this.sloganPane.getX();
         int y = this.sloganPane.getY() + this.sloganPane.getHeight() + LayoutConstants.MARGIN * 5;
         int height = this.bodyPanel.getHeight() - y - LayoutConstants.MARGIN * 10;
-        this.bodyScrollPane.setBounds(x, y, BODY_SCROLL_PANE_WIDTH, height);
+        bodyScrollPane.setBounds(x, y, BODY_SCROLL_PANE_WIDTH, height);
 
-        this.bodyScrollPane.setViewportView(this.bodyTable);
+        bodyScrollPane.setViewportView(this.bodyTable);
 
-        this.bodyPanel.add(this.bodyScrollPane);
+        this.bodyPanel.add(bodyScrollPane);
     }
 
     /**************************************************
@@ -253,22 +249,22 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     }
 
     private void setCopyrightPane() {
-        this.copyrightPane = new JEditorPane();
+        JEditorPane copyrightPane = new JEditorPane();
 
         int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
         int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
-        this.copyrightPane.setBounds(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT);
+        copyrightPane.setBounds(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT);
 
-        this.copyrightPane.setEditable(false);
-        this.copyrightPane.setOpaque(false);
+        copyrightPane.setEditable(false);
+        copyrightPane.setOpaque(false);
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
         style.addRule(".copyright { color: #ffffff; font-family: Arial; font-size: 8px; font-weight: bold; text-align: center; }");
-        this.copyrightPane.setEditorKit(kit);
-        this.copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
+        copyrightPane.setEditorKit(kit);
+        copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
 
-        this.footerPanel.add(this.copyrightPane);
+        this.footerPanel.add(copyrightPane);
     }
 
     /**************************************************
@@ -285,7 +281,6 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
         int column = this.bodyTable.columnAtPoint(e.getPoint());
         int row = this.bodyTable.rowAtPoint(e.getPoint());
         if (column >= 0 && row >= 0) {
@@ -332,18 +327,21 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         String remoteFile = GlobalConstants.REMOTE_TESTS_DIR + testIndex + GlobalConstants.POSTFIX_ZIP;
         String localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + testIndex + GlobalConstants.POSTFIX_ZIP;
 
-        // Mark the downloading threads to interrupt if necessary
+        // Mark other threads to interrupt if necessary
 
-        boolean flag = false;
+        if (!markers[selectedRow]) {
+            for (int i = 0; i < markers.length; i++) {
+                markers[i] = false;
+            }
+            markers[selectedRow] = true;
+        }
+
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             String var = DOWNLOAD_THREAD_PREFIX + testIndex;
             if (t.getName().equals(var)) {
-                this.markers[selectedRow] = true;
-                flag = true;
+                this.redownload = true;
+                break;
             }
-        }
-        if (!flag) {
-            this.markers[selectedRow] = false;
         }
 
         // Time-consuming task
@@ -351,11 +349,6 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if (markers[selectedRow]) {
-                    String var = DOWNLOAD_THREAD_PREFIX + testIndex;
-                    logger.info("Only ONE downloading thread '{}' started at a time.", var);
-                    return;
-                }
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         bodyTable.setValueAt("0%", selectedRow, selectedColumn); // "Download" column
@@ -364,12 +357,14 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                 });
                 InputStream is = null;
                 OutputStream os = null;
+                FTPClientWrapper ftp = new FTPClientWrapper();
                 try {
-                    is = FTPUtils.download(remoteFile);
+                    Thread.sleep(200);
+                    is = ftp.download(remoteFile);
                     os = new BufferedOutputStream(new FileOutputStream(new File(localFile)));
                     byte[] bytes = new byte[65536]; // 64k
                     int c;
-                    long fileSize = FTPUtils.getFileSize(remoteFile);
+                    long fileSize = ftp.getFileSize(remoteFile);
                     if (fileSize <= 0) {
                         logger.error("Downloadable file not found.");
                         return;
@@ -377,6 +372,15 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                     long step = fileSize / 100;
                     long localSize = 0L;
                     while ((c = is.read(bytes)) != -1) {
+                        if (!markers[selectedRow]) {
+                            logger.info("Previous download thread stopped. New download.");
+                            return;
+                        }
+                        if (redownload) {
+                            logger.info("Previous download thread stopped. Restart download.");
+                            redownload = false;
+                            return;
+                        }
                         os.write(bytes, 0, c);
                         localSize += c;
                         int downloadProgress = (int) (localSize / step);
@@ -401,11 +405,9 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                 } finally {
                     IOUtils.closeQuietly(os);
                     IOUtils.closeQuietly(is);
-                    FTPUtils.disconnect();
+                    ftp.disconnect();
                 }
-
                 // Unzip
-
                 ZipInputStream zis = null;
                 try {
                     zis = new ZipInputStream(new FileInputStream(localFile));
@@ -454,6 +456,6 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     }
 
     private void doReports(int selectedRow) {
-        logger.info("Reports.");
+        logger.info("Reports in row {}.", selectedRow);
     }
 }

@@ -4,7 +4,10 @@ import com.mocktpo.MApplication;
 import com.mocktpo.model.*;
 import com.mocktpo.ui.dialogs.PauseDialog;
 import com.mocktpo.ui.tests.listening.*;
-import com.mocktpo.ui.widgets.*;
+import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.ui.widgets.FooterPanel;
+import com.mocktpo.ui.widgets.HeaderPanel;
+import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 import com.thoughtworks.xstream.XStream;
@@ -32,13 +35,13 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int QUESTION_NUMBER_PANE_WIDTH = 200;
     public static final int QUESTION_NUMBER_PANE_HEIGHT = 20;
     public static final int NEXT_BUTTON_WIDTH = 70;
-    public static final int NEXT_BUTTON_HEIGHT = 50;
+    public static final int NEXT_BUTTON_HEIGHT = 48;
     public static final int OK_BUTTON_WIDTH = 70;
-    public static final int OK_BUTTON_HEIGHT = 50;
+    public static final int OK_BUTTON_HEIGHT = 48;
     public static final int HELP_BUTTON_WIDTH = 70;
-    public static final int HELP_BUTTON_HEIGHT = 50;
+    public static final int HELP_BUTTON_HEIGHT = 48;
     public static final int VOLUME_BUTTON_WIDTH = 70;
-    public static final int VOLUME_BUTTON_HEIGHT = 50;
+    public static final int VOLUME_BUTTON_HEIGHT = 48;
     public static final int CONTINUE_BUTTON_WIDTH = 74;
     public static final int CONTINUE_BUTTON_HEIGHT = 34;
     public static final int TIMER_LABEL_WIDTH = 60;
@@ -71,10 +74,10 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private JEditorPane questionNumberPane;
 
-    private MOvalButton nextButton;
-    private MOvalButton okButton;
-    private MOvalButton helpButton;
-    private MOvalButton volumeButton;
+    private MButton nextButton;
+    private MButton okButton;
+    private MButton helpButton;
+    private MButton volumeButton;
     private MButton continueButton;
 
     private JLabel timerLabel;
@@ -300,7 +303,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private void setNextButton() {
         if (HELP_OK_NEXT_BUTTON_ON) {
-            this.nextButton = new MOvalButton(" NEXT ", false);
+            this.nextButton = new MButton();
 
             int x = this.headerPanel.getWidth() - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN;
             this.nextButton.setBounds(x, 0, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT);
@@ -326,11 +329,15 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private void setOkButton() {
         if (HELP_OK_NEXT_BUTTON_ON) {
-            this.okButton = new MOvalButton("  OK  ", false);
+            this.okButton = new MButton();
 
             int x = this.headerPanel.getWidth() - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
             this.okButton.setBounds(x, 0, OK_BUTTON_WIDTH, OK_BUTTON_HEIGHT);
 
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ok.png"));
+            this.okButton.setIcon(icon);
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ok_hi.png"));
+            this.okButton.setRolloverIcon(rolloverIcon);
             this.okButton.setMargin(new Insets(0, 0, 0, 0));
             this.okButton.setBorder(null);
             this.okButton.setBorderPainted(false);
@@ -348,11 +355,15 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private void setHelpButton() {
         if (HELP_OK_NEXT_BUTTON_ON) {
-            this.helpButton = new MOvalButton(" HELP ", false);
+            this.helpButton = new MButton();
 
             int x = this.headerPanel.getWidth() - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 3;
             this.helpButton.setBounds(x, 0, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT);
 
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "help.png"));
+            this.helpButton.setIcon(icon);
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "help_hi.png"));
+            this.helpButton.setRolloverIcon(rolloverIcon);
             this.helpButton.setMargin(new Insets(0, 0, 0, 0));
             this.helpButton.setBorder(null);
             this.helpButton.setBorderPainted(false);
@@ -370,11 +381,15 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private void setVolumeButton() {
         if (VOLUME_BUTTON_ON && HELP_OK_NEXT_BUTTON_ON) {
-            this.volumeButton = new MOvalButton("VOLUME", true);
+            this.volumeButton = new MButton();
 
             int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
             this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
 
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "volume.png"));
+            this.volumeButton.setIcon(icon);
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "volume_hi.png"));
+            this.volumeButton.setRolloverIcon(rolloverIcon);
             this.volumeButton.setMargin(new Insets(0, 0, 0, 0));
             this.volumeButton.setBorder(null);
             this.volumeButton.setBorderPainted(false);
@@ -386,11 +401,15 @@ public class TestFrame extends JFrame implements ActionListener {
 
             this.headerPanel.add(this.volumeButton);
         } else if (VOLUME_BUTTON_ON && !HELP_OK_NEXT_BUTTON_ON) {
-            this.volumeButton = new MOvalButton("VOLUME", true);
+            this.volumeButton = new MButton();
 
             int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN;
             this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
 
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "volume.png"));
+            this.volumeButton.setIcon(icon);
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "volume_hi.png"));
+            this.volumeButton.setRolloverIcon(rolloverIcon);
             this.volumeButton.setMargin(new Insets(0, 0, 0, 0));
             this.volumeButton.setBorder(null);
             this.volumeButton.setBorderPainted(false);

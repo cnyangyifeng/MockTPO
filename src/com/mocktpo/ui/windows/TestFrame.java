@@ -44,6 +44,8 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int VOLUME_BUTTON_HEIGHT = 48;
     public static final int CONTINUE_BUTTON_WIDTH = 74;
     public static final int CONTINUE_BUTTON_HEIGHT = 34;
+    public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 72;
+    public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 18;
     public static final int TIMER_LABEL_WIDTH = 60;
     public static final int TIMER_LABEL_HEIGHT = 20;
 
@@ -53,8 +55,6 @@ public class TestFrame extends JFrame implements ActionListener {
 
     // Switches
 
-    // public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 70;
-    // public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 50;
     private boolean HELP_OK_NEXT_BUTTON_ON = false;
     private boolean VOLUME_BUTTON_ON = false;
     private boolean CONTINUE_BUTTON_ON = true;
@@ -81,7 +81,7 @@ public class TestFrame extends JFrame implements ActionListener {
     private MButton continueButton;
 
     private JLabel timerLabel;
-    // private MButton hideOrShowTimerButton;
+    private MButton hideOrShowTimerButton;
 
     private BodyPanel bodyPanel;
     private HeadsetPanel headsetPanel;
@@ -169,6 +169,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setControlButtons();
 
         this.setTimerLabel();
+        this.setHideOrShowTimerButton();
 
         this.getContentPane().add(headerPanel);
     }
@@ -505,6 +506,30 @@ public class TestFrame extends JFrame implements ActionListener {
         this.timerLabel.setText("00:07:35");
 
         this.headerPanel.add(this.timerLabel);
+    }
+
+    private void setHideOrShowTimerButton() {
+        this.hideOrShowTimerButton = new MButton();
+
+        int x = this.headerPanel.getWidth() - HIDE_OR_SHOW_TIMER_BUTTON_WIDTH - TIMER_LABEL_WIDTH - LayoutConstants.MARGIN * 4;
+        int y = this.headerPanel.getHeight() - HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT - LayoutConstants.MARGIN * 2;
+        this.hideOrShowTimerButton.setBounds(x, y, HIDE_OR_SHOW_TIMER_BUTTON_WIDTH, HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT);
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer.png"));
+        this.hideOrShowTimerButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer_hi.png"));
+        this.hideOrShowTimerButton.setRolloverIcon(rolloverIcon);
+        this.hideOrShowTimerButton.setText(null);
+        this.hideOrShowTimerButton.setMargin(new Insets(0, 0, 0, 0));
+        this.hideOrShowTimerButton.setBorder(null);
+        this.hideOrShowTimerButton.setBorderPainted(false);
+        this.hideOrShowTimerButton.setFocusPainted(false);
+        this.hideOrShowTimerButton.setContentAreaFilled(false);
+
+        this.hideOrShowTimerButton.setActionCommand("doHideOrShowTimer");
+        this.hideOrShowTimerButton.addActionListener(this);
+
+        this.headerPanel.add(this.hideOrShowTimerButton);
     }
 
     /**************************************************

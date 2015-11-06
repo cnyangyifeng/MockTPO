@@ -1,7 +1,7 @@
 package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.MApplication;
-import com.mocktpo.model.MListeningSection;
+import com.mocktpo.model.MListeningPassage;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ListeningSectionPanel extends BodyPanel implements ActionListener {
+public class ListeningPassagePanel extends BodyPanel implements ActionListener {
 
     public static final int CONVERSATION_LABEL_WIDTH = 600;
     public static final int CONVERSATION_LABEL_HEIGHT = 450;
@@ -26,9 +26,9 @@ public class ListeningSectionPanel extends BodyPanel implements ActionListener {
     private Player audioPlayer;
     private Timer timer;
 
-    private MListeningSection listeningSection;
+    private MListeningPassage listeningSection;
 
-    public ListeningSectionPanel(Rectangle bounds, MListeningSection listeningSection) {
+    public ListeningPassagePanel(Rectangle bounds, MListeningPassage listeningSection) {
         super(bounds);
         this.listeningSection = listeningSection;
         this.initComponents();

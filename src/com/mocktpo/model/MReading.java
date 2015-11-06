@@ -2,10 +2,10 @@ package com.mocktpo.model;
 
 import java.util.List;
 
-public class MListening {
+public class MReading {
 
     protected String index;
-    protected List<MListeningPassage> passages;
+    protected List<MReadingSection> sections;
 
     public String getIndex() {
         return this.index;
@@ -15,8 +15,12 @@ public class MListening {
         this.index = index;
     }
 
-    public List<MListeningPassage> getPassages() {
-        return passages;
+    public List<MReadingSection> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<MReadingSection> sections) {
+        this.sections = sections;
     }
 
     @Override

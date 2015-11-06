@@ -5,8 +5,6 @@ import com.mocktpo.model.MListeningPassage;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.media.*;
 import javax.media.format.AudioFormat;
@@ -22,10 +20,6 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
 
     public static final int CONVERSATION_PROGRESS_BAR_WIDTH = 320;
     public static final int CONVERSATION_PROGRESS_BAR_HEIGHT = 6;
-
-    // Logger
-
-    private static final Logger logger = LogManager.getLogger();
 
     private JLabel conversationLabel;
     private JProgressBar conversationProgressBar;
@@ -56,7 +50,6 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         this.conversationLabel.setBounds(x, LayoutConstants.MARGIN * 5, CONVERSATION_LABEL_WIDTH, CONVERSATION_LABEL_HEIGHT);
 
         String imageVal = GlobalConstants.TESTS_DIR + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.passage.getImages().get(0).getIndex();
-        logger.info("Image: " + imageVal);
         ImageIcon icon = new ImageIcon(this.getClass().getResource(imageVal));
         this.conversationLabel.setIcon(icon);
 

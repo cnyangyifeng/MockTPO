@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Vector;
 import java.util.zip.ZipInputStream;
@@ -364,15 +365,15 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                     Thread.sleep(200);
                     is = ftp.download(remoteFile);
                     os = new BufferedOutputStream(new FileOutputStream(new File(localFile)));
-                    byte[] bytes = new byte[65536]; // 64k
+                    byte[] bytes = new byte[524288]; // 512k
                     int c;
                     long fileSize = ftp.getFileSize(remoteFile);
                     if (fileSize <= 0) {
                         logger.error("Downloadable file not found.");
                         return;
                     }
-                    long step = fileSize / 100;
-                    long localSize = 0L;
+                    double step = fileSize / 100.0;
+                    double localSize = 0.0;
                     while ((c = is.read(bytes)) != -1) {
                         if (!markers[selectedRow]) {
                             logger.info("Previous download thread stopped. New download.");
@@ -385,12 +386,14 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                         }
                         os.write(bytes, 0, c);
                         localSize += c;
-                        int downloadProgress = (int) (localSize / step);
-                        logger.debug("Downloading {}: {}%", testIndex, downloadProgress);
+                        double downloadProgress = localSize / step;
                         if (downloadProgress <= 100) {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
-                                    bodyTable.setValueAt(downloadProgress + "%", selectedRow, selectedColumn); // "Download" column
+                                    DecimalFormat df = new DecimalFormat("#0.0");
+                                    String progress = df.format(downloadProgress);
+                                    logger.debug("Downloading {}: {}%", testIndex, progress);
+                                    bodyTable.setValueAt(progress + "%", selectedRow, selectedColumn); // "Download" column
                                 }
                             });
                         }

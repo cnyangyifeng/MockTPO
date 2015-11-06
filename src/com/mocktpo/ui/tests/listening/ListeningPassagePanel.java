@@ -5,6 +5,8 @@ import com.mocktpo.model.MListeningPassage;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.media.*;
 import javax.media.format.AudioFormat;
@@ -21,16 +23,20 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
     public static final int CONVERSATION_PROGRESS_BAR_WIDTH = 320;
     public static final int CONVERSATION_PROGRESS_BAR_HEIGHT = 6;
 
+    // Logger
+
+    private static final Logger logger = LogManager.getLogger();
+
     private JLabel conversationLabel;
     private JProgressBar conversationProgressBar;
     private Player audioPlayer;
     private Timer timer;
 
-    private MListeningPassage listeningSection;
+    private MListeningPassage passage;
 
-    public ListeningPassagePanel(Rectangle bounds, MListeningPassage listeningSection) {
+    public ListeningPassagePanel(Rectangle bounds, MListeningPassage passage) {
         super(bounds);
-        this.listeningSection = listeningSection;
+        this.passage = passage;
         this.initComponents();
     }
 
@@ -49,7 +55,8 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         int x = (this.getWidth() - CONVERSATION_LABEL_WIDTH) / 2;
         this.conversationLabel.setBounds(x, LayoutConstants.MARGIN * 5, CONVERSATION_LABEL_WIDTH, CONVERSATION_LABEL_HEIGHT);
 
-        String imageVal = GlobalConstants.TESTS_DIR + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getImages().get(0).getIndex();
+        String imageVal = GlobalConstants.TESTS_DIR + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.passage.getImages().get(0).getIndex();
+        logger.info("Image: " + imageVal);
         ImageIcon icon = new ImageIcon(this.getClass().getResource(imageVal));
         this.conversationLabel.setIcon(icon);
 
@@ -78,7 +85,7 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         Format output = new AudioFormat(AudioFormat.LINEAR);
         PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
         try {
-            String audioVal = GlobalConstants.TESTS_DIR + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.listeningSection.getAudios().get(0).getIndex();
+            String audioVal = GlobalConstants.TESTS_DIR + MApplication.settings.get("testIndex") + GlobalConstants.LISTENING_DIR + this.passage.getAudios().get(0).getIndex();
             this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(this.getClass().getResource(audioVal)));
         } catch (Exception e) {
             e.printStackTrace();

@@ -19,7 +19,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Vector;
 import java.util.zip.ZipInputStream;
@@ -372,8 +371,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                         logger.error("Downloadable file not found.");
                         return;
                     }
-                    double step = fileSize / 100.0;
-                    double localSize = 0.0;
+                    int step = (int) fileSize / 100;
+                    int localSize = 0;
                     while ((c = is.read(bytes)) != -1) {
                         if (!markers[selectedRow]) {
                             logger.info("Previous download thread stopped. New download.");
@@ -386,14 +385,12 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
                         }
                         os.write(bytes, 0, c);
                         localSize += c;
-                        double downloadProgress = localSize / step;
+                        int downloadProgress = localSize / step;
                         if (downloadProgress <= 100) {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
-                                    DecimalFormat df = new DecimalFormat("#0.0");
-                                    String progress = df.format(downloadProgress);
-                                    logger.debug("Downloading {}: {}%", testIndex, progress);
-                                    bodyTable.setValueAt(progress + "%", selectedRow, selectedColumn); // "Download" column
+                                    logger.debug("Downloading {}: {}%", testIndex, downloadProgress);
+                                    bodyTable.setValueAt(downloadProgress + "%", selectedRow, selectedColumn); // "Download" column
                                 }
                             });
                         }

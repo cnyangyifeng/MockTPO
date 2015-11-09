@@ -26,9 +26,9 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     public static final int SUBJECT_PANE_WIDTH = 800;
     public static final int SUBJECT_PANE_HEIGHT = 60;
     public static final int OPTIONS_PANEL_WIDTH = 800;
-    public static final int OPTIONS_PANEL_HEIGHT = 200;
+    public static final int OPTIONS_PANEL_HEIGHT = 320;
     public static final int OPTION_BUTTON_WIDTH = 800;
-    public static final int OPTION_BUTTON_HEIGHT = 40;
+    public static final int OPTION_BUTTON_HEIGHT = 30;
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -104,6 +104,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
             radioButton.setIcon(icon);
             ImageIcon selectedIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "checked.png"));
             radioButton.setSelectedIcon(selectedIcon);
+            radioButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             radioButton.addItemListener(this);
 
             buttonGroup.add(radioButton);

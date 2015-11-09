@@ -100,8 +100,7 @@ public class TestFrame extends JFrame implements ActionListener {
     public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc);
         this.mainFrame = mainFrame;
-        this.testIndex = (String) MApplication.settings.get("testIndex");
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {
@@ -138,7 +137,8 @@ public class TestFrame extends JFrame implements ActionListener {
         xs.alias("question", MListeningQuestion.class);
         xs.alias("option", MChoiceOption.class);
 
-        String val = GlobalConstants.TESTS_DIR + testIndex + GlobalConstants.LISTENING_DIR + GlobalConstants.LISTENING_CONF_FILE;
+        this.testIndex = (String) MApplication.settings.get("testIndex");
+        String val = GlobalConstants.TESTS_DIR + this.testIndex + GlobalConstants.LISTENING_DIR + GlobalConstants.LISTENING_CONF_FILE;
         URL xml = this.getClass().getResource(val);
         try {
             this.listening = (MListening) xs.fromXML(new File(xml.toURI()));

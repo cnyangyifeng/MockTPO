@@ -61,7 +61,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {
@@ -449,7 +449,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         GraphicsDevice device = ge.getDefaultScreenDevice();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
+                testFrame = new ListeningFrame(device.getDefaultConfiguration(), MainFrame.this);
                 device.setFullScreenWindow(testFrame);
                 testFrame.setVisible(true);
                 setVisible(false);

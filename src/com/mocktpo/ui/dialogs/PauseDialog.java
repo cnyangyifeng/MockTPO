@@ -171,7 +171,6 @@ public class PauseDialog extends JDialog implements ActionListener {
                     MainFrame mainFrame = testFrame.getMainFrame();
 
                     PauseDialog.this.dispose();
-                    testFrame.didPauseTest();
                     testFrame.dispose();
 
                     if (mainFrame == null) {

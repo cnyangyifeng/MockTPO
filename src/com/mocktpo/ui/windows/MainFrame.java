@@ -41,30 +41,30 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     // Logger
 
-    private static final Logger logger = LogManager.getLogger();
+    protected static final Logger logger = LogManager.getLogger();
 
     // Components
 
-    private TestFrame testFrame;
-    private HeaderPanel headerPanel;
-    private BodyPanel bodyPanel;
-    private JEditorPane sloganPane;
-    private MTable bodyTable;
-    private FooterPanel footerPanel;
+    protected TestFrame testFrame;
+    protected HeaderPanel headerPanel;
+    protected BodyPanel bodyPanel;
+    protected JEditorPane sloganPane;
+    protected MTable bodyTable;
+    protected FooterPanel footerPanel;
 
     // Variables
 
-    private MockTPO mockTPO;
+    protected MockTPO mockTPO;
 
-    private volatile boolean[] markers; // Download markers
-    private volatile boolean redownload;
+    protected volatile boolean[] markers; // Download markers
+    protected volatile boolean redownload;
 
     public MainFrame(GraphicsConfiguration gc) {
         super(gc);
         this.initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.globalSettings();
         this.setLayout(null);
 
@@ -73,7 +73,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.setFooterPanel();
     }
 
-    private void globalSettings() {
+    protected void globalSettings() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
 
@@ -91,7 +91,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
      * Set Header Panel
      **************************************************/
 
-    private void setHeaderPanel() {
+    protected void setHeaderPanel() {
         this.headerPanel = new HeaderPanel();
 
         this.headerPanel.setBounds(0, 0, this.getWidth(), LayoutConstants.HEADER_PANEL_HEIGHT);
@@ -105,7 +105,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.getContentPane().add(this.headerPanel);
     }
 
-    private void setLogoLabel() {
+    protected void setLogoLabel() {
         JLabel logoLabel = new JLabel();
 
         logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
@@ -116,7 +116,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.headerPanel.add(logoLabel);
     }
 
-    private void setTitlePane() {
+    protected void setTitlePane() {
         JEditorPane titlePane = new JEditorPane();
 
         int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
@@ -135,7 +135,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.headerPanel.add(titlePane);
     }
 
-    private void setExitApplicationButton() {
+    protected void setExitApplicationButton() {
         MButton exitApplicationButton = new MButton();
 
         int x = LayoutConstants.MARGIN;
@@ -163,7 +163,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
      * Set Body Panel
      **************************************************/
 
-    private void setBodyPanel() {
+    protected void setBodyPanel() {
         int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
         Rectangle bounds = new Rectangle(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
         this.bodyPanel = new BodyPanel(bounds);
@@ -174,7 +174,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.getContentPane().add(this.bodyPanel);
     }
 
-    private void setSloganPane() {
+    protected void setSloganPane() {
         this.sloganPane = new JEditorPane();
 
         int x = (this.bodyPanel.getWidth() - SLOGAN_PANE_WIDTH) / 2;
@@ -194,7 +194,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.bodyPanel.add(this.sloganPane);
     }
 
-    private void setBodyScrollPane() {
+    protected void setBodyScrollPane() {
         String[] columnNames = {"TPO" /* Index */, "Description" /* Name */, "Download", "Test" /* Next */, "Reports"};
         DefaultTableModel tableModel = new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int mColIndex) {
@@ -238,7 +238,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
      * Set Footer Panel
      **************************************************/
 
-    private void setFooterPanel() {
+    protected void setFooterPanel() {
         this.footerPanel = new FooterPanel();
 
         this.footerPanel.setBounds(0, this.getHeight() - LayoutConstants.FOOTER_PANEL_HEIGHT, this.getWidth(), LayoutConstants.FOOTER_PANEL_HEIGHT);
@@ -250,7 +250,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.getContentPane().add(this.footerPanel);
     }
 
-    private void setCopyrightPane() {
+    protected void setCopyrightPane() {
         JEditorPane copyrightPane = new JEditorPane();
 
         int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
@@ -324,7 +324,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
      * Actions
      **************************************************/
 
-    private void doDownload(final int selectedRow, final int selectedColumn) {
+    public void doDownload(final int selectedRow, final int selectedColumn) {
         String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
         String remoteFile = GlobalConstants.REMOTE_TESTS_DIR + testIndex + GlobalConstants.POSTFIX_ZIP;
         String localFile = this.getClass().getResource(GlobalConstants.TESTS_DIR).getPath() + testIndex + GlobalConstants.POSTFIX_ZIP;
@@ -442,13 +442,14 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         thread.start();
     }
 
-    private void doNext(int selectedRow) {
+    public void doNext(int selectedRow) {
         String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
         MApplication.settings.put("testIndex", testIndex);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = ge.getDefaultScreenDevice();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+                // testFrame = new ReadingFrame(device.getDefaultConfiguration(), MainFrame.this);
                 testFrame = new ListeningFrame(device.getDefaultConfiguration(), MainFrame.this);
                 device.setFullScreenWindow(testFrame);
                 testFrame.setVisible(true);
@@ -457,7 +458,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         });
     }
 
-    private void doReports(int selectedRow) {
+    public void doReports(int selectedRow) {
         logger.info("Reports in row {}.", selectedRow);
     }
 }

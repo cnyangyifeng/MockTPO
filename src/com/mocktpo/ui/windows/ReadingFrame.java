@@ -8,5 +8,13 @@ public class ReadingFrame extends TestFrame {
         super(gc, mainFrame);
     }
 
+    protected void configData() {
+    }
 
+    protected void customizeHeaderPanel() {
+
+    }
+
+    protected void customizeBodyPanel() {
+    }
 }

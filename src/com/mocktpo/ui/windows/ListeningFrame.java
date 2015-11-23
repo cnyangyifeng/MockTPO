@@ -42,6 +42,7 @@ public class ListeningFrame extends TestFrame implements ActionListener {
 
     // Components
 
+    private MButton sectionExitButton;
     private JEditorPane questionNumberPane;
     private MButton nextButton;
     private MButton okButton;
@@ -87,6 +88,7 @@ public class ListeningFrame extends TestFrame implements ActionListener {
     }
 
     protected void customizeHeaderPanel() {
+        this.setSectionExitButton();
         this.setQuestionNumberPane();
         this.setControlButtons();
         this.setTimerLabel();
@@ -101,6 +103,30 @@ public class ListeningFrame extends TestFrame implements ActionListener {
     /**************************************************
      * Private methods
      **************************************************/
+
+    private void setSectionExitButton() {
+        this.sectionExitButton = new MButton();
+
+        int x = this.pauseTestButton.getX() + PAUSE_TEST_BUTTON_WIDTH + LayoutConstants.MARGIN;
+        int y = LayoutConstants.HEADER_PANEL_HEIGHT - SECTION_EXIT_BUTTON_HEIGHT - LayoutConstants.MARGIN;
+        this.sectionExitButton.setBounds(x, y, SECTION_EXIT_BUTTON_WIDTH, SECTION_EXIT_BUTTON_HEIGHT);
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "section_exit.png"));
+        this.sectionExitButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "section_exit_hi.png"));
+        this.sectionExitButton.setRolloverIcon(rolloverIcon);
+        this.sectionExitButton.setText(null);
+        this.sectionExitButton.setMargin(new Insets(0, 0, 0, 0));
+        this.sectionExitButton.setBorder(null);
+        this.sectionExitButton.setBorderPainted(false);
+        this.sectionExitButton.setFocusPainted(false);
+        this.sectionExitButton.setContentAreaFilled(false);
+
+        this.sectionExitButton.setActionCommand("doSectionExit");
+        this.sectionExitButton.addActionListener(this);
+
+        this.headerPanel.add(this.sectionExitButton);
+    }
 
     private void setQuestionNumberPane() {
         this.questionNumberPane = new JEditorPane();

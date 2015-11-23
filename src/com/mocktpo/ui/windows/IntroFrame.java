@@ -93,10 +93,7 @@ public class IntroFrame extends TestFrame implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        getContentPane().remove(bodyPanel);
-                        //
-                        getContentPane().add(bodyPanel);
-                        repaint();
+                        // TODO
                     }
                 });
                 break;

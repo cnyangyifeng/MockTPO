@@ -450,8 +450,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // testFrame = new ReadingFrame(device.getDefaultConfiguration(), MainFrame.this);
-                // testFrame = new ListeningFrame(device.getDefaultConfiguration(), MainFrame.this);
-                testFrame = new IntroFrame(device.getDefaultConfiguration(), MainFrame.this);
+                testFrame = new ListeningFrame(device.getDefaultConfiguration(), MainFrame.this);
+                // testFrame = new IntroFrame(device.getDefaultConfiguration(), MainFrame.this);
                 device.setFullScreenWindow(testFrame);
                 testFrame.setVisible(true);
                 setVisible(false);

@@ -41,21 +41,19 @@ public class TestIntroFrame extends TestFrame implements ActionListener {
 
     @Override
     protected void customizeBodyPanel() {
-        // this.copyrightPanel = new CopyrightPanel(this.bodyBounds);
-        // this.bodyPanel = this.copyrightPanel;
-        this.generalTestInfoPanel = new GeneralTestInfoPanel(this.bodyBounds);
-        this.bodyPanel = this.generalTestInfoPanel;
+        this.copyrightPanel = new CopyrightPanel(this.bodyBounds);
+        this.bodyPanel = this.copyrightPanel;
     }
 
     /**************************************************
-     * Private methods
+     * User Interface Initializations
      **************************************************/
 
-    private void setControlButtons() {
+    protected void setControlButtons() {
         this.setContinueButton();
     }
 
-    private void setContinueButton() {
+    protected void setContinueButton() {
         this.continueButton = new MButton();
 
         int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
@@ -83,6 +81,7 @@ public class TestIntroFrame extends TestFrame implements ActionListener {
      * Listeners
      **************************************************/
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String ac = e.getActionCommand();
         switch (ac) {
@@ -101,7 +100,15 @@ public class TestIntroFrame extends TestFrame implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        // TODO
+                        getContentPane().remove(bodyPanel);
+                        if (bodyPanel instanceof CopyrightPanel) {
+                            generalTestInfoPanel = new GeneralTestInfoPanel(bodyBounds);
+                            bodyPanel = generalTestInfoPanel;
+                        } else if (bodyPanel instanceof GeneralTestInfoPanel) {
+                            //
+                        }
+                        getContentPane().add(bodyPanel);
+                        repaint();
                     }
                 });
                 break;

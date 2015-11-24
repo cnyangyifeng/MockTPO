@@ -19,7 +19,7 @@ public class MListeningPassage {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public List<MImage> getImages() {

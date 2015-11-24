@@ -36,6 +36,7 @@ public class ListeningFrame extends TestWithSectionControlFrame implements Actio
         super(gc, mainFrame);
     }
 
+    @Override
     protected void configData() {
         XStream xs = new XStream();
         xs.alias("listening", MListening.class);
@@ -55,6 +56,7 @@ public class ListeningFrame extends TestWithSectionControlFrame implements Actio
         }
     }
 
+    @Override
     protected void customizeBodyPanel() {
         this.headsetPanel = new HeadsetPanel(this.bodyBounds);
         this.bodyPanel = this.headsetPanel;
@@ -64,6 +66,7 @@ public class ListeningFrame extends TestWithSectionControlFrame implements Actio
      * Listeners
      **************************************************/
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String ac = e.getActionCommand();
         switch (ac) {

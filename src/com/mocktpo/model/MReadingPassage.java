@@ -5,7 +5,8 @@ import java.util.List;
 public class MReadingPassage {
 
     protected String index;
-    protected String text;
+    protected String title;
+    protected List<MReadingParagraph> paragraphs;
     protected List<MChoiceQuestion> questions;
 
     public String getIndex() {
@@ -16,8 +17,12 @@ public class MReadingPassage {
         this.index = index;
     }
 
-    public String getText() {
-        return this.text;
+    public String getTitle() {
+        return this.title;
+    }
+
+    public List<MReadingParagraph> getParagraphs() {
+        return this.paragraphs;
     }
 
     public List<MChoiceQuestion> getQuestions() {

@@ -16,11 +16,7 @@ public class MReading {
     }
 
     public List<MReadingPassage> getPassages() {
-        return passages;
-    }
-
-    public void setPassages(List<MReadingPassage> passages) {
-        this.passages = passages;
+        return this.passages;
     }
 
     @Override

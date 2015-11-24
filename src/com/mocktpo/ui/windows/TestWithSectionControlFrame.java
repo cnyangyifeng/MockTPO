@@ -60,10 +60,10 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
     }
 
     /**************************************************
-     * Private methods
+     * User Interface Initializations
      **************************************************/
 
-    private void setSectionExitButton() {
+    protected void setSectionExitButton() {
         this.sectionExitButton = new MButton();
 
         int x = this.pauseTestButton.getX() + PAUSE_TEST_BUTTON_WIDTH + LayoutConstants.MARGIN;
@@ -87,7 +87,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.headerPanel.add(this.sectionExitButton);
     }
 
-    private void setQuestionNumberPane() {
+    protected void setQuestionNumberPane() {
         this.questionNumberPane = new JEditorPane();
 
         int x = (this.headerPanel.getWidth() - QUESTION_NUMBER_PANE_WIDTH) / 2;
@@ -106,7 +106,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.headerPanel.add(this.questionNumberPane);
     }
 
-    private void setControlButtons() {
+    protected void setControlButtons() {
         this.setNextButton();
         this.setOkButton();
         this.setHelpButton();
@@ -114,7 +114,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.setContinueButton();
     }
 
-    private void setNextButton() {
+    protected void setNextButton() {
         this.nextButton = new MButton();
 
         int x = this.headerPanel.getWidth() - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN;
@@ -136,7 +136,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.headerPanel.add(this.nextButton);
     }
 
-    private void setOkButton() {
+    protected void setOkButton() {
         this.okButton = new MButton();
 
         int x = this.headerPanel.getWidth() - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
@@ -158,7 +158,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.headerPanel.add(this.okButton);
     }
 
-    private void setHelpButton() {
+    protected void setHelpButton() {
         this.helpButton = new MButton();
 
         int x = this.headerPanel.getWidth() - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 3;
@@ -180,7 +180,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.headerPanel.add(this.helpButton);
     }
 
-    private void setVolumeButton() {
+    protected void setVolumeButton() {
         this.volumeButton = new MButton();
 
         int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
@@ -202,7 +202,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.headerPanel.add(this.volumeButton);
     }
 
-    private void setContinueButton() {
+    protected void setContinueButton() {
         this.continueButton = new MButton();
 
         int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
@@ -226,7 +226,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.headerPanel.add(this.continueButton);
     }
 
-    private void setTimerLabel() {
+    protected void setTimerLabel() {
         this.timerLabel = new JLabel();
 
         int x = this.headerPanel.getWidth() - TIMER_LABEL_WIDTH - LayoutConstants.MARGIN * 2;
@@ -240,7 +240,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
         this.headerPanel.add(this.timerLabel);
     }
 
-    private void setHideOrShowTimerButton() {
+    protected void setHideOrShowTimerButton() {
         this.hideOrShowTimerButton = new MButton();
 
         int x = this.headerPanel.getWidth() - HIDE_OR_SHOW_TIMER_BUTTON_WIDTH - TIMER_LABEL_WIDTH - LayoutConstants.MARGIN * 4;
@@ -268,6 +268,7 @@ public abstract class TestWithSectionControlFrame extends TestFrame implements A
      * Listeners
      **************************************************/
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String ac = e.getActionCommand();
         switch (ac) {

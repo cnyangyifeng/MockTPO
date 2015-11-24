@@ -214,9 +214,6 @@ public abstract class TestFrame extends JFrame implements ActionListener {
                     }
                 });
                 break;
-            case "doSectionExit":
-                logger.info("'Section Exit' button pressed.");
-                break;
         }
     }
 

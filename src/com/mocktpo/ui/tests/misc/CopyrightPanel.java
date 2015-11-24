@@ -8,14 +8,14 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 
-public class IntroPanel extends BodyPanel {
+public class CopyrightPanel extends BodyPanel {
 
     public static final int DESCRIPTION_PANE_WIDTH = 800;
     public static final int DESCRIPTION_PANE_HEIGHT = 400;
 
     private JEditorPane descriptionPane;
 
-    public IntroPanel(Rectangle bounds) {
+    public CopyrightPanel(Rectangle bounds) {
         super(bounds);
         this.initComponents();
     }
@@ -37,11 +37,11 @@ public class IntroPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".intro-img { margin-bottom: 40px; text-align: center; } .intro-img img { height: 90px; width: 160px; } .intro-text { color: #333333; font-family: Arial; font-size: 12px; text-align: center; }");
+        style.addRule(".cp-img { margin-bottom: 40px; text-align: center; } .cp-img img { height: 90px; width: 160px; } .cp { color: #333333; font-family: Arial; font-size: 12px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ets_toefl.png").toString();
-        String text = "<div class='intro-img'><img src='" + imgUrl + "' /></div>";
-        text += "<div class='intro-text'>Copyright 2009, 2011 by Educational Testing Service. All rights reserved.<br />EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of<br />Educational Testing Service (ETS) in the United States and other countries.<br /><br />Click on <b>Continue</b> to go on.</div>";
+        String text = "<div class='cp-img'><img src='" + imgUrl + "' /></div>";
+        text += "<div class='cp'>Copyright 2009, 2011 by Educational Testing Service. All rights reserved.<br />EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of<br />Educational Testing Service (ETS) in the United States and other countries.<br /><br />Click on <b>Continue</b> to go on.</div>";
         this.descriptionPane.setText(text);
 
         this.add(this.descriptionPane);

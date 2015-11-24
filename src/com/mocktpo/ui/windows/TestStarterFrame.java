@@ -1,7 +1,8 @@
 package com.mocktpo.ui.windows;
 
 import com.mocktpo.ui.dialogs.PauseDialog;
-import com.mocktpo.ui.tests.misc.IntroPanel;
+import com.mocktpo.ui.tests.misc.CopyrightPanel;
+import com.mocktpo.ui.tests.misc.GeneralTestInfoPanel;
 import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class IntroFrame extends TestFrame implements ActionListener {
+public class TestStarterFrame extends TestFrame implements ActionListener {
 
     // Constants
 
@@ -21,22 +22,29 @@ public class IntroFrame extends TestFrame implements ActionListener {
     // Components
 
     private MButton continueButton;
-    private IntroPanel introPanel;
 
-    public IntroFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
+    private CopyrightPanel copyrightPanel;
+    private GeneralTestInfoPanel generalTestInfoPanel;
+
+    public TestStarterFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc, mainFrame);
     }
 
+    @Override
     protected void configData() {
     }
 
+    @Override
     protected void customizeHeaderPanel() {
         this.setControlButtons();
     }
 
+    @Override
     protected void customizeBodyPanel() {
-        this.introPanel = new IntroPanel(this.bodyBounds);
-        this.bodyPanel = this.introPanel;
+        // this.copyrightPanel = new CopyrightPanel(this.bodyBounds);
+        // this.bodyPanel = this.copyrightPanel;
+        this.generalTestInfoPanel = new GeneralTestInfoPanel(this.bodyBounds);
+        this.bodyPanel = this.generalTestInfoPanel;
     }
 
     /**************************************************
@@ -83,7 +91,7 @@ public class IntroFrame extends TestFrame implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        PauseDialog pause = new PauseDialog(IntroFrame.this, "", true);
+                        PauseDialog pause = new PauseDialog(TestStarterFrame.this, "", true);
                         pause.setVisible(true);
                     }
                 });

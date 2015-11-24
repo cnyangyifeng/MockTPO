@@ -3,7 +3,7 @@ package com.mocktpo.ui.widgets;
 import javax.swing.*;
 import java.awt.*;
 
-public class PauseDialogBodyPanel extends JPanel {
+public class DialogBodyPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {

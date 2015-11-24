@@ -1,6 +1,7 @@
 package com.mocktpo.ui.windows;
 
-import com.mocktpo.ui.dialogs.PauseDialog;
+import com.mocktpo.ui.dialogs.PauseTestDialog;
+import com.mocktpo.ui.dialogs.SectionExitDialog;
 import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public abstract class AbstractTestSectionFrame extends TestFrame implements ActionListener {
+public abstract class TestWithSectionControlFrame extends TestFrame implements ActionListener {
 
     // Constants
 
@@ -45,7 +46,7 @@ public abstract class AbstractTestSectionFrame extends TestFrame implements Acti
     private JLabel timerLabel;
     private MButton hideOrShowTimerButton;
 
-    public AbstractTestSectionFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
+    public TestWithSectionControlFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc, mainFrame);
     }
 
@@ -275,13 +276,20 @@ public abstract class AbstractTestSectionFrame extends TestFrame implements Acti
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        PauseDialog pause = new PauseDialog(AbstractTestSectionFrame.this, "", true);
+                        PauseTestDialog pause = new PauseTestDialog(TestWithSectionControlFrame.this, "", true);
                         pause.setVisible(true);
                     }
                 });
                 break;
             case "doSectionExit":
                 logger.info("'Section Exit' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        SectionExitDialog exit = new SectionExitDialog(TestWithSectionControlFrame.this, "", true);
+                        exit.setVisible(true);
+                    }
+                });
                 break;
             case "doContinue":
                 logger.info("'Continue' button pressed.");

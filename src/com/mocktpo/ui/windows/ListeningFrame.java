@@ -2,7 +2,8 @@ package com.mocktpo.ui.windows;
 
 import com.mocktpo.MApplication;
 import com.mocktpo.model.*;
-import com.mocktpo.ui.dialogs.PauseDialog;
+import com.mocktpo.ui.dialogs.PauseTestDialog;
+import com.mocktpo.ui.dialogs.SectionExitDialog;
 import com.mocktpo.ui.tests.listening.*;
 import com.mocktpo.util.GlobalConstants;
 import com.thoughtworks.xstream.XStream;
@@ -15,7 +16,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-public class ListeningFrame extends AbstractTestSectionFrame implements ActionListener {
+public class ListeningFrame extends TestWithSectionControlFrame implements ActionListener {
 
     // Components
 
@@ -71,13 +72,20 @@ public class ListeningFrame extends AbstractTestSectionFrame implements ActionLi
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        PauseDialog pause = new PauseDialog(ListeningFrame.this, "", true);
+                        PauseTestDialog pause = new PauseTestDialog(ListeningFrame.this, "", true);
                         pause.setVisible(true);
                     }
                 });
                 break;
             case "doSectionExit":
                 logger.info("'Section Exit' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        SectionExitDialog exit = new SectionExitDialog(ListeningFrame.this, "", true);
+                        exit.setVisible(true);
+                    }
+                });
                 break;
             case "doContinue":
                 logger.info("'Continue' button pressed.");

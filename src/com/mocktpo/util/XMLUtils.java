@@ -14,9 +14,8 @@ import java.net.URL;
 
 public class XMLUtils {
 
-    private static String LOCAL_FILE = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
-
     private static final Logger logger = LogManager.getLogger();
+    private static String LOCAL_FILE = GlobalConstants.APPLICATION_DIR + GlobalConstants.MOCKTPO_CONF_FILE;
 
     public static MockTPO load() {
         XStream xs = new XStream();

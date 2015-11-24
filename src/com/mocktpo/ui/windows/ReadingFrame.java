@@ -4,7 +4,7 @@ import com.mocktpo.ui.tests.reading.ReadingDirectionsPanel;
 
 import java.awt.*;
 
-public class ReadingFrame extends AbstractTestSectionFrame {
+public class ReadingFrame extends TestWithSectionControlFrame {
 
     // Components
 

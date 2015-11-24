@@ -3,6 +3,7 @@ package com.mocktpo.ui.windows;
 import com.mocktpo.MApplication;
 import com.mocktpo.model.MTest;
 import com.mocktpo.model.MockTPO;
+import com.mocktpo.ui.dialogs.ApplicationExitDialog;
 import com.mocktpo.ui.widgets.*;
 import com.mocktpo.util.*;
 import org.apache.commons.io.IOUtils;
@@ -277,7 +278,13 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         if ("doExitApplication".equals(e.getActionCommand())) {
             logger.info("'Exit Application' button pressed.");
-            System.exit(0);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    ApplicationExitDialog exit = new ApplicationExitDialog(MainFrame.this, "", true);
+                    exit.setVisible(true);
+                }
+            });
         }
     }
 
@@ -449,7 +456,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         GraphicsDevice device = ge.getDefaultScreenDevice();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                // testFrame = new TestStarterFrame(device.getDefaultConfiguration(), MainFrame.this);
+                // testFrame = new TestIntroFrame(device.getDefaultConfiguration(), MainFrame.this);
                 testFrame = new ReadingFrame(device.getDefaultConfiguration(), MainFrame.this);
                 // testFrame = new ListeningFrame(device.getDefaultConfiguration(), MainFrame.this);
                 device.setFullScreenWindow(testFrame);

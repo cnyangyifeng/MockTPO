@@ -1,6 +1,6 @@
 package com.mocktpo.ui.windows;
 
-import com.mocktpo.ui.dialogs.PauseDialog;
+import com.mocktpo.ui.dialogs.PauseTestDialog;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
@@ -209,7 +209,7 @@ public abstract class TestFrame extends JFrame implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        PauseDialog pause = new PauseDialog(TestFrame.this, "", true);
+                        PauseTestDialog pause = new PauseTestDialog(TestFrame.this, "", true);
                         pause.setVisible(true);
                     }
                 });

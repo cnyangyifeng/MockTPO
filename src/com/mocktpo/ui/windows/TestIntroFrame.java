@@ -1,6 +1,6 @@
 package com.mocktpo.ui.windows;
 
-import com.mocktpo.ui.dialogs.PauseDialog;
+import com.mocktpo.ui.dialogs.PauseTestDialog;
 import com.mocktpo.ui.tests.misc.CopyrightPanel;
 import com.mocktpo.ui.tests.misc.GeneralTestInfoPanel;
 import com.mocktpo.ui.widgets.MButton;
@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TestStarterFrame extends TestFrame implements ActionListener {
+public class TestIntroFrame extends TestFrame implements ActionListener {
 
     // Constants
 
@@ -26,7 +26,7 @@ public class TestStarterFrame extends TestFrame implements ActionListener {
     private CopyrightPanel copyrightPanel;
     private GeneralTestInfoPanel generalTestInfoPanel;
 
-    public TestStarterFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
+    public TestIntroFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc, mainFrame);
     }
 
@@ -91,7 +91,7 @@ public class TestStarterFrame extends TestFrame implements ActionListener {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        PauseDialog pause = new PauseDialog(TestStarterFrame.this, "", true);
+                        PauseTestDialog pause = new PauseTestDialog(TestIntroFrame.this, "", true);
                         pause.setVisible(true);
                     }
                 });

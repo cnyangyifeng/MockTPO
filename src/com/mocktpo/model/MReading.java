@@ -5,7 +5,7 @@ import java.util.List;
 public class MReading {
 
     protected String index;
-    protected List<MReadingSection> sections;
+    protected List<MReadingPassage> passages;
 
     public String getIndex() {
         return this.index;
@@ -15,12 +15,12 @@ public class MReading {
         this.index = index;
     }
 
-    public List<MReadingSection> getSections() {
-        return sections;
+    public List<MReadingPassage> getPassages() {
+        return passages;
     }
 
-    public void setSections(List<MReadingSection> sections) {
-        this.sections = sections;
+    public void setPassages(List<MReadingPassage> passages) {
+        this.passages = passages;
     }
 
     @Override

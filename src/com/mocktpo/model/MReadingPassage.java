@@ -1,15 +1,27 @@
 package com.mocktpo.model;
 
-public class MReadingPassage extends MChoiceQuestion {
+import java.util.List;
 
-    protected MAudio audio;
+public class MReadingPassage {
 
-    public MAudio getAudio() {
-        return this.audio;
+    protected String index;
+    protected String text;
+    protected List<MChoiceQuestion> questions;
+
+    public String getIndex() {
+        return this.index;
     }
 
-    public void setAudio(MAudio audio) {
-        this.audio = audio;
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public List<MChoiceQuestion> getQuestions() {
+        return this.questions;
     }
 
     @Override

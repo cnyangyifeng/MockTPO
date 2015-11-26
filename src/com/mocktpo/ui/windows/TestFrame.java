@@ -131,6 +131,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setUndecorated(true);
 
         this.setTitle("TOEFL iBT Complete Practice Test");
+
+        this.configData();
     }
 
     /**************************************************
@@ -544,7 +546,8 @@ public class TestFrame extends JFrame implements ActionListener {
                             rdPanel = new ReadingDirectionsPanel(bodyBounds);
                             bodyPanel = rdPanel;
                         } else if (bodyPanel instanceof ReadingDirectionsPanel) {
-                            rpPanel = new ReadingPassagePanel(bodyBounds, reading.getPassages().get(0));
+                            MReadingPassage passage = reading.getPassages().get(0);
+                            rpPanel = new ReadingPassagePanel(bodyBounds, passage);
                             bodyPanel = rpPanel;
                         } else if (bodyPanel instanceof ReadingPassagePanel) {
                             headsetPanel = new HeadsetPanel(bodyBounds);
@@ -556,18 +559,20 @@ public class TestFrame extends JFrame implements ActionListener {
                             ldPanel = new ListeningDirectionsPanel(bodyBounds);
                             bodyPanel = ldPanel;
                         } else if (bodyPanel instanceof ListeningDirectionsPanel) {
-                            lpPanel = new ListeningPassagePanel(bodyBounds, listening.getPassages().get(0));
+                            MListeningPassage passage = listening.getPassages().get(0);
+                            lpPanel = new ListeningPassagePanel(bodyBounds, passage);
                             bodyPanel = lpPanel;
                         } else if (bodyPanel instanceof ListeningPassagePanel) {
-                            String hints = "Listen and answer.";
+                            String hints = "Now get ready to answer the questions.<br /><br />You may use your notes<br /> to help you answer.";
                             lhPanel = new ListeningHintsPanel(bodyBounds, hints);
                             bodyPanel = lhPanel;
                         } else if (bodyPanel instanceof ListeningHintsPanel) {
-                            lqPanel = new ListeningQuestionPanel(bodyBounds, listening.getPassages().get(0).getQuestions().get(0));
+                            MListeningQuestion question = listening.getPassages().get(0).getQuestions().get(0);
+                            lqPanel = new ListeningQuestionPanel(bodyBounds, question);
                             bodyPanel = lqPanel;
                         }
                         getContentPane().add(bodyPanel);
-
+                        repaint();
                     }
                 });
                 break;

@@ -19,5 +19,48 @@ public class ReadingPassagePanel extends BodyPanel {
         this.setLayout(null);
     }
 
+    @Override
+    public boolean sectionExitButtonEnabled() {
+        return true;
+    }
 
+    @Override
+    public boolean questionNumberPaneEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean nextButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean okButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean helpButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean volumeButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean continueButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean timerLabelEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean hideOrShowTimerButtonEnabled() {
+        return true;
+    }
 }

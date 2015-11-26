@@ -45,7 +45,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.initComponents();
     }
 
-    protected void initComponents() {
+    private void initComponents() {
         this.setLayout(null);
 
         this.setSubjectPane();

@@ -65,14 +65,18 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
         this.initComponents();
     }
 
-    protected void initComponents() {
+    private void initComponents() {
         this.globalSettings();
         this.setLayout(null);
 
-        this.setHeaderPanel();
         this.setBodyPanel();
+        this.setHeaderPanel();
         this.setFooterPanel();
     }
+
+    /**************************************************
+     * Global Settings
+     **************************************************/
 
     protected void globalSettings() {
         Toolkit tk = Toolkit.getDefaultToolkit();

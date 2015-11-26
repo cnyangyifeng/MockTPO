@@ -24,7 +24,7 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
         this.initComponents();
     }
 
-    protected void initComponents() {
+    private void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
         this.setAudioPlayer();

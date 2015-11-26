@@ -8,10 +8,10 @@ public class BodyPanel extends JPanel {
     public BodyPanel(Rectangle bounds) {
         super();
         this.setBounds(bounds);
-        initComponents();
+        this.initComponents();
     }
 
-    protected void initComponents() {
+    private void initComponents() {
         this.setLayout(null);
     }
 
@@ -28,7 +28,39 @@ public class BodyPanel extends JPanel {
         g2d.fillRect(0, 0, width, height);
     }
 
-    protected boolean sectionExitButtonEnabled() {
+    public boolean sectionExitButtonEnabled() {
+        return false;
+    }
+
+    public boolean questionNumberPaneEnabled() {
+        return false;
+    }
+
+    public boolean nextButtonEnabled() {
+        return false;
+    }
+
+    public boolean okButtonEnabled() {
+        return false;
+    }
+
+    public boolean helpButtonEnabled() {
+        return false;
+    }
+
+    public boolean volumeButtonEnabled() {
+        return false;
+    }
+
+    public boolean continueButtonEnabled() {
+        return true;
+    }
+
+    public boolean timerLabelEnabled() {
+        return false;
+    }
+
+    public boolean hideOrShowTimerButtonEnabled() {
         return false;
     }
 }

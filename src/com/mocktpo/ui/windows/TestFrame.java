@@ -110,14 +110,18 @@ public class TestFrame extends JFrame implements ActionListener {
         this.initComponents();
     }
 
-    protected void initComponents() {
+    private void initComponents() {
         this.globalSettings();
         this.setLayout(null);
 
-        this.setHeaderPanel();
         this.setBodyPanel();
+        this.setHeaderPanel();
         this.setFooterPanel();
     }
+
+    /**************************************************
+     * Global Settings
+     **************************************************/
 
     protected void globalSettings() {
         Toolkit tk = Toolkit.getDefaultToolkit();
@@ -182,6 +186,20 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     /**************************************************
+     * Set Body Panel
+     **************************************************/
+
+    protected void setBodyPanel() {
+        int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
+        this.bodyBounds = new Rectangle(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
+
+        this.copyrightPanel = new CopyrightPanel(this.bodyBounds);
+        this.bodyPanel = this.copyrightPanel;
+
+        this.getContentPane().add(this.bodyPanel);
+    }
+
+    /**************************************************
      * Set Header Panel
      **************************************************/
 
@@ -194,19 +212,45 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setTitlePane();
         this.setPauseTestButton();
 
-        this.setSectionExitButton();
-        this.setQuestionNumberPane();
-
-        this.setNextButton();
-        this.setOkButton();
-        this.setHelpButton();
-        this.setVolumeButton();
-        this.setContinueButton();
-
-        this.setTimerLabel();
-        this.setHideOrShowTimerButton();
+        this.resetHeaderPanel();
 
         this.getContentPane().add(headerPanel);
+    }
+
+    protected void resetHeaderPanel() {
+        this.headerPanel.removeAll();
+
+        this.setLogoLabel();
+        this.setTitlePane();
+        this.setPauseTestButton();
+
+        if (this.bodyPanel.sectionExitButtonEnabled()) {
+            this.setSectionExitButton();
+        }
+        if (this.bodyPanel.questionNumberPaneEnabled()) {
+            this.setQuestionNumberPane();
+        }
+        if (this.bodyPanel.nextButtonEnabled()) {
+            this.setNextButton();
+        }
+        if (this.bodyPanel.okButtonEnabled()) {
+            this.setOkButton();
+        }
+        if (this.bodyPanel.helpButtonEnabled()) {
+            this.setHelpButton();
+        }
+        if (this.bodyPanel.volumeButtonEnabled()) {
+            this.setVolumeButton();
+        }
+        if (this.bodyPanel.continueButtonEnabled()) {
+            this.setContinueButton();
+        }
+        if (this.bodyPanel.timerLabelEnabled()) {
+            this.setTimerLabel();
+        }
+        if (this.bodyPanel.hideOrShowTimerButtonEnabled()) {
+            this.setHideOrShowTimerButton();
+        }
     }
 
     protected void setLogoLabel() {
@@ -457,20 +501,6 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     /**************************************************
-     * Set Body Panel
-     **************************************************/
-
-    protected void setBodyPanel() {
-        int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
-        this.bodyBounds = new Rectangle(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
-
-        this.copyrightPanel = new CopyrightPanel(this.bodyBounds);
-        this.bodyPanel = this.copyrightPanel;
-
-        this.getContentPane().add(this.bodyPanel);
-    }
-
-    /**************************************************
      * Set Footer Panel
      **************************************************/
 
@@ -560,6 +590,7 @@ public class TestFrame extends JFrame implements ActionListener {
                             bodyPanel = ldPanel;
                         } else if (bodyPanel instanceof ListeningDirectionsPanel) {
                             MListeningPassage passage = listening.getPassages().get(0);
+                            System.out.println("passage: " + passage.getImages());
                             lpPanel = new ListeningPassagePanel(bodyBounds, passage);
                             bodyPanel = lpPanel;
                         } else if (bodyPanel instanceof ListeningPassagePanel) {
@@ -572,6 +603,7 @@ public class TestFrame extends JFrame implements ActionListener {
                             bodyPanel = lqPanel;
                         }
                         getContentPane().add(bodyPanel);
+                        resetHeaderPanel();
                         repaint();
                     }
                 });

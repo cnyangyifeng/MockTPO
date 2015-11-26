@@ -44,10 +44,10 @@ public class PauseTestDialog extends JDialog implements ActionListener {
 
     public PauseTestDialog(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
-        initComponents();
+        this.initComponents();
     }
 
-    protected void initComponents() {
+    private void initComponents() {
         this.globalSettings();
 
         this.setLayout(null);

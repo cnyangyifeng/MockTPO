@@ -16,7 +16,7 @@ public class ReadingDirectionsPanel extends BodyPanel {
         this.initComponents();
     }
 
-    protected void initComponents() {
+    private void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
     }
@@ -57,5 +57,50 @@ public class ReadingDirectionsPanel extends BodyPanel {
         Color bg = new Color(242, 232, 200); // #f2e8c8
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
+    }
+
+    @Override
+    public boolean sectionExitButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean questionNumberPaneEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean nextButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean okButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean helpButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean volumeButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean continueButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean timerLabelEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean hideOrShowTimerButtonEnabled() {
+        return false;
     }
 }

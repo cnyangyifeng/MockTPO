@@ -27,4 +27,8 @@ public class BodyPanel extends JPanel {
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
     }
+
+    protected boolean sectionExitButtonEnabled() {
+        return false;
+    }
 }

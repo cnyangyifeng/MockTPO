@@ -208,13 +208,9 @@ public class TestFrame extends JFrame implements ActionListener {
         this.headerPanel.setBounds(0, 0, this.getWidth(), LayoutConstants.HEADER_PANEL_HEIGHT);
         this.headerPanel.setLayout(null);
 
-        this.setLogoLabel();
-        this.setTitlePane();
-        this.setPauseTestButton();
-
         this.resetHeaderPanel();
 
-        this.getContentPane().add(headerPanel);
+        this.getContentPane().add(this.headerPanel);
     }
 
     protected void resetHeaderPanel() {
@@ -224,33 +220,17 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setTitlePane();
         this.setPauseTestButton();
 
-        if (this.bodyPanel.sectionExitButtonEnabled()) {
-            this.setSectionExitButton();
-        }
-        if (this.bodyPanel.questionNumberPaneEnabled()) {
-            this.setQuestionNumberPane();
-        }
-        if (this.bodyPanel.nextButtonEnabled()) {
-            this.setNextButton();
-        }
-        if (this.bodyPanel.okButtonEnabled()) {
-            this.setOkButton();
-        }
-        if (this.bodyPanel.helpButtonEnabled()) {
-            this.setHelpButton();
-        }
-        if (this.bodyPanel.volumeButtonEnabled()) {
-            this.setVolumeButton();
-        }
-        if (this.bodyPanel.continueButtonEnabled()) {
-            this.setContinueButton();
-        }
-        if (this.bodyPanel.timerLabelEnabled()) {
-            this.setTimerLabel();
-        }
-        if (this.bodyPanel.hideOrShowTimerButtonEnabled()) {
-            this.setHideOrShowTimerButton();
-        }
+        this.setSectionExitButton();
+        this.setQuestionNumberPane();
+
+        this.setNextButton();
+        this.setOkButton();
+        this.setHelpButton();
+        this.setVolumeButton();
+        this.setContinueButton();
+
+        this.setTimerLabel();
+        this.setHideOrShowTimerButton();
     }
 
     protected void setLogoLabel() {
@@ -308,6 +288,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setSectionExitButton() {
+        if (!this.bodyPanel.sectionExitButtonEnabled()) {
+            return;
+        }
         this.sectionExitButton = new MButton();
 
         int x = this.pauseTestButton.getX() + PAUSE_TEST_BUTTON_WIDTH + LayoutConstants.MARGIN;
@@ -332,6 +315,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setQuestionNumberPane() {
+        if (!this.bodyPanel.questionNumberPaneEnabled()) {
+            return;
+        }
         this.questionNumberPane = new JEditorPane();
 
         int x = (this.headerPanel.getWidth() - QUESTION_NUMBER_PANE_WIDTH) / 2;
@@ -351,6 +337,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setNextButton() {
+        if (!this.bodyPanel.nextButtonEnabled()) {
+            return;
+        }
         this.nextButton = new MButton();
 
         int x = this.headerPanel.getWidth() - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN;
@@ -373,6 +362,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setOkButton() {
+        if (!this.bodyPanel.okButtonEnabled()) {
+            return;
+        }
         this.okButton = new MButton();
 
         int x = this.headerPanel.getWidth() - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
@@ -395,6 +387,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setHelpButton() {
+        if (!this.bodyPanel.helpButtonEnabled()) {
+            return;
+        }
         this.helpButton = new MButton();
 
         int x = this.headerPanel.getWidth() - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 3;
@@ -417,6 +412,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setVolumeButton() {
+        if (!this.bodyPanel.volumeButtonEnabled()) {
+            return;
+        }
         this.volumeButton = new MButton();
 
         int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
@@ -439,9 +437,15 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setContinueButton() {
+        if (!this.bodyPanel.continueButtonEnabled()) {
+            return;
+        }
         this.continueButton = new MButton();
 
-        int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
+        int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - LayoutConstants.MARGIN;
+        if (this.bodyPanel.nextButtonEnabled() && this.bodyPanel.okButtonEnabled() && this.bodyPanel.helpButtonEnabled() && this.bodyPanel.volumeButtonEnabled()) {
+            x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
+        }
         int y = LayoutConstants.MARGIN * 3;
         this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
 
@@ -463,6 +467,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setTimerLabel() {
+        if (!this.bodyPanel.timerLabelEnabled()) {
+            return;
+        }
         this.timerLabel = new JLabel();
 
         int x = this.headerPanel.getWidth() - TIMER_LABEL_WIDTH - LayoutConstants.MARGIN * 2;
@@ -477,6 +484,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setHideOrShowTimerButton() {
+        if (!this.bodyPanel.hideOrShowTimerButtonEnabled()) {
+            return;
+        }
         this.hideOrShowTimerButton = new MButton();
 
         int x = this.headerPanel.getWidth() - HIDE_OR_SHOW_TIMER_BUTTON_WIDTH - TIMER_LABEL_WIDTH - LayoutConstants.MARGIN * 4;
@@ -513,7 +523,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
         this.setCopyrightPane();
 
-        this.getContentPane().add(footerPanel);
+        this.getContentPane().add(this.footerPanel);
     }
 
     protected void setCopyrightPane() {

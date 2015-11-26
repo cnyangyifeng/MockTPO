@@ -11,7 +11,7 @@ public class BodyPanel extends JPanel {
         initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.setLayout(null);
     }
 

@@ -18,4 +18,6 @@ public class ReadingPassagePanel extends BodyPanel {
     private void initComponents() {
         this.setLayout(null);
     }
+
+
 }

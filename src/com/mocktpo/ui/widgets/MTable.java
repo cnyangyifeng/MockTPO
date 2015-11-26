@@ -20,7 +20,7 @@ public class MTable extends JTable {
         initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         // Set table header
 
         JTableHeader tableHeader = this.getTableHeader();

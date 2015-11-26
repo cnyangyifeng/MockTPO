@@ -45,7 +45,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.setLayout(null);
 
         this.setSubjectPane();
@@ -53,7 +53,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.setAudioPlayer();
     }
 
-    private void setSubjectPane() {
+    protected void setSubjectPane() {
         this.subjectPane = new JEditorPane();
 
         int x = (this.getWidth() - SUBJECT_PANE_WIDTH) / 2;
@@ -79,7 +79,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.add(this.subjectPane);
     }
 
-    private void setOptionsPanel() {
+    protected void setOptionsPanel() {
         this.optionsPanel = new JPanel();
         this.optionsPanel.setLayout(null);
 
@@ -115,7 +115,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.add(this.optionsPanel);
     }
 
-    private void setAudioPlayer() {
+    protected void setAudioPlayer() {
         Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
         Format input2 = new AudioFormat(AudioFormat.MPEG);
         Format output = new AudioFormat(AudioFormat.LINEAR);

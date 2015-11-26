@@ -19,12 +19,12 @@ public class ChangingVolumePanel extends BodyPanel {
         this.initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
     }
 
-    private void setDescriptionPane() {
+    protected void setDescriptionPane() {
         this.descriptionPane = new JEditorPane();
 
         int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;

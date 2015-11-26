@@ -16,12 +16,12 @@ public class ReadingDirectionsPanel extends BodyPanel {
         this.initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
     }
 
-    private void setDescriptionPane() {
+    protected void setDescriptionPane() {
         this.descriptionPane = new JEditorPane();
 
         this.descriptionPane.setBounds(0, 0, this.getWidth(), this.getHeight());

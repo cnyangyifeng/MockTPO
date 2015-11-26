@@ -44,7 +44,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.globalSettings();
 
         this.setLayout(null);
@@ -54,7 +54,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         this.getContentPane().add(this.bodyPanel);
     }
 
-    private void globalSettings() {
+    protected void globalSettings() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
 
@@ -68,7 +68,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         this.setTitle("");
     }
 
-    private void setBodyPanel() {
+    protected void setBodyPanel() {
         this.bodyPanel = new DialogBodyPanel();
         this.bodyPanel.setBounds(0, 0, this.getWidth(), this.getHeight());
 
@@ -85,7 +85,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         this.bodyPanel.add(this.returnButton);
     }
 
-    private void setTitleLabel() {
+    protected void setTitleLabel() {
         this.titleLabel = new JLabel("Application Exit", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
         this.titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -93,7 +93,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         this.titleLabel.setBounds(x, LayoutConstants.MARGIN, TITLE_WIDTH, TITLE_HEIGHT);
     }
 
-    private void setDescriptionPane() {
+    protected void setDescriptionPane() {
         this.descriptionPane = new JEditorPane();
 
         int x = (this.bodyPanel.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
@@ -110,7 +110,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         this.descriptionPane.setText("<div class='desc'>ARE YOU SURE you wish to exit?<br /><br />Click on <b>Return</b> to continue with us. Click on <b>Continue</b> if you are sure you want to exit this application.</div>");
     }
 
-    private void setReturnButton() {
+    protected void setReturnButton() {
         this.returnButton = new MButton();
 
         int x = this.bodyPanel.getWidth() / 2 - RETURN_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
@@ -132,7 +132,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         this.returnButton.addActionListener(this);
     }
 
-    private void setContinueButton() {
+    protected void setContinueButton() {
         this.continueButton = new MButton();
 
         int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;

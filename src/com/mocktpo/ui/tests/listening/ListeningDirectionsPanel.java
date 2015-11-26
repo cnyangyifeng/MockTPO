@@ -24,13 +24,13 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
         this.initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.setLayout(null);
         this.setDescriptionPane();
         this.setAudioPlayer();
     }
 
-    private void setDescriptionPane() {
+    protected void setDescriptionPane() {
         this.descriptionPane = new JEditorPane();
 
         this.descriptionPane.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -61,6 +61,19 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
         this.add(this.descriptionPane);
     }
 
+    protected void setAudioPlayer() {
+        URL url = this.getClass().getResource(GlobalConstants.AUDIOS_DIR + "listening_section_directions.mp3");
+        Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
+        Format input2 = new AudioFormat(AudioFormat.MPEG);
+        Format output = new AudioFormat(AudioFormat.LINEAR);
+        PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
+        try {
+            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(url));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -72,19 +85,6 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
         Color bg = new Color(242, 232, 200); // #f2e8c8
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
-    }
-
-    private void setAudioPlayer() {
-        URL url = this.getClass().getResource(GlobalConstants.AUDIOS_DIR + "listening_section_directions.mp3");
-        Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
-        Format input2 = new AudioFormat(AudioFormat.MPEG);
-        Format output = new AudioFormat(AudioFormat.LINEAR);
-        PlugInManager.addPlugIn("com.sun.media.codec.audio.mp3.JavaDecoder", new Format[]{input1, input2}, new Format[]{output}, PlugInManager.CODEC);
-        try {
-            this.audioPlayer = Manager.createRealizedPlayer(new MediaLocator(url));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void startAudio() {

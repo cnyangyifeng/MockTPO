@@ -47,7 +47,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
         initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.globalSettings();
 
         this.setLayout(null);
@@ -57,7 +57,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
         this.getContentPane().add(this.bodyPanel);
     }
 
-    private void globalSettings() {
+    protected void globalSettings() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
 
@@ -71,7 +71,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
         this.setTitle("");
     }
 
-    private void setBodyPanel() {
+    protected void setBodyPanel() {
         this.bodyPanel = new DialogBodyPanel();
         this.bodyPanel.setBounds(0, 0, this.getWidth(), this.getHeight());
 
@@ -88,7 +88,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
         this.bodyPanel.add(this.returnButton);
     }
 
-    private void setTitleLabel() {
+    protected void setTitleLabel() {
         this.titleLabel = new JLabel("Pause Test", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
         this.titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -96,7 +96,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
         this.titleLabel.setBounds(x, LayoutConstants.MARGIN, TITLE_WIDTH, TITLE_HEIGHT);
     }
 
-    private void setDescriptionPane() {
+    protected void setDescriptionPane() {
         this.descriptionPane = new JEditorPane();
 
         int x = (this.bodyPanel.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
@@ -113,7 +113,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
         this.descriptionPane.setText("<div class='desc'>You may now pause this test and resume work at any later time; however the score you obtain may not be an accurate indication of a score you would earn in a timed test. When you resume the test, you will return to the question from which you left.<br /><br />Are you sure you wish to pause the test? Click on <b>Return</b> to continue working. Click on <b>Continue</b> to pause the test.</div>");
     }
 
-    private void setReturnButton() {
+    protected void setReturnButton() {
         this.returnButton = new MButton();
 
         int x = this.bodyPanel.getWidth() / 2 - RETURN_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
@@ -135,7 +135,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
         this.returnButton.addActionListener(this);
     }
 
-    private void setContinueButton() {
+    protected void setContinueButton() {
         this.continueButton = new MButton();
 
         int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;

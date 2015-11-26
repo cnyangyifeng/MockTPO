@@ -34,7 +34,7 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         this.initComponents();
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         this.setLayout(null);
 
         this.setConversationLabel();
@@ -43,7 +43,7 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         this.setAudioPlayer();
     }
 
-    private void setConversationLabel() {
+    protected void setConversationLabel() {
         this.conversationLabel = new JLabel();
 
         int x = (this.getWidth() - CONVERSATION_LABEL_WIDTH) / 2;
@@ -56,7 +56,7 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         this.add(this.conversationLabel);
     }
 
-    private void setConversationProgressBar() {
+    protected void setConversationProgressBar() {
         this.conversationProgressBar = new JProgressBar();
 
         int x = (this.getWidth() - CONVERSATION_PROGRESS_BAR_WIDTH) / 2;
@@ -72,7 +72,7 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         this.add(this.conversationProgressBar);
     }
 
-    private void setAudioPlayer() {
+    protected void setAudioPlayer() {
         Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
         Format input2 = new AudioFormat(AudioFormat.MPEG);
         Format output = new AudioFormat(AudioFormat.LINEAR);

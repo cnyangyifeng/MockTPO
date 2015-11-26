@@ -169,4 +169,77 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
             logger.info("{}: {} answer: {}, user choice: {}.", this.question.getIndex(), this.question.getSubject(), this.question.getAnswer(), radioButton.getName());
         }
     }
+
+    /**************************************************
+     * Control Buttons Status
+     **************************************************/
+
+    @Override
+    public boolean sectionExitButtonAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean questionNumberPaneAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean nextButtonAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean okButtonAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean helpButtonAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean volumeButtonAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean continueButtonAvailable() {
+        return false;
+    }
+
+    @Override
+    public boolean timerLabelAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean hideOrShowTimerButtonAvailable() {
+        return true;
+    }
+
+    /**************************************************
+     * Control Buttons Status - Enabled
+     **************************************************/
+
+    @Override
+    public boolean nextButtonEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean okButtonEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean helpButtonEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean volumeButtonEnabled() {
+        return true;
+    }
 }

@@ -288,7 +288,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setSectionExitButton() {
-        if (!this.bodyPanel.sectionExitButtonEnabled()) {
+        if (!this.bodyPanel.sectionExitButtonAvailable()) {
             return;
         }
         this.sectionExitButton = new MButton();
@@ -315,7 +315,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setQuestionNumberPane() {
-        if (!this.bodyPanel.questionNumberPaneEnabled()) {
+        if (!this.bodyPanel.questionNumberPaneAvailable()) {
             return;
         }
         this.questionNumberPane = new JEditorPane();
@@ -337,7 +337,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setNextButton() {
-        if (!this.bodyPanel.nextButtonEnabled()) {
+        if (!this.bodyPanel.nextButtonAvailable()) {
             return;
         }
         this.nextButton = new MButton();
@@ -355,6 +355,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.nextButton.setFocusPainted(false);
         this.nextButton.setContentAreaFilled(false);
 
+        this.nextButton.setEnabled(this.bodyPanel.nextButtonEnabled());
+
         this.nextButton.setActionCommand("doNext");
         this.nextButton.addActionListener(this);
 
@@ -362,7 +364,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setOkButton() {
-        if (!this.bodyPanel.okButtonEnabled()) {
+        if (!this.bodyPanel.okButtonAvailable()) {
             return;
         }
         this.okButton = new MButton();
@@ -380,6 +382,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.okButton.setFocusPainted(false);
         this.okButton.setContentAreaFilled(false);
 
+        this.okButton.setEnabled(this.bodyPanel.okButtonEnabled());
+
         this.okButton.setActionCommand("doOk");
         this.okButton.addActionListener(this);
 
@@ -387,7 +391,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setHelpButton() {
-        if (!this.bodyPanel.helpButtonEnabled()) {
+        if (!this.bodyPanel.helpButtonAvailable()) {
             return;
         }
         this.helpButton = new MButton();
@@ -405,6 +409,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.helpButton.setFocusPainted(false);
         this.helpButton.setContentAreaFilled(false);
 
+        this.helpButton.setEnabled(this.bodyPanel.helpButtonEnabled());
+
         this.helpButton.setActionCommand("doHelp");
         this.helpButton.addActionListener(this);
 
@@ -412,12 +418,15 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setVolumeButton() {
-        if (!this.bodyPanel.volumeButtonEnabled()) {
+        if (!this.bodyPanel.volumeButtonAvailable()) {
             return;
         }
         this.volumeButton = new MButton();
 
-        int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
+        int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN;
+        if (this.bodyPanel.nextButtonAvailable() && this.bodyPanel.okButtonAvailable() && this.bodyPanel.helpButtonAvailable()) {
+            x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
+        }
         this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
 
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "volume.png"));
@@ -430,6 +439,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.volumeButton.setFocusPainted(false);
         this.volumeButton.setContentAreaFilled(false);
 
+        this.volumeButton.setEnabled(this.bodyPanel.volumeButtonEnabled());
+
         this.volumeButton.setActionCommand("doVolume");
         this.volumeButton.addActionListener(this);
 
@@ -437,14 +448,16 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setContinueButton() {
-        if (!this.bodyPanel.continueButtonEnabled()) {
+        if (!this.bodyPanel.continueButtonAvailable()) {
             return;
         }
         this.continueButton = new MButton();
 
         int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - LayoutConstants.MARGIN;
-        if (this.bodyPanel.nextButtonEnabled() && this.bodyPanel.okButtonEnabled() && this.bodyPanel.helpButtonEnabled() && this.bodyPanel.volumeButtonEnabled()) {
+        if (this.bodyPanel.nextButtonAvailable() && this.bodyPanel.okButtonAvailable() && this.bodyPanel.helpButtonAvailable() && this.bodyPanel.volumeButtonAvailable()) {
             x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
+        } else if (!this.bodyPanel.nextButtonAvailable() && !this.bodyPanel.okButtonAvailable() && !this.bodyPanel.helpButtonAvailable() && this.bodyPanel.volumeButtonAvailable()) {
+            x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
         }
         int y = LayoutConstants.MARGIN * 3;
         this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
@@ -467,7 +480,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setTimerLabel() {
-        if (!this.bodyPanel.timerLabelEnabled()) {
+        if (!this.bodyPanel.timerLabelAvailable()) {
             return;
         }
         this.timerLabel = new JLabel();
@@ -484,7 +497,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setHideOrShowTimerButton() {
-        if (!this.bodyPanel.hideOrShowTimerButtonEnabled()) {
+        if (!this.bodyPanel.hideOrShowTimerButtonAvailable()) {
             return;
         }
         this.hideOrShowTimerButton = new MButton();

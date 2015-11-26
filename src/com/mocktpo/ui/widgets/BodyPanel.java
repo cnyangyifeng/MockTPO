@@ -28,13 +28,49 @@ public class BodyPanel extends JPanel {
         g2d.fillRect(0, 0, width, height);
     }
 
-    public boolean sectionExitButtonEnabled() {
+    /**************************************************
+     * Control Buttons Status - Available
+     **************************************************/
+
+    public boolean sectionExitButtonAvailable() {
         return false;
     }
 
-    public boolean questionNumberPaneEnabled() {
+    public boolean questionNumberPaneAvailable() {
         return false;
     }
+
+    public boolean nextButtonAvailable() {
+        return false;
+    }
+
+    public boolean okButtonAvailable() {
+        return false;
+    }
+
+    public boolean helpButtonAvailable() {
+        return false;
+    }
+
+    public boolean volumeButtonAvailable() {
+        return false;
+    }
+
+    public boolean continueButtonAvailable() {
+        return true;
+    }
+
+    public boolean timerLabelAvailable() {
+        return false;
+    }
+
+    public boolean hideOrShowTimerButtonAvailable() {
+        return false;
+    }
+
+    /**************************************************
+     * Control Buttons Status - Enabled
+     **************************************************/
 
     public boolean nextButtonEnabled() {
         return false;
@@ -49,18 +85,6 @@ public class BodyPanel extends JPanel {
     }
 
     public boolean volumeButtonEnabled() {
-        return false;
-    }
-
-    public boolean continueButtonEnabled() {
-        return true;
-    }
-
-    public boolean timerLabelEnabled() {
-        return false;
-    }
-
-    public boolean hideOrShowTimerButtonEnabled() {
         return false;
     }
 }

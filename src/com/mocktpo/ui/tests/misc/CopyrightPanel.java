@@ -60,48 +60,52 @@ public class CopyrightPanel extends BodyPanel {
         g2d.fillRect(0, 0, width, height);
     }
 
+    /**************************************************
+     * Control Buttons Status
+     **************************************************/
+
     @Override
-    public boolean sectionExitButtonEnabled() {
+    public boolean sectionExitButtonAvailable() {
         return false;
     }
 
     @Override
-    public boolean questionNumberPaneEnabled() {
+    public boolean questionNumberPaneAvailable() {
         return false;
     }
 
     @Override
-    public boolean nextButtonEnabled() {
+    public boolean nextButtonAvailable() {
         return false;
     }
 
     @Override
-    public boolean okButtonEnabled() {
+    public boolean okButtonAvailable() {
         return false;
     }
 
     @Override
-    public boolean helpButtonEnabled() {
+    public boolean helpButtonAvailable() {
         return false;
     }
 
     @Override
-    public boolean volumeButtonEnabled() {
+    public boolean volumeButtonAvailable() {
         return false;
     }
 
     @Override
-    public boolean continueButtonEnabled() {
+    public boolean continueButtonAvailable() {
         return true;
     }
 
     @Override
-    public boolean timerLabelEnabled() {
+    public boolean timerLabelAvailable() {
         return false;
     }
 
     @Override
-    public boolean hideOrShowTimerButtonEnabled() {
+    public boolean hideOrShowTimerButtonAvailable() {
         return false;
     }
 }

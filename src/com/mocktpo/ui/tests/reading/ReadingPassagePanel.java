@@ -19,48 +19,52 @@ public class ReadingPassagePanel extends BodyPanel {
         this.setLayout(null);
     }
 
+    /**************************************************
+     * Control Buttons Status
+     **************************************************/
+
     @Override
-    public boolean sectionExitButtonEnabled() {
+    public boolean sectionExitButtonAvailable() {
         return true;
     }
 
     @Override
-    public boolean questionNumberPaneEnabled() {
+    public boolean questionNumberPaneAvailable() {
         return false;
     }
 
     @Override
-    public boolean nextButtonEnabled() {
+    public boolean nextButtonAvailable() {
+        return false;
+    }
+
+    @Override
+    public boolean okButtonAvailable() {
+        return false;
+    }
+
+    @Override
+    public boolean helpButtonAvailable() {
+        return false;
+    }
+
+    @Override
+    public boolean volumeButtonAvailable() {
+        return false;
+    }
+
+    @Override
+    public boolean continueButtonAvailable() {
         return true;
     }
 
     @Override
-    public boolean okButtonEnabled() {
+    public boolean timerLabelAvailable() {
         return true;
     }
 
     @Override
-    public boolean helpButtonEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean volumeButtonEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean continueButtonEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean timerLabelEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean hideOrShowTimerButtonEnabled() {
+    public boolean hideOrShowTimerButtonAvailable() {
         return true;
     }
 }

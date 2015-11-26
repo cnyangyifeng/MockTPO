@@ -59,24 +59,67 @@ public class ReadingDirectionsPanel extends BodyPanel {
         g2d.fillRect(0, 0, width, height);
     }
 
+    /**************************************************
+     * Control Buttons Status - Available
+     **************************************************/
+
     @Override
-    public boolean sectionExitButtonEnabled() {
+    public boolean sectionExitButtonAvailable() {
         return true;
     }
 
     @Override
-    public boolean questionNumberPaneEnabled() {
+    public boolean questionNumberPaneAvailable() {
         return false;
     }
 
     @Override
-    public boolean nextButtonEnabled() {
+    public boolean nextButtonAvailable() {
         return true;
     }
 
     @Override
-    public boolean okButtonEnabled() {
+    public boolean okButtonAvailable() {
         return true;
+    }
+
+    @Override
+    public boolean helpButtonAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean volumeButtonAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean continueButtonAvailable() {
+        return true;
+    }
+
+    @Override
+    public boolean timerLabelAvailable() {
+        return false;
+    }
+
+    @Override
+    public boolean hideOrShowTimerButtonAvailable() {
+        return false;
+    }
+
+    /**************************************************
+     * Control Buttons Status - Enabled
+     **************************************************/
+
+    @Override
+    public boolean nextButtonEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean okButtonEnabled() {
+        return false;
     }
 
     @Override
@@ -86,21 +129,6 @@ public class ReadingDirectionsPanel extends BodyPanel {
 
     @Override
     public boolean volumeButtonEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean continueButtonEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean timerLabelEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean hideOrShowTimerButtonEnabled() {
         return false;
     }
 }

@@ -62,11 +62,10 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
 
         this.subjectPane.setEditable(false);
         this.subjectPane.setOpaque(true);
-        this.subjectPane.setBackground(new Color(255, 255, 255));
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".subject { color: #333333; font-family: Arial; font-size: 14px; } img {}");
+        style.addRule(".subject { color: #333333; font-family: Arial; font-size: 12px; }");
         this.subjectPane.setEditorKit(kit);
         String subject = this.question.getSubject();
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "earphone.png").toString();
@@ -81,6 +80,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
 
     protected void setOptionsPanel() {
         this.optionsPanel = new JPanel();
+
         this.optionsPanel.setLayout(null);
 
         int x = (this.getWidth() - OPTIONS_PANEL_WIDTH) / 2;

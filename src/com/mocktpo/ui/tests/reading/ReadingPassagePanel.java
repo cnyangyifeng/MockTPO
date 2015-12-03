@@ -192,8 +192,8 @@ public class ReadingPassagePanel extends BodyPanel {
 
     public void nextQuestion() {
         List<MChoiceQuestion> questions = this.passage.getQuestions();
-        if (++questionIndex < questions.size()) {
-            MChoiceQuestion question = questions.get(questionIndex);
+        if (questionIndex < questions.size() - 1) {
+            MChoiceQuestion question = questions.get(++questionIndex);
             String subject = question.getSubject();
             this.setSubjectPane(subject);
             List<MChoiceOption> options = question.getOptions();
@@ -205,8 +205,8 @@ public class ReadingPassagePanel extends BodyPanel {
 
     public void previousQuestion() {
         List<MChoiceQuestion> questions = this.passage.getQuestions();
-        if (--questionIndex >= 0) {
-            MChoiceQuestion question = questions.get(questionIndex);
+        if (questionIndex > 0) {
+            MChoiceQuestion question = questions.get(--questionIndex);
             String subject = question.getSubject();
             this.setSubjectPane(subject);
             List<MChoiceOption> options = question.getOptions();

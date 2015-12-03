@@ -16,9 +16,7 @@ import java.util.List;
 
 public class ReadingPassagePanel extends BodyPanel {
 
-    public static final int SUBJECT_PANE_WIDTH = 600;
     public static final int SUBJECT_PANE_HEIGHT = 60;
-    public static final int OPTIONS_PANEL_WIDTH = 600;
     public static final int OPTIONS_PANEL_HEIGHT = 300;
     public static final int OPTION_BUTTON_WIDTH = 600;
     public static final int OPTION_BUTTON_HEIGHT = 30;
@@ -205,6 +203,19 @@ public class ReadingPassagePanel extends BodyPanel {
         }
     }
 
+    public void previousQuestion() {
+        List<MChoiceQuestion> questions = this.passage.getQuestions();
+        if (--questionIndex >= 0) {
+            MChoiceQuestion question = questions.get(questionIndex);
+            String subject = question.getSubject();
+            this.setSubjectPane(subject);
+            List<MChoiceOption> options = question.getOptions();
+            this.setOptionsPanel(options);
+        } else {
+            // TODO
+        }
+    }
+
     /**************************************************
      * Control Buttons Status
      **************************************************/
@@ -225,8 +236,13 @@ public class ReadingPassagePanel extends BodyPanel {
     }
 
     @Override
-    public boolean okButtonAvailable() {
+    public boolean backButtonAvailable() {
         return true;
+    }
+
+    @Override
+    public boolean okButtonAvailable() {
+        return false;
     }
 
     @Override
@@ -235,13 +251,18 @@ public class ReadingPassagePanel extends BodyPanel {
     }
 
     @Override
-    public boolean volumeButtonAvailable() {
+    public boolean reviewButtonAvailable() {
         return true;
     }
 
     @Override
+    public boolean volumeButtonAvailable() {
+        return false;
+    }
+
+    @Override
     public boolean continueButtonAvailable() {
-        return true;
+        return false;
     }
 
     @Override

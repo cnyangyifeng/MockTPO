@@ -42,10 +42,14 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int QUESTION_NUMBER_PANE_HEIGHT = 20;
     public static final int NEXT_BUTTON_WIDTH = 70;
     public static final int NEXT_BUTTON_HEIGHT = 48;
+    public static final int BACK_BUTTON_WIDTH = 70;
+    public static final int BACK_BUTTON_HEIGHT = 48;
     public static final int OK_BUTTON_WIDTH = 70;
     public static final int OK_BUTTON_HEIGHT = 48;
     public static final int HELP_BUTTON_WIDTH = 70;
     public static final int HELP_BUTTON_HEIGHT = 48;
+    public static final int REVIEW_BUTTON_WIDTH = 70;
+    public static final int REVIEW_BUTTON_HEIGHT = 48;
     public static final int VOLUME_BUTTON_WIDTH = 70;
     public static final int VOLUME_BUTTON_HEIGHT = 48;
     public static final int CONTINUE_BUTTON_WIDTH = 74;
@@ -73,8 +77,10 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private JEditorPane questionNumberPane;
     private MButton nextButton;
+    private MButton backButton;
     private MButton okButton;
     private MButton helpButton;
+    private MButton reviewButton;
     private MButton volumeButton;
     private MButton continueButton;
 
@@ -229,8 +235,10 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setQuestionNumberPane();
 
         this.setNextButton();
+        this.setBackButton();
         this.setOkButton();
         this.setHelpButton();
+        this.setReviewButton();
         this.setVolumeButton();
         this.setContinueButton();
 
@@ -368,6 +376,33 @@ public class TestFrame extends JFrame implements ActionListener {
         this.headerPanel.add(this.nextButton);
     }
 
+    protected void setBackButton() {
+        if (!this.bodyPanel.backButtonAvailable()) {
+            return;
+        }
+        this.backButton = new MButton();
+
+        int x = this.headerPanel.getWidth() - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
+        this.backButton.setBounds(x, 0, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "back.png"));
+        this.backButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "back_hi.png"));
+        this.backButton.setRolloverIcon(rolloverIcon);
+        this.backButton.setMargin(new Insets(0, 0, 0, 0));
+        this.backButton.setBorder(null);
+        this.backButton.setBorderPainted(false);
+        this.backButton.setFocusPainted(false);
+        this.backButton.setContentAreaFilled(false);
+
+        this.backButton.setEnabled(this.bodyPanel.okButtonEnabled());
+
+        this.backButton.setActionCommand("doBack");
+        this.backButton.addActionListener(this);
+
+        this.headerPanel.add(this.backButton);
+    }
+
     protected void setOkButton() {
         if (!this.bodyPanel.okButtonAvailable()) {
             return;
@@ -420,6 +455,36 @@ public class TestFrame extends JFrame implements ActionListener {
         this.helpButton.addActionListener(this);
 
         this.headerPanel.add(this.helpButton);
+    }
+
+    protected void setReviewButton() {
+        if (!this.bodyPanel.reviewButtonAvailable()) {
+            return;
+        }
+        this.reviewButton = new MButton();
+
+        int x = this.headerPanel.getWidth() - REVIEW_BUTTON_WIDTH - LayoutConstants.MARGIN;
+        if (this.bodyPanel.nextButtonAvailable() && this.bodyPanel.backButtonAvailable() && this.bodyPanel.helpButtonAvailable()) {
+            x = this.headerPanel.getWidth() - REVIEW_BUTTON_WIDTH - HELP_BUTTON_WIDTH - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
+        }
+        this.reviewButton.setBounds(x, 0, REVIEW_BUTTON_WIDTH, REVIEW_BUTTON_HEIGHT);
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "review.png"));
+        this.reviewButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "review_hi.png"));
+        this.reviewButton.setRolloverIcon(rolloverIcon);
+        this.reviewButton.setMargin(new Insets(0, 0, 0, 0));
+        this.reviewButton.setBorder(null);
+        this.reviewButton.setBorderPainted(false);
+        this.reviewButton.setFocusPainted(false);
+        this.reviewButton.setContentAreaFilled(false);
+
+        this.reviewButton.setEnabled(this.bodyPanel.volumeButtonEnabled());
+
+        this.reviewButton.setActionCommand("doReview");
+        this.reviewButton.addActionListener(this);
+
+        this.headerPanel.add(this.reviewButton);
     }
 
     protected void setVolumeButton() {
@@ -664,11 +729,25 @@ public class TestFrame extends JFrame implements ActionListener {
                     }
                 });
                 break;
+            case "doReview":
+                logger.info("'Review' button pressed.");
+                break;
             case "doVolume":
                 logger.info("'Volume' button pressed.");
                 break;
             case "doHelp":
                 logger.info("'Help' button pressed.");
+                break;
+            case "doBack":
+                logger.info("'Back' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (bodyPanel instanceof ReadingPassagePanel) {
+                            ((ReadingPassagePanel) bodyPanel).previousQuestion();
+                        }
+                    }
+                });
                 break;
             case "doOk":
                 logger.info("'Ok' button pressed.");

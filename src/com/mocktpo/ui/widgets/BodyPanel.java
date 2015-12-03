@@ -44,11 +44,19 @@ public class BodyPanel extends JPanel {
         return false;
     }
 
+    public boolean backButtonAvailable() {
+        return false;
+    }
+
     public boolean okButtonAvailable() {
         return false;
     }
 
     public boolean helpButtonAvailable() {
+        return false;
+    }
+
+    public boolean reviewButtonAvailable() {
         return false;
     }
 

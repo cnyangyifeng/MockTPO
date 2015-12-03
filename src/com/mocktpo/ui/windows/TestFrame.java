@@ -682,9 +682,21 @@ public class TestFrame extends JFrame implements ActionListener {
                     @Override
                     public void run() {
                         if (timerLabel.isVisible()) {
+                            // Reset timerLabel
                             timerLabel.setVisible(false);
+                            // Reset hideOrShowTimerButton
+                            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "show_timer.png"));
+                            hideOrShowTimerButton.setIcon(icon);
+                            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "show_timer_hi.png"));
+                            hideOrShowTimerButton.setRolloverIcon(rolloverIcon);
                         } else {
+                            // Reset timerLabel
                             timerLabel.setVisible(true);
+                            // Reset hideOrShowTimerButton
+                            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer.png"));
+                            hideOrShowTimerButton.setIcon(icon);
+                            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer_hi.png"));
+                            hideOrShowTimerButton.setRolloverIcon(rolloverIcon);
                         }
                     }
                 });

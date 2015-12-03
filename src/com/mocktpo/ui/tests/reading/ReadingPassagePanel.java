@@ -17,7 +17,7 @@ import java.util.List;
 public class ReadingPassagePanel extends BodyPanel {
 
     public static final int SUBJECT_PANE_WIDTH = 600;
-    public static final int SUBJECT_PANE_HEIGHT = 30;
+    public static final int SUBJECT_PANE_HEIGHT = 60;
     public static final int OPTIONS_PANEL_WIDTH = 600;
     public static final int OPTIONS_PANEL_HEIGHT = 300;
     public static final int OPTION_BUTTON_WIDTH = 600;
@@ -36,10 +36,12 @@ public class ReadingPassagePanel extends BodyPanel {
     private JEditorPane passagePane;
 
     private MReadingPassage passage;
+    private int questionIndex;
 
     public ReadingPassagePanel(Rectangle bounds, MReadingPassage passage) {
         super(bounds);
         this.passage = passage;
+        this.questionIndex = 0;
         this.initComponents();
     }
 
@@ -62,18 +64,22 @@ public class ReadingPassagePanel extends BodyPanel {
 
         this.questionPanel.setBackground(new Color(255, 255, 255));
 
-        this.setSubjectPane();
-        this.setOptionsPanel();
+        MChoiceQuestion question = this.passage.getQuestions().get(questionIndex);
+        String subject = question.getSubject();
+        this.setSubjectPane(subject);
+        List<MChoiceOption> options = question.getOptions();
+        this.setOptionsPanel(options);
 
         this.add(this.questionPanel);
     }
 
-    protected void setSubjectPane() {
+    protected void setSubjectPane(String subject) {
         this.subjectPane = new JEditorPane();
 
         int x = LayoutConstants.MARGIN * 4;
         int y = LayoutConstants.MARGIN * 4;
-        this.subjectPane.setBounds(x, y, SUBJECT_PANE_WIDTH, SUBJECT_PANE_HEIGHT);
+        int width = this.getWidth() / 2 - LayoutConstants.MARGIN * 8;
+        this.subjectPane.setBounds(x, y, width, SUBJECT_PANE_HEIGHT);
 
         this.subjectPane.setEditable(false);
         this.subjectPane.setOpaque(true);
@@ -82,27 +88,24 @@ public class ReadingPassagePanel extends BodyPanel {
         StyleSheet style = kit.getStyleSheet();
         style.addRule(".subject { color: #333333; font-family: Arial; font-size: 12px; }");
         this.subjectPane.setEditorKit(kit);
-        MChoiceQuestion question = this.passage.getQuestions().get(0);
-        String subject = question.getSubject();
         String text = "<div class='subject'>" + subject + "</div>";
         this.subjectPane.setText(text);
 
         this.questionPanel.add(this.subjectPane);
     }
 
-    protected void setOptionsPanel() {
+    protected void setOptionsPanel(List<MChoiceOption> options) {
         this.optionsPanel = new JPanel();
 
         this.optionsPanel.setLayout(null);
 
         int x = LayoutConstants.MARGIN * 4;
         int y = LayoutConstants.MARGIN * 4 + SUBJECT_PANE_HEIGHT;
-        this.optionsPanel.setBounds(x, y, OPTIONS_PANEL_WIDTH, OPTIONS_PANEL_HEIGHT);
+        int width = this.getWidth() / 2 - LayoutConstants.MARGIN * 8;
+        this.optionsPanel.setBounds(x, y, width, OPTIONS_PANEL_HEIGHT);
 
         this.optionsPanel.setBackground(new Color(255, 255, 255));
 
-        MChoiceQuestion question = this.passage.getQuestions().get(0);
-        List<MChoiceOption> options = question.getOptions();
         ButtonGroup buttonGroup = new ButtonGroup();
         for (int i = 0; i < options.size(); i++) {
             MChoiceOption option = options.get(i);
@@ -186,6 +189,23 @@ public class ReadingPassagePanel extends BodyPanel {
     }
 
     /**************************************************
+     * Actions
+     **************************************************/
+
+    public void nextQuestion() {
+        List<MChoiceQuestion> questions = this.passage.getQuestions();
+        if (++questionIndex < questions.size()) {
+            MChoiceQuestion question = questions.get(questionIndex);
+            String subject = question.getSubject();
+            this.setSubjectPane(subject);
+            List<MChoiceOption> options = question.getOptions();
+            this.setOptionsPanel(options);
+        } else {
+            // TODO
+        }
+    }
+
+    /**************************************************
      * Control Buttons Status
      **************************************************/
 
@@ -201,22 +221,22 @@ public class ReadingPassagePanel extends BodyPanel {
 
     @Override
     public boolean nextButtonAvailable() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean okButtonAvailable() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean helpButtonAvailable() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean volumeButtonAvailable() {
-        return false;
+        return true;
     }
 
     @Override
@@ -231,6 +251,30 @@ public class ReadingPassagePanel extends BodyPanel {
 
     @Override
     public boolean hideOrShowTimerButtonAvailable() {
+        return true;
+    }
+
+    /**************************************************
+     * Control Buttons Status - Enabled
+     **************************************************/
+
+    @Override
+    public boolean nextButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean okButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean helpButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean volumeButtonEnabled() {
         return true;
     }
 }

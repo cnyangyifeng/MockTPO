@@ -150,7 +150,7 @@ public class TestFrame extends JFrame implements ActionListener {
     protected void configData() {
         this.configReadingData();
         this.configListeningData();
-        this.timeElapsed = 60; // 60 minutes
+        this.timeElapsed = 3600; // 60 minutes
     }
 
     protected void configReadingData() {
@@ -675,6 +675,14 @@ public class TestFrame extends JFrame implements ActionListener {
                 break;
             case "doNext":
                 logger.info("'Next' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (bodyPanel instanceof ReadingPassagePanel) {
+                            ((ReadingPassagePanel) bodyPanel).nextQuestion();
+                        }
+                    }
+                });
                 break;
             case "doHideOrShowTimer":
                 logger.info("'HideOrShowTimer' button pressed.");

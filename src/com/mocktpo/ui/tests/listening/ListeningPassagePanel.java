@@ -23,6 +23,7 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
 
     private JLabel conversationLabel;
     private JProgressBar conversationProgressBar;
+
     private Player audioPlayer;
     private Timer timer;
 
@@ -72,6 +73,10 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         this.add(this.conversationProgressBar);
     }
 
+    /**************************************************
+     * Audio Player
+     **************************************************/
+
     protected void setAudioPlayer() {
         Format input1 = new AudioFormat(AudioFormat.MPEGLAYER3);
         Format input2 = new AudioFormat(AudioFormat.MPEG);
@@ -102,27 +107,32 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
      **************************************************/
 
     public void actionPerformed(ActionEvent e) {
-        if ("doStartAudio".equals(e.getActionCommand())) {
-            long duration = this.audioPlayer.getDuration().getNanoseconds();
-            long now = this.audioPlayer.getMediaTime().getNanoseconds();
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (now < duration) {
-                        int progress = (int) ((now * 100) / duration);
-                        if (progress < 95) {
-                            // 95% might bring bugs.
-                            conversationProgressBar.setValue(progress);
+        String ac = e.getActionCommand();
+        switch (ac) {
+            case "doStartAudio":
+                long duration = this.audioPlayer.getDuration().getNanoseconds();
+                long now = this.audioPlayer.getMediaTime().getNanoseconds();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (now < duration) {
+                            int progress = (int) ((now * 100) / duration);
+                            if (progress < 95) {
+                                // 95% might bring bugs.
+                                conversationProgressBar.setValue(progress);
+                            } else {
+                                conversationProgressBar.setValue(100);
+                                timer.stop();
+                            }
                         } else {
                             conversationProgressBar.setValue(100);
                             timer.stop();
                         }
-                    } else {
-                        conversationProgressBar.setValue(100);
-                        timer.stop();
                     }
-                }
-            });
+                });
+                break;
+            default:
+                break;
         }
     }
 

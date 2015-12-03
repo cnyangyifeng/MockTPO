@@ -15,6 +15,7 @@ import com.mocktpo.ui.widgets.HeaderPanel;
 import com.mocktpo.ui.widgets.MButton;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
+import com.mocktpo.util.TimeUtils;
 import com.thoughtworks.xstream.XStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -97,6 +98,9 @@ public class TestFrame extends JFrame implements ActionListener {
 
     // Variables
 
+    private Timer timer;
+    private long timeElapsed;
+
     protected Rectangle bodyBounds;
     protected String testIndex;
 
@@ -146,6 +150,7 @@ public class TestFrame extends JFrame implements ActionListener {
     protected void configData() {
         this.configReadingData();
         this.configListeningData();
+        this.timeElapsed = 3600; // 60 minutes
     }
 
     protected void configReadingData() {
@@ -491,7 +496,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
         this.timerLabel.setFont(new Font("Arial", Font.BOLD, 14));
         this.timerLabel.setForeground(new Color(245, 245, 245));
-        this.timerLabel.setText("00:07:35");
+        this.timerLabel.setText(TimeUtils.displayTime(timeElapsed));
+        this.startCountdown();
 
         this.headerPanel.add(this.timerLabel);
     }
@@ -559,6 +565,20 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     /**************************************************
+     * Countdown
+     **************************************************/
+
+    public void startCountdown() {
+        this.timer = new Timer(1000, this);
+        this.timer.setActionCommand("doCountdown");
+        this.timer.start();
+    }
+
+    public void stopCountdown() {
+        this.timer.stop();
+    }
+
+    /**************************************************
      * Listeners
      **************************************************/
 
@@ -566,6 +586,19 @@ public class TestFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String ac = e.getActionCommand();
         switch (ac) {
+            case "doCountdown":
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        timeElapsed--;
+                        timerLabel.setText(TimeUtils.displayTime(timeElapsed));
+                        if (timeElapsed <= 0) {
+                            timer.stop();
+                            // TODO
+                        }
+                    }
+                });
+                break;
             case "doPauseTest":
                 logger.info("'Pause Test' button pressed.");
                 SwingUtilities.invokeLater(new Runnable() {
@@ -642,6 +675,19 @@ public class TestFrame extends JFrame implements ActionListener {
                 break;
             case "doNext":
                 logger.info("'Next' button pressed.");
+                break;
+            case "doHideOrShowTimer":
+                logger.info("'HideOrShowTimer' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (timerLabel.isVisible()) {
+                            timerLabel.setVisible(false);
+                        } else {
+                            timerLabel.setVisible(true);
+                        }
+                    }
+                });
                 break;
             default:
                 break;

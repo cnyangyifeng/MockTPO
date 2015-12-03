@@ -150,7 +150,7 @@ public class TestFrame extends JFrame implements ActionListener {
     protected void configData() {
         this.configReadingData();
         this.configListeningData();
-        this.timeElapsed = 3600; // 60 minutes
+        this.timeElapsed = 60; // 60 minutes
     }
 
     protected void configReadingData() {

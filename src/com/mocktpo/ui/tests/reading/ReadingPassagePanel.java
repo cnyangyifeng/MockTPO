@@ -106,14 +106,16 @@ public class ReadingPassagePanel extends BodyPanel {
 
         ButtonGroup buttonGroup = new ButtonGroup();
         for (int i = 0; i < options.size(); i++) {
-            MChoiceOption option = options.get(i);
-
-            JRadioButton radioButton = new JRadioButton(option.getText());
+            JRadioButton radioButton = new JRadioButton();
             radioButton.setBounds(0, OPTION_BUTTON_HEIGHT * i + LayoutConstants.MARGIN * i * 2, OPTION_BUTTON_WIDTH, OPTION_BUTTON_HEIGHT);
 
             radioButton.setFont(new Font("Arial", Font.PLAIN, 16));
             radioButton.setForeground(new Color(51, 51, 51));
+
+            MChoiceOption option = options.get(i);
+            radioButton.setText(option.getText());
             radioButton.setName(option.getIndex());
+
             ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "unchecked.png"));
             radioButton.setIcon(icon);
             ImageIcon selectedIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "checked.png"));
@@ -194,10 +196,14 @@ public class ReadingPassagePanel extends BodyPanel {
         List<MChoiceQuestion> questions = this.passage.getQuestions();
         if (questionIndex < questions.size() - 1) {
             MChoiceQuestion question = questions.get(++questionIndex);
+            this.questionPanel.remove(this.subjectPane);
             String subject = question.getSubject();
-            this.setSubjectPane(subject);
+            setSubjectPane(subject);
+            this.optionsPanel.removeAll();
+            this.questionPanel.remove(this.optionsPanel);
             List<MChoiceOption> options = question.getOptions();
-            this.setOptionsPanel(options);
+            setOptionsPanel(options);
+            repaint();
         } else {
             // TODO
         }
@@ -207,13 +213,25 @@ public class ReadingPassagePanel extends BodyPanel {
         List<MChoiceQuestion> questions = this.passage.getQuestions();
         if (questionIndex > 0) {
             MChoiceQuestion question = questions.get(--questionIndex);
+            this.questionPanel.remove(this.subjectPane);
             String subject = question.getSubject();
-            this.setSubjectPane(subject);
+            setSubjectPane(subject);
+            this.optionsPanel.removeAll();
+            this.questionPanel.remove(this.optionsPanel);
             List<MChoiceOption> options = question.getOptions();
-            this.setOptionsPanel(options);
+            setOptionsPanel(options);
+            repaint();
         } else {
             // TODO
         }
+    }
+
+    public int currentQuestionIndex() {
+        return this.questionIndex;
+    }
+
+    public int totalQuestions() {
+        return this.passage.getQuestions().size();
     }
 
     /**************************************************

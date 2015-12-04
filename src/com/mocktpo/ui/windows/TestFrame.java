@@ -112,7 +112,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private MReading reading;
     private MListening listening;
-    private int nextQuestion = 0;
+
+    private int questionIndex;
 
     public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc);
@@ -157,6 +158,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.configReadingData();
         this.configListeningData();
         this.timeElapsed = 3600; // 60 minutes
+        this.questionIndex = 0;
     }
 
     protected void configReadingData() {
@@ -344,9 +346,20 @@ public class TestFrame extends JFrame implements ActionListener {
         StyleSheet style = kit.getStyleSheet();
         style.addRule(".question { font-family: Arial; font-size: 11px; font-weight: bold; color: #f5f5f5; text-align: center; }");
         this.questionNumberPane.setEditorKit(kit);
-        this.questionNumberPane.setText("<div class='question'>Question 4 of 17</div>");
+
+        this.resetQuestionNumber();
 
         this.headerPanel.add(this.questionNumberPane);
+    }
+
+    protected void resetQuestionNumber() {
+        if (this.bodyPanel instanceof ReadingPassagePanel) {
+            ReadingPassagePanel rpPanel = (ReadingPassagePanel) this.bodyPanel;
+            int questionNo = rpPanel.currentQuestionIndex() + 1;
+            int totalQuestions = rpPanel.totalQuestions();
+            String text = "<div class='question'>Question " + questionNo + " of " + totalQuestions + "</div>";
+            this.questionNumberPane.setText(text);
+        }
     }
 
     protected void setNextButton() {
@@ -745,6 +758,7 @@ public class TestFrame extends JFrame implements ActionListener {
                     public void run() {
                         if (bodyPanel instanceof ReadingPassagePanel) {
                             ((ReadingPassagePanel) bodyPanel).previousQuestion();
+                            resetQuestionNumber();
                         }
                     }
                 });
@@ -759,6 +773,7 @@ public class TestFrame extends JFrame implements ActionListener {
                     public void run() {
                         if (bodyPanel instanceof ReadingPassagePanel) {
                             ((ReadingPassagePanel) bodyPanel).nextQuestion();
+                            resetQuestionNumber();
                         }
                     }
                 });

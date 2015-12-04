@@ -40,6 +40,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
     public static final int QUESTION_NUMBER_PANE_WIDTH = 200;
     public static final int QUESTION_NUMBER_PANE_HEIGHT = 20;
+    public static final int CONTINUE_OVAL_BUTTON_WIDTH = 70;
+    public static final int CONTINUE_OVAL_BUTTON_HEIGHT = 48;
     public static final int NEXT_BUTTON_WIDTH = 70;
     public static final int NEXT_BUTTON_HEIGHT = 48;
     public static final int BACK_BUTTON_WIDTH = 70;
@@ -76,6 +78,7 @@ public class TestFrame extends JFrame implements ActionListener {
     private MButton sectionExitButton;
 
     private JEditorPane questionNumberPane;
+    private MButton continueOvalButton;
     private MButton nextButton;
     private MButton backButton;
     private MButton okButton;
@@ -112,8 +115,6 @@ public class TestFrame extends JFrame implements ActionListener {
 
     private MReading reading;
     private MListening listening;
-
-    private int questionIndex;
 
     public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
         super(gc);
@@ -158,7 +159,6 @@ public class TestFrame extends JFrame implements ActionListener {
         this.configReadingData();
         this.configListeningData();
         this.timeElapsed = 3600; // 60 minutes
-        this.questionIndex = 0;
     }
 
     protected void configReadingData() {
@@ -236,6 +236,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setSectionExitButton();
         this.setQuestionNumberPane();
 
+        this.setContinueOvalButton();
         this.setNextButton();
         this.setBackButton();
         this.setOkButton();
@@ -303,7 +304,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setSectionExitButton() {
-        if (!this.bodyPanel.sectionExitButtonAvailable()) {
+        if (!this.bodyPanel.isSectionExitButtonAvailable()) {
             return;
         }
         this.sectionExitButton = new MButton();
@@ -330,7 +331,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setQuestionNumberPane() {
-        if (!this.bodyPanel.questionNumberPaneAvailable()) {
+        if (!this.bodyPanel.isQuestionNumberPaneAvailable()) {
             return;
         }
         this.questionNumberPane = new JEditorPane();
@@ -362,8 +363,33 @@ public class TestFrame extends JFrame implements ActionListener {
         }
     }
 
+    protected void setContinueOvalButton() {
+        if (!this.bodyPanel.isContinueOvalButtonAvailable()) {
+            return;
+        }
+        this.continueOvalButton = new MButton();
+
+        int x = this.headerPanel.getWidth() - CONTINUE_OVAL_BUTTON_WIDTH - LayoutConstants.MARGIN;
+        this.continueOvalButton.setBounds(x, 0, CONTINUE_OVAL_BUTTON_WIDTH, CONTINUE_OVAL_BUTTON_HEIGHT);
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_oval.png"));
+        this.continueOvalButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_oval_hi.png"));
+        this.continueOvalButton.setRolloverIcon(rolloverIcon);
+        this.continueOvalButton.setMargin(new Insets(0, 0, 0, 0));
+        this.continueOvalButton.setBorder(null);
+        this.continueOvalButton.setBorderPainted(false);
+        this.continueOvalButton.setFocusPainted(false);
+        this.continueOvalButton.setContentAreaFilled(false);
+
+        this.continueOvalButton.setActionCommand("doContinueOval");
+        this.continueOvalButton.addActionListener(this);
+
+        this.headerPanel.add(this.continueOvalButton);
+    }
+
     protected void setNextButton() {
-        if (!this.bodyPanel.nextButtonAvailable()) {
+        if (!this.bodyPanel.isNextButtonAvailable()) {
             return;
         }
         this.nextButton = new MButton();
@@ -381,7 +407,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.nextButton.setFocusPainted(false);
         this.nextButton.setContentAreaFilled(false);
 
-        this.nextButton.setEnabled(this.bodyPanel.nextButtonEnabled());
+        this.nextButton.setEnabled(this.bodyPanel.isNextButtonEnabled());
 
         this.nextButton.setActionCommand("doNext");
         this.nextButton.addActionListener(this);
@@ -390,7 +416,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setBackButton() {
-        if (!this.bodyPanel.backButtonAvailable()) {
+        if (!this.bodyPanel.isBackButtonAvailable()) {
             return;
         }
         this.backButton = new MButton();
@@ -408,7 +434,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.backButton.setFocusPainted(false);
         this.backButton.setContentAreaFilled(false);
 
-        this.backButton.setEnabled(this.bodyPanel.okButtonEnabled());
+        this.backButton.setEnabled(this.bodyPanel.isBackButtonEnabled());
 
         this.backButton.setActionCommand("doBack");
         this.backButton.addActionListener(this);
@@ -417,7 +443,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setOkButton() {
-        if (!this.bodyPanel.okButtonAvailable()) {
+        if (!this.bodyPanel.isOkButtonAvailable()) {
             return;
         }
         this.okButton = new MButton();
@@ -435,7 +461,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.okButton.setFocusPainted(false);
         this.okButton.setContentAreaFilled(false);
 
-        this.okButton.setEnabled(this.bodyPanel.okButtonEnabled());
+        this.okButton.setEnabled(this.bodyPanel.isOkButtonEnabled());
 
         this.okButton.setActionCommand("doOk");
         this.okButton.addActionListener(this);
@@ -444,7 +470,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setHelpButton() {
-        if (!this.bodyPanel.helpButtonAvailable()) {
+        if (!this.bodyPanel.isHelpButtonAvailable()) {
             return;
         }
         this.helpButton = new MButton();
@@ -462,7 +488,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.helpButton.setFocusPainted(false);
         this.helpButton.setContentAreaFilled(false);
 
-        this.helpButton.setEnabled(this.bodyPanel.helpButtonEnabled());
+        this.helpButton.setEnabled(this.bodyPanel.isHelpButtonEnabled());
 
         this.helpButton.setActionCommand("doHelp");
         this.helpButton.addActionListener(this);
@@ -471,13 +497,13 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setReviewButton() {
-        if (!this.bodyPanel.reviewButtonAvailable()) {
+        if (!this.bodyPanel.isReviewButtonAvailable()) {
             return;
         }
         this.reviewButton = new MButton();
 
         int x = this.headerPanel.getWidth() - REVIEW_BUTTON_WIDTH - LayoutConstants.MARGIN;
-        if (this.bodyPanel.nextButtonAvailable() && this.bodyPanel.backButtonAvailable() && this.bodyPanel.helpButtonAvailable()) {
+        if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isBackButtonAvailable() && this.bodyPanel.isHelpButtonAvailable()) {
             x = this.headerPanel.getWidth() - REVIEW_BUTTON_WIDTH - HELP_BUTTON_WIDTH - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
         }
         this.reviewButton.setBounds(x, 0, REVIEW_BUTTON_WIDTH, REVIEW_BUTTON_HEIGHT);
@@ -492,7 +518,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.reviewButton.setFocusPainted(false);
         this.reviewButton.setContentAreaFilled(false);
 
-        this.reviewButton.setEnabled(this.bodyPanel.volumeButtonEnabled());
+        this.reviewButton.setEnabled(this.bodyPanel.isReviewButtonEnabled());
 
         this.reviewButton.setActionCommand("doReview");
         this.reviewButton.addActionListener(this);
@@ -501,13 +527,13 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setVolumeButton() {
-        if (!this.bodyPanel.volumeButtonAvailable()) {
+        if (!this.bodyPanel.isVolumeButtonAvailable()) {
             return;
         }
         this.volumeButton = new MButton();
 
         int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN;
-        if (this.bodyPanel.nextButtonAvailable() && this.bodyPanel.okButtonAvailable() && this.bodyPanel.helpButtonAvailable()) {
+        if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isOkButtonAvailable() && this.bodyPanel.isHelpButtonAvailable()) {
             x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
         }
         this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
@@ -522,7 +548,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.volumeButton.setFocusPainted(false);
         this.volumeButton.setContentAreaFilled(false);
 
-        this.volumeButton.setEnabled(this.bodyPanel.volumeButtonEnabled());
+        this.volumeButton.setEnabled(this.bodyPanel.isVolumeButtonEnabled());
 
         this.volumeButton.setActionCommand("doVolume");
         this.volumeButton.addActionListener(this);
@@ -531,15 +557,17 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setContinueButton() {
-        if (!this.bodyPanel.continueButtonAvailable()) {
+        if (!this.bodyPanel.isContinueButtonAvailable()) {
             return;
         }
         this.continueButton = new MButton();
 
         int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - LayoutConstants.MARGIN;
-        if (this.bodyPanel.nextButtonAvailable() && this.bodyPanel.okButtonAvailable() && this.bodyPanel.helpButtonAvailable() && this.bodyPanel.volumeButtonAvailable()) {
+        if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isBackButtonAvailable() && this.bodyPanel.isHelpButtonAvailable() && this.bodyPanel.isReviewButtonAvailable()) {
+            x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - REVIEW_BUTTON_WIDTH - HELP_BUTTON_WIDTH - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
+        } else if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isOkButtonAvailable() && this.bodyPanel.isHelpButtonAvailable() && this.bodyPanel.isVolumeButtonAvailable()) {
             x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
-        } else if (!this.bodyPanel.nextButtonAvailable() && !this.bodyPanel.okButtonAvailable() && !this.bodyPanel.helpButtonAvailable() && this.bodyPanel.volumeButtonAvailable()) {
+        } else if (!this.bodyPanel.isNextButtonAvailable() && !this.bodyPanel.isOkButtonAvailable() && !this.bodyPanel.isHelpButtonAvailable() && this.bodyPanel.isVolumeButtonAvailable()) {
             x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
         }
         int y = LayoutConstants.MARGIN * 3;
@@ -563,7 +591,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setTimerLabel() {
-        if (!this.bodyPanel.timerLabelAvailable()) {
+        if (!this.bodyPanel.isTimerLabelAvailable()) {
             return;
         }
         this.timerLabel = new JLabel();
@@ -575,13 +603,14 @@ public class TestFrame extends JFrame implements ActionListener {
         this.timerLabel.setFont(new Font("Arial", Font.BOLD, 14));
         this.timerLabel.setForeground(new Color(245, 245, 245));
         this.timerLabel.setText(TimeUtils.displayTime(timeElapsed));
+        this.stopCountdown();
         this.startCountdown();
 
         this.headerPanel.add(this.timerLabel);
     }
 
     protected void setHideOrShowTimerButton() {
-        if (!this.bodyPanel.hideOrShowTimerButtonAvailable()) {
+        if (!this.bodyPanel.isHideOrShowTimerButtonAvailable()) {
             return;
         }
         this.hideOrShowTimerButton = new MButton();
@@ -653,7 +682,9 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     public void stopCountdown() {
-        this.timer.stop();
+        if (this.timer != null) {
+            this.timer.stop();
+        }
     }
 
     /**************************************************
@@ -741,6 +772,21 @@ public class TestFrame extends JFrame implements ActionListener {
                         repaint();
                     }
                 });
+                break;
+            case "doContinueOval":
+                logger.info("'Continue' oval button pressed.");
+                bodyPanel.setContinueOvalButtonAvailable(false);
+                bodyPanel.setQuestionNumberPaneAvailable(true);
+                bodyPanel.setNextButtonAvailable(true);
+                bodyPanel.setBackButtonAvailable(true);
+                bodyPanel.setHelpButtonAvailable(true);
+                bodyPanel.setReviewButtonAvailable(true);
+                bodyPanel.setNextButtonEnabled(true);
+                bodyPanel.setBackButtonEnabled(true);
+                bodyPanel.setHelpButtonEnabled(true);
+                bodyPanel.setReviewButtonEnabled(true);
+                resetHeaderPanel();
+                repaint();
                 break;
             case "doReview":
                 logger.info("'Review' button pressed.");

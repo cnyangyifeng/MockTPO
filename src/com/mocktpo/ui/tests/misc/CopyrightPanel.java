@@ -22,6 +22,7 @@ public class CopyrightPanel extends BodyPanel {
 
     private void initComponents() {
         this.setLayout(null);
+
         this.setDescriptionPane();
     }
 
@@ -58,54 +59,5 @@ public class CopyrightPanel extends BodyPanel {
         Color bg = new Color(238, 213, 204);
         g2d.setPaint(bg);
         g2d.fillRect(0, 0, width, height);
-    }
-
-    /**************************************************
-     * Control Buttons Status
-     **************************************************/
-
-    @Override
-    public boolean sectionExitButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean questionNumberPaneAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean nextButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean okButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean helpButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean volumeButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean continueButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean timerLabelAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean hideOrShowTimerButtonAvailable() {
-        return false;
     }
 }

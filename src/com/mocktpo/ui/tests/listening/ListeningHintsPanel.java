@@ -24,6 +24,7 @@ public class ListeningHintsPanel extends BodyPanel {
 
     private void initComponents() {
         this.setLayout(null);
+
         this.setDescriptionPane();
     }
 
@@ -46,78 +47,5 @@ public class ListeningHintsPanel extends BodyPanel {
         this.descriptionPane.setText(text);
 
         this.add(this.descriptionPane);
-    }
-
-    /**************************************************
-     * Control Buttons Status
-     **************************************************/
-
-    @Override
-    public boolean sectionExitButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean questionNumberPaneAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean nextButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean okButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean helpButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean volumeButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean continueButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean timerLabelAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean hideOrShowTimerButtonAvailable() {
-        return false;
-    }
-
-    /**************************************************
-     * Control Buttons Status - Enabled
-     **************************************************/
-
-    @Override
-    public boolean nextButtonEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean okButtonEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean helpButtonEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean volumeButtonEnabled() {
-        return true;
     }
 }

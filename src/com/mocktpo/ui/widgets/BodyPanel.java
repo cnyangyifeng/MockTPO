@@ -5,14 +5,57 @@ import java.awt.*;
 
 public class BodyPanel extends JPanel {
 
+    private boolean sectionExitButtonAvailable;
+    private boolean questionNumberPaneAvailable;
+    private boolean continueOvalButtonAvailable;
+    private boolean nextButtonAvailable;
+    private boolean backButtonAvailable;
+    private boolean okButtonAvailable;
+    private boolean helpButtonAvailable;
+    private boolean reviewButtonAvailable;
+    private boolean volumeButtonAvailable;
+    private boolean continueButtonAvailable;
+    private boolean timerLabelAvailable;
+    private boolean hideOrShowTimerButtonAvailable;
+
+    private boolean nextButtonEnabled;
+    private boolean backButtonEnabled;
+    private boolean okButtonEnabled;
+    private boolean helpButtonEnabled;
+    private boolean reviewButtonEnabled;
+    private boolean volumeButtonEnabled;
+
     public BodyPanel(Rectangle bounds) {
         super();
         this.setBounds(bounds);
         this.initComponents();
+        this.initButtonStatus();
     }
 
     private void initComponents() {
         this.setLayout(null);
+    }
+
+    protected void initButtonStatus() {
+        this.setSectionExitButtonAvailable(false);
+        this.setQuestionNumberPaneAvailable(false);
+        this.setContinueOvalButtonAvailable(false);
+        this.setNextButtonAvailable(false);
+        this.setBackButtonAvailable(false);
+        this.setOkButtonAvailable(false);
+        this.setHelpButtonAvailable(false);
+        this.setReviewButtonAvailable(false);
+        this.setVolumeButtonAvailable(false);
+        this.setContinueButtonAvailable(true);
+        this.setTimerLabelAvailable(false);
+        this.setHideOrShowTimerButtonAvailable(false);
+
+        this.setNextButtonEnabled(false);
+        this.setBackButtonEnabled(false);
+        this.setOkButtonEnabled(false);
+        this.setHelpButtonEnabled(false);
+        this.setReviewButtonEnabled(false);
+        this.setVolumeButtonEnabled(false);
     }
 
     @Override
@@ -32,67 +75,151 @@ public class BodyPanel extends JPanel {
      * Control Buttons Status - Available
      **************************************************/
 
-    public boolean sectionExitButtonAvailable() {
-        return false;
+    public boolean isSectionExitButtonAvailable() {
+        return sectionExitButtonAvailable;
     }
 
-    public boolean questionNumberPaneAvailable() {
-        return false;
+    public boolean isQuestionNumberPaneAvailable() {
+        return questionNumberPaneAvailable;
     }
 
-    public boolean nextButtonAvailable() {
-        return false;
+    public boolean isContinueOvalButtonAvailable() {
+        return continueOvalButtonAvailable;
     }
 
-    public boolean backButtonAvailable() {
-        return false;
+    public boolean isNextButtonAvailable() {
+        return nextButtonAvailable;
     }
 
-    public boolean okButtonAvailable() {
-        return false;
+    public boolean isBackButtonAvailable() {
+        return backButtonAvailable;
     }
 
-    public boolean helpButtonAvailable() {
-        return false;
+    public boolean isOkButtonAvailable() {
+        return okButtonAvailable;
     }
 
-    public boolean reviewButtonAvailable() {
-        return false;
+    public boolean isHelpButtonAvailable() {
+        return helpButtonAvailable;
     }
 
-    public boolean volumeButtonAvailable() {
-        return false;
+    public boolean isReviewButtonAvailable() {
+        return reviewButtonAvailable;
     }
 
-    public boolean continueButtonAvailable() {
-        return true;
+    public boolean isVolumeButtonAvailable() {
+        return volumeButtonAvailable;
     }
 
-    public boolean timerLabelAvailable() {
-        return false;
+    public boolean isContinueButtonAvailable() {
+        return continueButtonAvailable;
     }
 
-    public boolean hideOrShowTimerButtonAvailable() {
-        return false;
+    public boolean isTimerLabelAvailable() {
+        return timerLabelAvailable;
+    }
+
+    public boolean isHideOrShowTimerButtonAvailable() {
+        return hideOrShowTimerButtonAvailable;
+    }
+
+    public void setSectionExitButtonAvailable(boolean sectionExitButtonAvailable) {
+        this.sectionExitButtonAvailable = sectionExitButtonAvailable;
+    }
+
+    public void setQuestionNumberPaneAvailable(boolean questionNumberPaneAvailable) {
+        this.questionNumberPaneAvailable = questionNumberPaneAvailable;
+    }
+
+    public void setContinueOvalButtonAvailable(boolean continueOvalButtonAvailable) {
+        this.continueOvalButtonAvailable = continueOvalButtonAvailable;
+    }
+
+    public void setNextButtonAvailable(boolean nextButtonAvailable) {
+        this.nextButtonAvailable = nextButtonAvailable;
+    }
+
+    public void setBackButtonAvailable(boolean backButtonAvailable) {
+        this.backButtonAvailable = backButtonAvailable;
+    }
+
+    public void setOkButtonAvailable(boolean okButtonAvailable) {
+        this.okButtonAvailable = okButtonAvailable;
+    }
+
+    public void setHelpButtonAvailable(boolean helpButtonAvailable) {
+        this.helpButtonAvailable = helpButtonAvailable;
+    }
+
+    public void setReviewButtonAvailable(boolean reviewButtonAvailable) {
+        this.reviewButtonAvailable = reviewButtonAvailable;
+    }
+
+    public void setVolumeButtonAvailable(boolean volumeButtonAvailable) {
+        this.volumeButtonAvailable = volumeButtonAvailable;
+    }
+
+    public void setContinueButtonAvailable(boolean continueButtonAvailable) {
+        this.continueButtonAvailable = continueButtonAvailable;
+    }
+
+    public void setTimerLabelAvailable(boolean timerLabelAvailable) {
+        this.timerLabelAvailable = timerLabelAvailable;
+    }
+
+    public void setHideOrShowTimerButtonAvailable(boolean hideOrShowTimerButtonAvailable) {
+        this.hideOrShowTimerButtonAvailable = hideOrShowTimerButtonAvailable;
     }
 
     /**************************************************
      * Control Buttons Status - Enabled
      **************************************************/
 
-    public boolean nextButtonEnabled() {
-        return false;
+    public boolean isNextButtonEnabled() {
+        return nextButtonEnabled;
     }
 
-    public boolean okButtonEnabled() {
-        return false;
+    public boolean isBackButtonEnabled() {
+        return backButtonEnabled;
     }
 
-    public boolean helpButtonEnabled() {
-        return false;
+    public boolean isOkButtonEnabled() {
+        return okButtonEnabled;
     }
 
-    public boolean volumeButtonEnabled() {
-        return false;
+    public boolean isHelpButtonEnabled() {
+        return helpButtonEnabled;
+    }
+
+    public boolean isReviewButtonEnabled() {
+        return reviewButtonEnabled;
+    }
+
+    public boolean isVolumeButtonEnabled() {
+        return volumeButtonEnabled;
+    }
+
+    public void setNextButtonEnabled(boolean nextButtonEnabled) {
+        this.nextButtonEnabled = nextButtonEnabled;
+    }
+
+    public void setBackButtonEnabled(boolean backButtonEnabled) {
+        this.backButtonEnabled = backButtonEnabled;
+    }
+
+    public void setOkButtonEnabled(boolean okButtonEnabled) {
+        this.okButtonEnabled = okButtonEnabled;
+    }
+
+    public void setHelpButtonEnabled(boolean helpButtonEnabled) {
+        this.helpButtonEnabled = helpButtonEnabled;
+    }
+
+    public void setReviewButtonEnabled(boolean reviewButtonEnabled) {
+        this.reviewButtonEnabled = reviewButtonEnabled;
+    }
+
+    public void setVolumeButtonEnabled(boolean volumeButtonEnabled) {
+        this.volumeButtonEnabled = volumeButtonEnabled;
     }
 }

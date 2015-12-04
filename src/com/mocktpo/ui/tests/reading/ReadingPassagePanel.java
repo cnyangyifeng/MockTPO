@@ -51,6 +51,14 @@ public class ReadingPassagePanel extends BodyPanel {
         this.setPassagePane();
     }
 
+    @Override
+    protected void initButtonStatus() {
+        this.setSectionExitButtonAvailable(true);
+        this.setContinueOvalButtonAvailable(true);
+        this.setTimerLabelAvailable(true);
+        this.setHideOrShowTimerButtonAvailable(true);
+    }
+
     protected void setQuestionPanel() {
         this.questionPanel = new JPanel();
 
@@ -232,88 +240,5 @@ public class ReadingPassagePanel extends BodyPanel {
 
     public int totalQuestions() {
         return this.passage.getQuestions().size();
-    }
-
-    /**************************************************
-     * Control Buttons Status
-     **************************************************/
-
-    @Override
-    public boolean sectionExitButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean questionNumberPaneAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean nextButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean backButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean okButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean helpButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean reviewButtonAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean volumeButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean continueButtonAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean timerLabelAvailable() {
-        return true;
-    }
-
-    @Override
-    public boolean hideOrShowTimerButtonAvailable() {
-        return true;
-    }
-
-    /**************************************************
-     * Control Buttons Status - Enabled
-     **************************************************/
-
-    @Override
-    public boolean nextButtonEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean okButtonEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean helpButtonEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean volumeButtonEnabled() {
-        return true;
     }
 }

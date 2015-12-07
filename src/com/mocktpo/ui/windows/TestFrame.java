@@ -290,7 +290,6 @@ public class TestFrame extends JFrame implements ActionListener {
         StyleSheet style = kit.getStyleSheet();
         style.addRule(".title { font-family: Arial; font-size: 11px; font-weight: bold; color: #ffffff; margin-top: 3px; width: 150px; }");
         titlePane.setEditorKit(kit);
-        // titlePane.setText("<div class='title'>TOEFL iBT Complete<br />Practice Test V25 Listening</div>");
         titlePane.setText("<div class='title'>" + this.title + "</div>");
 
         this.headerPanel.add(titlePane);

@@ -10,6 +10,7 @@ import com.mocktpo.ui.tests.misc.GeneralTestInfoPanel;
 import com.mocktpo.ui.tests.reading.ReadingDirectionsPanel;
 import com.mocktpo.ui.tests.reading.ReadingPassagePanel;
 import com.mocktpo.ui.tests.reading.ReadingReviewPanel;
+import com.mocktpo.ui.tests.reading.ReadingSummaryQuestionPanel;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
@@ -100,6 +101,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
     protected ReadingDirectionsPanel rdPanel;
     protected ReadingPassagePanel rpPanel;
+    protected ReadingSummaryQuestionPanel rsqPanel;
     protected ReadingReviewPanel rrPanel;
 
     protected HeadsetPanel headsetPanel;
@@ -827,8 +829,25 @@ public class TestFrame extends JFrame implements ActionListener {
                     @Override
                     public void run() {
                         if (bodyPanel instanceof ReadingPassagePanel) {
-                            ((ReadingPassagePanel) bodyPanel).nextQuestion();
-                            resetQuestionNumber();
+//                            ((ReadingPassagePanel) bodyPanel).nextQuestion();
+//                            resetQuestionNumber();
+
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getContentPane().remove(bodyPanel);
+                                    if (bodyPanel instanceof ReadingPassagePanel) {
+                                        // TODO
+                                        MReadingPassage passage = reading.getPassages().get(0);
+                                        rsqPanel = new ReadingSummaryQuestionPanel(bodyBounds, passage);
+                                        bodyPanel = rsqPanel;
+                                    }
+                                    getContentPane().add(bodyPanel);
+                                    resetHeaderPanel();
+                                    repaint();
+                                }
+                            });
+// TODO END
                         }
                     }
                 });

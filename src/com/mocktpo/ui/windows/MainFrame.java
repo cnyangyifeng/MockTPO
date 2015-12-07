@@ -455,12 +455,13 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
     public void doNext(int selectedRow) {
         String testIndex = this.bodyTable.getValueAt(selectedRow, 0).toString();
+        String testDescription = this.bodyTable.getValueAt(selectedRow, 1).toString();
         MApplication.settings.put("testIndex", testIndex);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = ge.getDefaultScreenDevice();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this);
+                testFrame = new TestFrame(device.getDefaultConfiguration(), MainFrame.this, testDescription);
                 device.setFullScreenWindow(testFrame);
                 testFrame.setVisible(true);
                 setVisible(false);

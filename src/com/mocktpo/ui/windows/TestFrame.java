@@ -111,6 +111,8 @@ public class TestFrame extends JFrame implements ActionListener {
 
     // Variables
 
+    private String title;
+
     private Timer timer;
     private long timeElapsed;
 
@@ -120,9 +122,10 @@ public class TestFrame extends JFrame implements ActionListener {
     private MReading reading;
     private MListening listening;
 
-    public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame) {
+    public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame, String title) {
         super(gc);
         this.mainFrame = mainFrame;
+        this.title = title;
         this.initComponents();
     }
 
@@ -150,7 +153,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setUndecorated(true);
 
-        this.setTitle("TOEFL iBT Complete Practice Test");
+        this.setTitle(this.title);
 
         this.configData();
     }
@@ -285,9 +288,10 @@ public class TestFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Arial; font-size: 11px; font-weight: bold; color: #ffffff; margin-top: 3px; }");
+        style.addRule(".title { font-family: Arial; font-size: 11px; font-weight: bold; color: #ffffff; margin-top: 3px; width: 150px; }");
         titlePane.setEditorKit(kit);
-        titlePane.setText("<div class='title'>TOEFL iBT Complete<br />Practice Test V25 Listening</div>");
+        // titlePane.setText("<div class='title'>TOEFL iBT Complete<br />Practice Test V25 Listening</div>");
+        titlePane.setText("<div class='title'>" + this.title + "</div>");
 
         this.headerPanel.add(titlePane);
     }

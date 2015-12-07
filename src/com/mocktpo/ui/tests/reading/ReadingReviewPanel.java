@@ -39,7 +39,8 @@ public class ReadingReviewPanel extends BodyPanel {
     @Override
     protected void initButtonStatus() {
         this.setSectionExitButtonAvailable(true);
-        this.setContinueOvalButtonAvailable(true);
+        this.setGoToQuestionButtonAvailable(true);
+        this.setReturnButtonAvailable(true);
         this.setTimerLabelAvailable(true);
         this.setHideOrShowTimerButtonAvailable(true);
     }

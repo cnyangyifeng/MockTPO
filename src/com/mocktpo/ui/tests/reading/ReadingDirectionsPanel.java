@@ -30,7 +30,6 @@ public class ReadingDirectionsPanel extends BodyPanel {
         this.setHelpButtonAvailable(true);
         this.setReviewButtonAvailable(true);
         this.setContinueButtonAvailable(true);
-
         this.setHelpButtonEnabled(true);
     }
 

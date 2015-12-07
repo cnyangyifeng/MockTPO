@@ -10,6 +10,10 @@ public class BodyPanel extends JPanel {
 
     protected static final Logger logger = LogManager.getLogger();
 
+    /**************************************************
+     * Control Buttons Status - Available
+     **************************************************/
+
     private boolean sectionExitButtonAvailable;
     private boolean questionNumberPaneAvailable;
     private boolean continueOvalButtonAvailable;
@@ -20,8 +24,14 @@ public class BodyPanel extends JPanel {
     private boolean reviewButtonAvailable;
     private boolean volumeButtonAvailable;
     private boolean continueButtonAvailable;
+    private boolean goToQuestionButtonAvailable;
+    private boolean returnButtonAvailable;
     private boolean timerLabelAvailable;
     private boolean hideOrShowTimerButtonAvailable;
+
+    /**************************************************
+     * Control Buttons Status - Enabled
+     **************************************************/
 
     private boolean nextButtonEnabled;
     private boolean backButtonEnabled;
@@ -52,9 +62,10 @@ public class BodyPanel extends JPanel {
         this.setReviewButtonAvailable(false);
         this.setVolumeButtonAvailable(false);
         this.setContinueButtonAvailable(true);
+        this.setGoToQuestionButtonAvailable(false);
+        this.setReturnButtonAvailable(false);
         this.setTimerLabelAvailable(false);
         this.setHideOrShowTimerButtonAvailable(false);
-
         this.setNextButtonEnabled(false);
         this.setBackButtonEnabled(false);
         this.setOkButtonEnabled(false);
@@ -120,6 +131,14 @@ public class BodyPanel extends JPanel {
         return continueButtonAvailable;
     }
 
+    public boolean isGoToQuestionButtonAvailable() {
+        return goToQuestionButtonAvailable;
+    }
+
+    public boolean isReturnButtonAvailable() {
+        return returnButtonAvailable;
+    }
+
     public boolean isTimerLabelAvailable() {
         return timerLabelAvailable;
     }
@@ -166,6 +185,14 @@ public class BodyPanel extends JPanel {
 
     public void setContinueButtonAvailable(boolean continueButtonAvailable) {
         this.continueButtonAvailable = continueButtonAvailable;
+    }
+
+    public void setGoToQuestionButtonAvailable(boolean goToQuestionButtonAvailable) {
+        this.goToQuestionButtonAvailable = goToQuestionButtonAvailable;
+    }
+
+    public void setReturnButtonAvailable(boolean returnButtonAvailable) {
+        this.returnButtonAvailable = returnButtonAvailable;
     }
 
     public void setTimerLabelAvailable(boolean timerLabelAvailable) {

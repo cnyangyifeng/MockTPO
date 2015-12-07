@@ -38,7 +38,6 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int PAUSE_TEST_BUTTON_HEIGHT = 34;
     public static final int SECTION_EXIT_BUTTON_WIDTH = 84;
     public static final int SECTION_EXIT_BUTTON_HEIGHT = 34;
-
     public static final int QUESTION_NUMBER_PANE_WIDTH = 200;
     public static final int QUESTION_NUMBER_PANE_HEIGHT = 20;
     public static final int CONTINUE_OVAL_BUTTON_WIDTH = 70;
@@ -57,7 +56,10 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int VOLUME_BUTTON_HEIGHT = 48;
     public static final int CONTINUE_BUTTON_WIDTH = 74;
     public static final int CONTINUE_BUTTON_HEIGHT = 34;
-
+    public static final int GO_TO_QUESTION_BUTTON_WIDTH = 74;
+    public static final int GO_TO_QUESTION_BUTTON_HEIGHT = 34;
+    public static final int RETURN_BUTTON_WIDTH = 74;
+    public static final int RETURN_BUTTON_HEIGHT = 34;
     public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 72;
     public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 18;
     public static final int TIMER_LABEL_WIDTH = 60;
@@ -77,7 +79,6 @@ public class TestFrame extends JFrame implements ActionListener {
 
     protected MButton pauseTestButton;
     protected MButton sectionExitButton;
-
     protected JEditorPane questionNumberPane;
     protected MButton continueOvalButton;
     protected MButton nextButton;
@@ -87,7 +88,8 @@ public class TestFrame extends JFrame implements ActionListener {
     protected MButton reviewButton;
     protected MButton volumeButton;
     protected MButton continueButton;
-
+    protected MButton goToQuestionButton;
+    protected MButton returnButton;
     protected JLabel timerLabel;
     protected MButton hideOrShowTimerButton;
 
@@ -244,10 +246,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setLogoLabel();
         this.setTitlePane();
         this.setPauseTestButton();
-
         this.setSectionExitButton();
         this.setQuestionNumberPane();
-
         this.setContinueOvalButton();
         this.setNextButton();
         this.setBackButton();
@@ -256,7 +256,8 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setReviewButton();
         this.setVolumeButton();
         this.setContinueButton();
-
+        this.setGoToQuestionButton();
+        this.setReturnButton();
         this.setTimerLabel();
         this.setHideOrShowTimerButton();
     }
@@ -368,9 +369,8 @@ public class TestFrame extends JFrame implements ActionListener {
     protected void resetQuestionNumber() {
         if (this.bodyPanel instanceof ReadingPassagePanel) {
             ReadingPassagePanel rpPanel = (ReadingPassagePanel) this.bodyPanel;
-            int questionNo = rpPanel.currentQuestionIndex() + 1;
             int totalQuestions = this.reading.getTotalQuestions();
-            String text = "<div class='question'>Question " + questionNo + " of " + totalQuestions + "</div>";
+            String text = "<div class='question'>Question " + rpPanel.currentQuestionIndex() + " of " + totalQuestions + "</div>";
             this.questionNumberPane.setText(text);
         }
     }
@@ -602,6 +602,64 @@ public class TestFrame extends JFrame implements ActionListener {
         this.headerPanel.add(this.continueButton);
     }
 
+    protected void setGoToQuestionButton() {
+        if (!this.bodyPanel.isGoToQuestionButtonAvailable()) {
+            return;
+        }
+        this.goToQuestionButton = new MButton();
+
+        int x = this.headerPanel.getWidth() - GO_TO_QUESTION_BUTTON_WIDTH - LayoutConstants.MARGIN;
+        int y = LayoutConstants.MARGIN * 3;
+        this.goToQuestionButton.setBounds(x, y, GO_TO_QUESTION_BUTTON_WIDTH, GO_TO_QUESTION_BUTTON_HEIGHT);
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_to_question.png"));
+        this.goToQuestionButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_to_question_hi.png"));
+        this.goToQuestionButton.setRolloverIcon(rolloverIcon);
+        this.goToQuestionButton.setText(null);
+        this.goToQuestionButton.setMargin(new Insets(0, 0, 0, 0));
+        this.goToQuestionButton.setBorder(null);
+        this.goToQuestionButton.setBorderPainted(false);
+        this.goToQuestionButton.setFocusPainted(false);
+        this.goToQuestionButton.setContentAreaFilled(false);
+
+        this.goToQuestionButton.setActionCommand("doGoToQuestion");
+        this.goToQuestionButton.addActionListener(this);
+
+        this.headerPanel.add(this.goToQuestionButton);
+    }
+
+    protected void setReturnButton() {
+        if (!this.bodyPanel.isReturnButtonAvailable()) {
+            return;
+        }
+        this.returnButton = new MButton();
+
+        if (this.bodyPanel.isGoToQuestionButtonAvailable() && this.bodyPanel.isReturnButtonAvailable()) {
+            int x = this.headerPanel.getWidth() - GO_TO_QUESTION_BUTTON_WIDTH - RETURN_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
+            int y = LayoutConstants.MARGIN * 3;
+            this.returnButton.setBounds(x, y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
+        } else {
+            return;
+        }
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return.png"));
+        this.returnButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return_hi.png"));
+        this.returnButton.setRolloverIcon(rolloverIcon);
+        this.returnButton.setText(null);
+        this.returnButton.setMargin(new Insets(0, 0, 0, 0));
+        this.returnButton.setBorder(null);
+        this.returnButton.setBorderPainted(false);
+        this.returnButton.setFocusPainted(false);
+        this.returnButton.setContentAreaFilled(false);
+
+        this.returnButton.setActionCommand("doReturn");
+        this.returnButton.addActionListener(this);
+
+        this.headerPanel.add(this.returnButton);
+    }
+
     protected void setTimerLabel() {
         if (!this.bodyPanel.isTimerLabelAvailable()) {
             return;
@@ -740,6 +798,77 @@ public class TestFrame extends JFrame implements ActionListener {
                     }
                 });
                 break;
+            case "doContinueOval":
+                logger.info("'Continue' oval button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        bodyPanel.setContinueOvalButtonAvailable(false);
+                        bodyPanel.setQuestionNumberPaneAvailable(true);
+                        bodyPanel.setNextButtonAvailable(true);
+                        bodyPanel.setBackButtonAvailable(true);
+                        bodyPanel.setHelpButtonAvailable(true);
+                        bodyPanel.setReviewButtonAvailable(true);
+                        bodyPanel.setNextButtonEnabled(true);
+                        bodyPanel.setBackButtonEnabled(true);
+                        bodyPanel.setHelpButtonEnabled(true);
+                        bodyPanel.setReviewButtonEnabled(true);
+                        resetHeaderPanel();
+                        repaint();
+                    }
+                });
+                break;
+            case "doNext":
+                logger.info("'Next' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (bodyPanel instanceof ReadingPassagePanel) {
+                            ((ReadingPassagePanel) bodyPanel).nextQuestion();
+                            resetQuestionNumber();
+                        }
+                    }
+                });
+                break;
+            case "doBack":
+                logger.info("'Back' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (bodyPanel instanceof ReadingPassagePanel) {
+                            ((ReadingPassagePanel) bodyPanel).previousQuestion();
+                            resetQuestionNumber();
+                        }
+                    }
+                });
+                break;
+            case "doOk":
+                logger.info("'Ok' button pressed.");
+                break;
+            case "doHelp":
+                logger.info("'Help' button pressed.");
+                break;
+            case "doReview":
+                logger.info("'Review' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        getContentPane().remove(bodyPanel);
+                        if (bodyPanel instanceof ReadingPassagePanel) {
+                            // TODO
+                            MReadingPassage passage = reading.getPassages().get(0);
+                            rrPanel = new ReadingReviewPanel(bodyBounds, passage);
+                            bodyPanel = rrPanel;
+                        }
+                        getContentPane().add(bodyPanel);
+                        resetHeaderPanel();
+                        repaint();
+                    }
+                });
+                break;
+            case "doVolume":
+                logger.info("'Volume' button pressed.");
+                break;
             case "doContinue":
                 logger.info("'Continue' button pressed.");
                 SwingUtilities.invokeLater(new Runnable() {
@@ -786,78 +915,44 @@ public class TestFrame extends JFrame implements ActionListener {
                     }
                 });
                 break;
-            case "doContinueOval":
-                logger.info("'Continue' oval button pressed.");
+            case "doGoToQuestion":
+                logger.info("'Go To Question' button pressed.");
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        bodyPanel.setContinueOvalButtonAvailable(false);
-                        bodyPanel.setQuestionNumberPaneAvailable(true);
-                        bodyPanel.setNextButtonAvailable(true);
-                        bodyPanel.setBackButtonAvailable(true);
-                        bodyPanel.setHelpButtonAvailable(true);
-                        bodyPanel.setReviewButtonAvailable(true);
-                        bodyPanel.setNextButtonEnabled(true);
-                        bodyPanel.setBackButtonEnabled(true);
-                        bodyPanel.setHelpButtonEnabled(true);
-                        bodyPanel.setReviewButtonEnabled(true);
+                        getContentPane().remove(bodyPanel);
+                        if (bodyPanel instanceof ReadingReviewPanel) {
+                            // TODO
+                            MReadingPassage passage = reading.getPassages().get(0);
+                            rpPanel = new ReadingPassagePanel(bodyBounds, passage);
+                            bodyPanel = rpPanel;
+                        }
+                        getContentPane().add(bodyPanel);
                         resetHeaderPanel();
                         repaint();
                     }
                 });
                 break;
-            case "doReview":
-                logger.info("'Review' button pressed.");
+            case "doReturn":
+                logger.info("'Return' button pressed.");
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         getContentPane().remove(bodyPanel);
-                        if (bodyPanel instanceof ReadingPassagePanel) {
+                        if (bodyPanel instanceof ReadingReviewPanel) {
                             // TODO
                             MReadingPassage passage = reading.getPassages().get(0);
-                            rrPanel = new ReadingReviewPanel(bodyBounds, passage);
-                            bodyPanel = rrPanel;
+                            rpPanel = new ReadingPassagePanel(bodyBounds, passage);
+                            bodyPanel = rpPanel;
                         }
                         getContentPane().add(bodyPanel);
+                        resetHeaderPanel();
                         repaint();
                     }
                 });
                 break;
-            case "doVolume":
-                logger.info("'Volume' button pressed.");
-                break;
-            case "doHelp":
-                logger.info("'Help' button pressed.");
-                break;
-            case "doBack":
-                logger.info("'Back' button pressed.");
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (bodyPanel instanceof ReadingPassagePanel) {
-                            ((ReadingPassagePanel) bodyPanel).previousQuestion();
-                            resetQuestionNumber();
-                        }
-                    }
-                });
-                break;
-            case "doOk":
-                logger.info("'Ok' button pressed.");
-                break;
-            case "doNext":
-                logger.info("'Next' button pressed.");
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (bodyPanel instanceof ReadingPassagePanel) {
-                            ((ReadingPassagePanel) bodyPanel).nextQuestion();
-                            resetQuestionNumber();
-                        }
-                    }
-                });
-                break;
             case "doHideOrShowTimer":
-                logger.info("'HideOrShowTimer' button pressed.");
+                logger.info("'Hide Or Show Timer' button pressed.");
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {

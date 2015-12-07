@@ -235,10 +235,6 @@ public class ReadingPassagePanel extends BodyPanel {
     }
 
     public int currentQuestionIndex() {
-        return this.questionIndex;
-    }
-
-    public int totalQuestions() {
-        return this.passage.getQuestions().size();
+        return this.passage.getQuestions().get(questionIndex).getNumber();
     }
 }

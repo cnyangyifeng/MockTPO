@@ -4,17 +4,13 @@ import java.util.List;
 
 public class MChoiceQuestion {
 
-    protected String index;
+    protected int number;
     protected String subject;
     protected String answer;
     protected List<MChoiceOption> options;
 
-    public String getIndex() {
-        return this.index;
-    }
-
-    public void setIndex(String index) {
-        this.index = index;
+    public int getNumber() {
+        return this.number;
     }
 
     public String getSubject() {
@@ -27,10 +23,5 @@ public class MChoiceQuestion {
 
     public List<MChoiceOption> getOptions() {
         return this.options;
-    }
-
-    @Override
-    public String toString() {
-        return this.index;
     }
 }

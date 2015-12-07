@@ -200,7 +200,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
     }
 
     protected void setBodyScrollPane() {
-        String[] columnNames = {"TPO" /* Index */, "Description" /* Name */, "Download", "Test" /* Next */, "Reports"};
+        String[] columnNames = {"Number" /* Index */, "Description" /* Name */, "Download", "Test" /* Next */, "Reports"};
         DefaultTableModel tableModel = new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;

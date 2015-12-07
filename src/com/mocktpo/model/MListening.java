@@ -11,16 +11,7 @@ public class MListening {
         return this.index;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
-    }
-
     public List<MListeningPassage> getPassages() {
         return this.passages;
-    }
-
-    @Override
-    public String toString() {
-        return this.index;
     }
 }

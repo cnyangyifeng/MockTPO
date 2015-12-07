@@ -14,16 +14,7 @@ public class MChoiceOption {
         return this.index;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
-    }
-
     public String getText() {
         return this.text;
-    }
-
-    @Override
-    public String toString() {
-        return this.index;
     }
 }

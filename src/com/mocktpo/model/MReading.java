@@ -5,22 +5,18 @@ import java.util.List;
 public class MReading {
 
     protected String index;
+    protected int totalQuestions;
     protected List<MReadingPassage> passages;
 
     public String getIndex() {
         return this.index;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
+    public int getTotalQuestions() {
+        return totalQuestions;
     }
 
     public List<MReadingPassage> getPassages() {
         return this.passages;
-    }
-
-    @Override
-    public String toString() {
-        return this.index;
     }
 }

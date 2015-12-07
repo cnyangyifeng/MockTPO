@@ -7,9 +7,4 @@ public class MListeningQuestion extends MChoiceQuestion {
     public MAudio getAudio() {
         return this.audio;
     }
-
-    @Override
-    public String toString() {
-        return this.index;
-    }
 }

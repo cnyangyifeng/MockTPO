@@ -13,10 +13,6 @@ public class MReadingPassage {
         return this.index;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
-    }
-
     public String getTitle() {
         return this.title;
     }
@@ -27,10 +23,5 @@ public class MReadingPassage {
 
     public List<MChoiceQuestion> getQuestions() {
         return this.questions;
-    }
-
-    @Override
-    public String toString() {
-        return this.index;
     }
 }

@@ -163,7 +163,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             JRadioButton radioButton = (JRadioButton) e.getSource();
-            logger.info("{}: {} answer: {}, user choice: {}.", this.question.getIndex(), this.question.getSubject(), this.question.getAnswer(), radioButton.getName());
+            logger.info("{}: {} answer: {}, user choice: {}.", this.question.getNumber(), this.question.getSubject(), this.question.getAnswer(), radioButton.getName());
         }
     }
 }

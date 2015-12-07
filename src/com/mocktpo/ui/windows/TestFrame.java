@@ -179,6 +179,11 @@ public class TestFrame extends JFrame implements ActionListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if (this.reading == null) {
+            logger.error("Configuration file 'reading.xml' not found.");
+            System.exit(-1);
+        }
     }
 
     protected void configListeningData() {
@@ -197,6 +202,11 @@ public class TestFrame extends JFrame implements ActionListener {
             this.listening = (MListening) xs.fromXML(new File(xml.toURI()));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if (this.listening == null) {
+            logger.error("Configuration file 'listening.xml' not found.");
+            System.exit(-1);
         }
     }
 
@@ -359,7 +369,7 @@ public class TestFrame extends JFrame implements ActionListener {
         if (this.bodyPanel instanceof ReadingPassagePanel) {
             ReadingPassagePanel rpPanel = (ReadingPassagePanel) this.bodyPanel;
             int questionNo = rpPanel.currentQuestionIndex() + 1;
-            int totalQuestions = rpPanel.totalQuestions();
+            int totalQuestions = this.reading.getTotalQuestions();
             String text = "<div class='question'>Question " + questionNo + " of " + totalQuestions + "</div>";
             this.questionNumberPane.setText(text);
         }

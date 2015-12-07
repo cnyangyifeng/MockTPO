@@ -14,10 +14,6 @@ public class MListeningPassage {
         return this.index;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
-    }
-
     public String getType() {
         return this.type;
     }
@@ -32,10 +28,5 @@ public class MListeningPassage {
 
     public List<MListeningQuestion> getQuestions() {
         return this.questions;
-    }
-
-    @Override
-    public String toString() {
-        return this.index;
     }
 }

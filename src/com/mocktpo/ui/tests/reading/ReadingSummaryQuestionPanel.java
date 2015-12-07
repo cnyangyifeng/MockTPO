@@ -2,7 +2,6 @@ package com.mocktpo.ui.tests.reading;
 
 import com.mocktpo.model.MReadingPassage;
 import com.mocktpo.ui.widgets.BodyPanel;
-import com.mocktpo.ui.widgets.MReadingReviewTable;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
@@ -14,7 +13,6 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
     public static final int DESCRIPTION_PANE_HEIGHT = 160;
 
     protected JEditorPane descriptionPane;
-    protected MReadingReviewTable bodyTable;
 
     private MReadingPassage passage;
 
@@ -32,9 +30,15 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
 
     @Override
     protected void initButtonStatus() {
-        this.setSectionExitButtonAvailable(true);
-        this.setGoToQuestionButtonAvailable(true);
-        this.setReturnButtonAvailable(true);
+        this.setQuestionNumberPaneAvailable(true);
+        this.setNextButtonAvailable(true);
+        this.setBackButtonAvailable(true);
+        this.setHelpButtonAvailable(true);
+        this.setReviewButtonAvailable(true);
+        this.setNextButtonEnabled(true);
+        this.setBackButtonEnabled(true);
+        this.setHelpButtonEnabled(true);
+        this.setReviewButtonEnabled(true);
         this.setTimerLabelAvailable(true);
         this.setHideOrShowTimerButtonAvailable(true);
     }

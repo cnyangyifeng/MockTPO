@@ -13,7 +13,8 @@ public class ListeningHintsPanel extends BodyPanel {
     public static final int DESCRIPTION_PANE_WIDTH = 500;
     public static final int DESCRIPTION_PANE_HEIGHT = 380;
 
-    private JEditorPane descriptionPane;
+    protected JEditorPane descriptionPane;
+
     private String hints;
 
     public ListeningHintsPanel(Rectangle bounds, String hints) {

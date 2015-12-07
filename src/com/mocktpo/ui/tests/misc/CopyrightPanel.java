@@ -13,7 +13,7 @@ public class CopyrightPanel extends BodyPanel {
     public static final int DESCRIPTION_PANE_WIDTH = 800;
     public static final int DESCRIPTION_PANE_HEIGHT = 400;
 
-    private JEditorPane descriptionPane;
+    protected JEditorPane descriptionPane;
 
     public CopyrightPanel(Rectangle bounds) {
         super(bounds);

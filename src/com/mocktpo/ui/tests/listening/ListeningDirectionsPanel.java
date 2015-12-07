@@ -15,7 +15,8 @@ import java.net.URL;
 
 public class ListeningDirectionsPanel extends BodyPanel implements ActionListener {
 
-    private JEditorPane descriptionPane;
+    protected JEditorPane descriptionPane;
+
     private Player audioPlayer;
     private Timer timer;
 

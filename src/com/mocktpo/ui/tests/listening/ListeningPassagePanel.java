@@ -21,13 +21,13 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
     public static final int CONVERSATION_PROGRESS_BAR_WIDTH = 320;
     public static final int CONVERSATION_PROGRESS_BAR_HEIGHT = 6;
 
-    private JLabel conversationLabel;
-    private JProgressBar conversationProgressBar;
+    protected JLabel conversationLabel;
+    protected JProgressBar conversationProgressBar;
 
     private Player audioPlayer;
     private Timer timer;
 
-    private MListeningPassage passage;
+    protected MListeningPassage passage;
 
     public ListeningPassagePanel(Rectangle bounds, MListeningPassage passage) {
         super(bounds);

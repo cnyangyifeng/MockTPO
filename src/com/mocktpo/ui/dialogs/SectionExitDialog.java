@@ -35,11 +35,11 @@ public class SectionExitDialog extends JDialog implements ActionListener {
      * Properties
      **************************************************/
 
-    private DialogBodyPanel bodyPanel;
-    private JLabel titleLabel;
-    private JEditorPane descriptionPane;
-    private MButton continueButton;
-    private MButton returnButton;
+    protected DialogBodyPanel bodyPanel;
+    protected JLabel titleLabel;
+    protected JEditorPane descriptionPane;
+    protected MButton continueButton;
+    protected MButton returnButton;
 
     public SectionExitDialog(Frame owner, String title, boolean modal) {
         super(owner, title, modal);

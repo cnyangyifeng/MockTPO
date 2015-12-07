@@ -1,9 +1,14 @@
 package com.mocktpo.ui.widgets;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class BodyPanel extends JPanel {
+
+    protected static final Logger logger = LogManager.getLogger();
 
     private boolean sectionExitButtonAvailable;
     private boolean questionNumberPaneAvailable;

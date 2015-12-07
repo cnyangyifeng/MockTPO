@@ -9,6 +9,7 @@ import com.mocktpo.ui.tests.misc.CopyrightPanel;
 import com.mocktpo.ui.tests.misc.GeneralTestInfoPanel;
 import com.mocktpo.ui.tests.reading.ReadingDirectionsPanel;
 import com.mocktpo.ui.tests.reading.ReadingPassagePanel;
+import com.mocktpo.ui.tests.reading.ReadingReviewPanel;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.FooterPanel;
 import com.mocktpo.ui.widgets.HeaderPanel;
@@ -75,35 +76,36 @@ public class TestFrame extends JFrame implements ActionListener {
     protected FooterPanel footerPanel;
 
     protected MButton pauseTestButton;
-    private MButton sectionExitButton;
+    protected MButton sectionExitButton;
 
-    private JEditorPane questionNumberPane;
-    private MButton continueOvalButton;
-    private MButton nextButton;
-    private MButton backButton;
-    private MButton okButton;
-    private MButton helpButton;
-    private MButton reviewButton;
-    private MButton volumeButton;
-    private MButton continueButton;
+    protected JEditorPane questionNumberPane;
+    protected MButton continueOvalButton;
+    protected MButton nextButton;
+    protected MButton backButton;
+    protected MButton okButton;
+    protected MButton helpButton;
+    protected MButton reviewButton;
+    protected MButton volumeButton;
+    protected MButton continueButton;
 
-    private JLabel timerLabel;
-    private MButton hideOrShowTimerButton;
+    protected JLabel timerLabel;
+    protected MButton hideOrShowTimerButton;
 
     // Panels
 
-    private CopyrightPanel copyrightPanel;
-    private GeneralTestInfoPanel generalTestInfoPanel;
+    protected CopyrightPanel copyrightPanel;
+    protected GeneralTestInfoPanel generalTestInfoPanel;
 
-    private ReadingDirectionsPanel rdPanel;
-    private ReadingPassagePanel rpPanel;
+    protected ReadingDirectionsPanel rdPanel;
+    protected ReadingPassagePanel rpPanel;
+    protected ReadingReviewPanel rrPanel;
 
-    private HeadsetPanel headsetPanel;
-    private ChangingVolumePanel cvPanel;
-    private ListeningDirectionsPanel ldPanel;
-    private ListeningPassagePanel lpPanel;
-    private ListeningHintsPanel lhPanel;
-    private ListeningQuestionPanel lqPanel;
+    protected HeadsetPanel headsetPanel;
+    protected ChangingVolumePanel cvPanel;
+    protected ListeningDirectionsPanel ldPanel;
+    protected ListeningPassagePanel lpPanel;
+    protected ListeningHintsPanel lhPanel;
+    protected ListeningQuestionPanel lqPanel;
 
     // Variables
 
@@ -741,6 +743,7 @@ public class TestFrame extends JFrame implements ActionListener {
                             rdPanel = new ReadingDirectionsPanel(bodyBounds);
                             bodyPanel = rdPanel;
                         } else if (bodyPanel instanceof ReadingDirectionsPanel) {
+                            // TODO
                             MReadingPassage passage = reading.getPassages().get(0);
                             rpPanel = new ReadingPassagePanel(bodyBounds, passage);
                             bodyPanel = rpPanel;
@@ -775,21 +778,40 @@ public class TestFrame extends JFrame implements ActionListener {
                 break;
             case "doContinueOval":
                 logger.info("'Continue' oval button pressed.");
-                bodyPanel.setContinueOvalButtonAvailable(false);
-                bodyPanel.setQuestionNumberPaneAvailable(true);
-                bodyPanel.setNextButtonAvailable(true);
-                bodyPanel.setBackButtonAvailable(true);
-                bodyPanel.setHelpButtonAvailable(true);
-                bodyPanel.setReviewButtonAvailable(true);
-                bodyPanel.setNextButtonEnabled(true);
-                bodyPanel.setBackButtonEnabled(true);
-                bodyPanel.setHelpButtonEnabled(true);
-                bodyPanel.setReviewButtonEnabled(true);
-                resetHeaderPanel();
-                repaint();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        bodyPanel.setContinueOvalButtonAvailable(false);
+                        bodyPanel.setQuestionNumberPaneAvailable(true);
+                        bodyPanel.setNextButtonAvailable(true);
+                        bodyPanel.setBackButtonAvailable(true);
+                        bodyPanel.setHelpButtonAvailable(true);
+                        bodyPanel.setReviewButtonAvailable(true);
+                        bodyPanel.setNextButtonEnabled(true);
+                        bodyPanel.setBackButtonEnabled(true);
+                        bodyPanel.setHelpButtonEnabled(true);
+                        bodyPanel.setReviewButtonEnabled(true);
+                        resetHeaderPanel();
+                        repaint();
+                    }
+                });
                 break;
             case "doReview":
                 logger.info("'Review' button pressed.");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        getContentPane().remove(bodyPanel);
+                        if (bodyPanel instanceof ReadingPassagePanel) {
+                            // TODO
+                            MReadingPassage passage = reading.getPassages().get(0);
+                            rrPanel = new ReadingReviewPanel(bodyBounds, passage);
+                            bodyPanel = rrPanel;
+                        }
+                        getContentPane().add(bodyPanel);
+                        repaint();
+                    }
+                });
                 break;
             case "doVolume":
                 logger.info("'Volume' button pressed.");

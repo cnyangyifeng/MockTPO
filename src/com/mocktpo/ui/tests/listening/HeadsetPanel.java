@@ -13,7 +13,7 @@ public class HeadsetPanel extends BodyPanel {
     public static final int DESCRIPTION_PANE_WIDTH = 600;
     public static final int DESCRIPTION_PANE_HEIGHT = 480;
 
-    private JEditorPane descriptionPane;
+    protected JEditorPane descriptionPane;
 
     public HeadsetPanel(Rectangle bounds) {
         super(bounds);

@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class GeneralTestInfoPanel extends BodyPanel {
 
-    private JEditorPane descriptionPane;
+    protected JEditorPane descriptionPane;
 
     public GeneralTestInfoPanel(Rectangle bounds) {
         super(bounds);

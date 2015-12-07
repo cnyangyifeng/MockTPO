@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class ReadingDirectionsPanel extends BodyPanel {
 
-    private JEditorPane descriptionPane;
+    protected JEditorPane descriptionPane;
 
     public ReadingDirectionsPanel(Rectangle bounds) {
         super(bounds);

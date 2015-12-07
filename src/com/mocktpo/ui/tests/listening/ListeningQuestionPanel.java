@@ -6,8 +6,6 @@ import com.mocktpo.model.MListeningQuestion;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.media.*;
 import javax.media.format.AudioFormat;
@@ -30,10 +28,9 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     public static final int OPTION_BUTTON_WIDTH = 800;
     public static final int OPTION_BUTTON_HEIGHT = 30;
 
-    private static final Logger logger = LogManager.getLogger();
+    protected JEditorPane subjectPane;
+    protected JPanel optionsPanel;
 
-    private JEditorPane subjectPane;
-    private JPanel optionsPanel;
     private Player audioPlayer;
     private Timer timer;
 

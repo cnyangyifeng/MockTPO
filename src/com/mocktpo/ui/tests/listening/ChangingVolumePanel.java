@@ -12,7 +12,7 @@ public class ChangingVolumePanel extends BodyPanel {
     public static final int DESCRIPTION_PANE_WIDTH = 680;
     public static final int DESCRIPTION_PANE_HEIGHT = 600;
 
-    private JEditorPane descriptionPane;
+    protected JEditorPane descriptionPane;
 
     public ChangingVolumePanel(Rectangle bounds) {
         super(bounds);

@@ -24,14 +24,14 @@ public class ReadingPassagePanel extends BodyPanel {
     public static final int INDICATOR_PANEL_HEIGHT = 24;
     public static final int INDICATOR_LABEL_WIDTH = 100;
 
-    private JPanel questionPanel;
-    private JEditorPane subjectPane;
-    private JPanel optionsPanel;
+    protected JPanel questionPanel;
+    protected JEditorPane subjectPane;
+    protected JPanel optionsPanel;
 
-    private JPanel indicatorPanel;
-    private JLabel indicatorLabel;
+    protected JPanel indicatorPanel;
+    protected JLabel indicatorLabel;
 
-    private JEditorPane passagePane;
+    protected JEditorPane passagePane;
 
     private MReadingPassage passage;
     private int questionIndex;

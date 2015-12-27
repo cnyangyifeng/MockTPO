@@ -12,7 +12,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ApplicationExitDialog extends JDialog implements ActionListener {
+public class ContactUsDialog extends JDialog implements ActionListener {
+
 
     public static final int DIALOG_WIDTH = 440;
     public static final int DIALOG_HEIGHT = 420;
@@ -26,9 +27,6 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
     public static final int CONTINUE_BUTTON_WIDTH = 74;
     public static final int CONTINUE_BUTTON_HEIGHT = 34;
 
-    public static final int RETURN_BUTTON_WIDTH = 74;
-    public static final int RETURN_BUTTON_HEIGHT = 34;
-
     /**************************************************
      * Properties
      **************************************************/
@@ -37,9 +35,8 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
     protected JLabel titleLabel;
     protected JEditorPane descriptionPane;
     protected MButton continueButton;
-    protected MButton returnButton;
 
-    public ApplicationExitDialog(Frame owner, String title, boolean modal) {
+    public ContactUsDialog(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
         this.initComponents();
     }
@@ -76,17 +73,15 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
 
         this.setTitleLabel();
         this.setDescriptionPane();
-        this.setReturnButton();
         this.setContinueButton();
 
         this.bodyPanel.add(this.titleLabel);
         this.bodyPanel.add(this.descriptionPane);
         this.bodyPanel.add(this.continueButton);
-        this.bodyPanel.add(this.returnButton);
     }
 
     protected void setTitleLabel() {
-        this.titleLabel = new JLabel("Application Exit", JLabel.CENTER);
+        this.titleLabel = new JLabel("Contact Us", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
         this.titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         int x = (this.bodyPanel.getWidth() - TITLE_WIDTH) / 2;
@@ -105,37 +100,18 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".desc { background-color: #ffffff; font-family: Arial; font-size: 12px; color: #333333; padding: 30px; }");
+        style.addRule(".desc { background-color: #ffffff; font-family: Arial; font-size: 12px; color: #333333; padding: 10px; } .desc-img-wrapper { margin-top: 10px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
-        this.descriptionPane.setText("<div class='desc'>ARE YOU SURE you wish to exit MockTPO?<br /><br />Click on <b>Return</b> to continue with us. Click on <b>Continue</b> if you are sure you want to exit this application.</div>");
-    }
-
-    protected void setReturnButton() {
-        this.returnButton = new MButton();
-
-        int x = this.bodyPanel.getWidth() / 2 - RETURN_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
-        int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.returnButton.setBounds(x, y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
-
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return.png"));
-        this.returnButton.setIcon(icon);
-        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return_hi.png"));
-        this.returnButton.setRolloverIcon(rolloverIcon);
-        this.returnButton.setText(null);
-        this.returnButton.setMargin(new Insets(0, 0, 0, 0));
-        this.returnButton.setBorder(null);
-        this.returnButton.setBorderPainted(false);
-        this.returnButton.setFocusPainted(false);
-        this.returnButton.setContentAreaFilled(false);
-
-        this.returnButton.setActionCommand("doReturn");
-        this.returnButton.addActionListener(this);
+        String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "qrcode.png").toString();
+        String text = "<div class='desc'>Please open WeChat on phone and scan QR Code to follow us if any technical support is required.<br />";
+        text += "<div class='desc-img-wrapper'><img src='" + imgUrl + "' /></div></div>";
+        this.descriptionPane.setText(text);
     }
 
     protected void setContinueButton() {
         this.continueButton = new MButton();
 
-        int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;
+        int x = (this.bodyPanel.getWidth() - CONTINUE_BUTTON_WIDTH) / 2;
         int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
         this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
 
@@ -160,8 +136,6 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if ("doContinue".equals(e.getActionCommand())) {
-            System.exit(0);
-        } else if ("doReturn".equals(e.getActionCommand())) {
             this.dispose();
         }
     }

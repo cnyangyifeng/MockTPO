@@ -4,6 +4,7 @@ import com.mocktpo.MApplication;
 import com.mocktpo.model.MTest;
 import com.mocktpo.model.MockTPO;
 import com.mocktpo.ui.dialogs.ApplicationExitDialog;
+import com.mocktpo.ui.dialogs.ContactUsDialog;
 import com.mocktpo.ui.widgets.*;
 import com.mocktpo.util.*;
 import org.apache.commons.io.IOUtils;
@@ -11,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
@@ -191,10 +194,25 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #666666; font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; } .slogan-desc { color: #999999; font-family: Arial; font-size: 16px; font-weight: normal; margin-top: 10px; text-align: center; } span.highlighted { color: #333333; } a.author { color: #333333; } ");
+        style.addRule(".slogan { color: #666666; font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; } .slogan-desc { color: #999999; font-family: Arial; font-size: 16px; font-weight: normal; margin-top: 10px; text-align: center; } span.highlighted { color: #333333; } a.author { color: #333333; }");
         this.sloganPane.setEditorKit(kit);
         this.sloganPane.setText("<div class='slogan'>MockTPO is a TOEFL Practice Offline Application</div" +
                 "<div class='slogan-desc'> only for <span class='highlighted'>noncommercial</span> use. Please contact <a href='' class='author'>us</a> to report bugs and check updates.</div>");
+        this.sloganPane.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+                if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    logger.info("'Contact Us' link clicked.");
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ContactUsDialog contactUs = new ContactUsDialog(MainFrame.this, "", true);
+                            contactUs.setVisible(true);
+                        }
+                    });
+                }
+            }
+        });
 
         this.bodyPanel.add(this.sloganPane);
     }

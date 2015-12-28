@@ -55,6 +55,8 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int REVIEW_BUTTON_HEIGHT = 48;
     public static final int VOLUME_BUTTON_WIDTH = 70;
     public static final int VOLUME_BUTTON_HEIGHT = 48;
+    public static final int VIEW_TEXT_OR_QUESTION_BUTTON_WIDTH = 84;
+    public static final int VIEW_TEXT_OR_QUESTION_BUTTON_HEIGHT = 34;
     public static final int CONTINUE_BUTTON_WIDTH = 74;
     public static final int CONTINUE_BUTTON_HEIGHT = 34;
     public static final int GO_TO_QUESTION_BUTTON_WIDTH = 74;
@@ -88,6 +90,7 @@ public class TestFrame extends JFrame implements ActionListener {
     protected MButton helpButton;
     protected MButton reviewButton;
     protected MButton volumeButton;
+    protected MButton viewTextOrQuestionButton;
     protected MButton continueButton;
     protected MButton goToQuestionButton;
     protected MButton returnButton;
@@ -255,6 +258,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setHelpButton();
         this.setReviewButton();
         this.setVolumeButton();
+        this.setViewTextOrQuestionButton();
         this.setContinueButton();
         this.setGoToQuestionButton();
         this.setReturnButton();
@@ -566,6 +570,36 @@ public class TestFrame extends JFrame implements ActionListener {
         this.volumeButton.addActionListener(this);
 
         this.headerPanel.add(this.volumeButton);
+    }
+
+    protected void setViewTextOrQuestionButton() {
+        if (!this.bodyPanel.isViewTextOrQuestionButtonAvailable()) {
+            return;
+        }
+        this.viewTextOrQuestionButton = new MButton();
+
+        int x = this.headerPanel.getWidth() - VIEW_TEXT_OR_QUESTION_BUTTON_WIDTH - LayoutConstants.MARGIN;
+        if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isBackButtonAvailable() && this.bodyPanel.isHelpButtonAvailable() && this.bodyPanel.isReviewButtonAvailable()) {
+            x = this.headerPanel.getWidth() - VIEW_TEXT_OR_QUESTION_BUTTON_WIDTH - REVIEW_BUTTON_WIDTH - HELP_BUTTON_WIDTH - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
+        }
+        int y = LayoutConstants.MARGIN * 3;
+        this.viewTextOrQuestionButton.setBounds(x, y, VIEW_TEXT_OR_QUESTION_BUTTON_WIDTH, VIEW_TEXT_OR_QUESTION_BUTTON_HEIGHT);
+
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "view_text.png"));
+        this.viewTextOrQuestionButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "view_text_hi.png"));
+        this.viewTextOrQuestionButton.setRolloverIcon(rolloverIcon);
+        this.viewTextOrQuestionButton.setText(null);
+        this.viewTextOrQuestionButton.setMargin(new Insets(0, 0, 0, 0));
+        this.viewTextOrQuestionButton.setBorder(null);
+        this.viewTextOrQuestionButton.setBorderPainted(false);
+        this.viewTextOrQuestionButton.setFocusPainted(false);
+        this.viewTextOrQuestionButton.setContentAreaFilled(false);
+
+        this.viewTextOrQuestionButton.setActionCommand("doViewText");
+        this.viewTextOrQuestionButton.addActionListener(this);
+
+        this.headerPanel.add(this.viewTextOrQuestionButton);
     }
 
     protected void setContinueButton() {

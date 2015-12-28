@@ -61,6 +61,7 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
         this.setBackButtonAvailable(true);
         this.setHelpButtonAvailable(true);
         this.setReviewButtonAvailable(true);
+        this.setViewTextOrQuestionButtonAvailable(true);
         this.setNextButtonEnabled(true);
         this.setBackButtonEnabled(true);
         this.setHelpButtonEnabled(true);

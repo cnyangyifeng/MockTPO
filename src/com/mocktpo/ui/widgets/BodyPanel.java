@@ -23,6 +23,7 @@ public class BodyPanel extends JPanel {
     private boolean helpButtonAvailable;
     private boolean reviewButtonAvailable;
     private boolean volumeButtonAvailable;
+    private boolean viewTextOrQuestionButtonAvailable;
     private boolean continueButtonAvailable;
     private boolean goToQuestionButtonAvailable;
     private boolean returnButtonAvailable;
@@ -61,6 +62,7 @@ public class BodyPanel extends JPanel {
         this.setHelpButtonAvailable(false);
         this.setReviewButtonAvailable(false);
         this.setVolumeButtonAvailable(false);
+        this.setViewTextOrQuestionButtonAvailable(false);
         this.setContinueButtonAvailable(true);
         this.setGoToQuestionButtonAvailable(false);
         this.setReturnButtonAvailable(false);
@@ -161,6 +163,14 @@ public class BodyPanel extends JPanel {
 
     public void setVolumeButtonAvailable(boolean volumeButtonAvailable) {
         this.volumeButtonAvailable = volumeButtonAvailable;
+    }
+
+    public boolean isViewTextOrQuestionButtonAvailable() {
+        return viewTextOrQuestionButtonAvailable;
+    }
+
+    public void setViewTextOrQuestionButtonAvailable(boolean viewTextOrQuestionButtonAvailable) {
+        this.viewTextOrQuestionButtonAvailable = viewTextOrQuestionButtonAvailable;
     }
 
     public boolean isContinueButtonAvailable() {

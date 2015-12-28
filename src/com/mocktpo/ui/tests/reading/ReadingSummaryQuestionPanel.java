@@ -15,18 +15,23 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
     public static final int DESCRIPTION_PANE_HEIGHT = 160;
     public static final int ANSWERS_PANEL_WIDTH = 500;
     public static final int ANSWERS_PANEL_HEIGHT = 340;
+    public static final int SUMMARY_PANE_WIDTH = 500;
     public static final int SUMMARY_PANE_HEIGHT = 80;
     public static final int DOT_LABEL_WIDTH = 10;
     public static final int DOT_LABEL_HEIGHT = 10;
     public static final int ANSWER_CHOICE_HEIGHT = 80;
-    public static final int SEPARATOR_LABEL_WIDTH = 200;
+    public static final int SEPARATOR_LABEL_WIDTH = 140;
     public static final int SEPARATOR_LABEL_HEIGHT = 40;
     public static final int CANDIDATE_CHOICE_PANE_WIDTH = 600;
     public static final int CANDIDATE_CHOICE_PANE_HEIGHT = 60;
 
     protected JEditorPane descriptionPane;
     protected JPanel answersPanel;
+    protected JEditorPane summaryPane;
+
+    protected JTextPane[] answerChoicePanes;
     protected JLabel separatorLabel;
+    protected JTextPane[] candidateChoicePanes;
 
     private MReadingPassage passage;
 
@@ -41,8 +46,12 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
 
         this.setDescriptionPane();
         this.setAnswersPanel();
+        this.setSummaryPane();
+        this.setAnswerChoicePanes();
         this.setSeparatorLabel();
         this.setCandidateChoicePanes();
+
+        this.setDragAndDrop();
     }
 
     @Override
@@ -87,61 +96,60 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
         this.answersPanel.setBounds(x, y, ANSWERS_PANEL_WIDTH, ANSWERS_PANEL_HEIGHT);
         this.answersPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
         this.answersPanel.setLayout(null);
-
-        this.answersPanel.setBackground(new Color(255, 255, 255));
-
-        this.setSummaryPane();
-        this.setAnswerChoicePanes();
+        this.answersPanel.setOpaque(false);
 
         this.add(this.answersPanel);
     }
 
     protected void setSummaryPane() {
-        JEditorPane summaryPane = new JEditorPane();
+        this.summaryPane = new JEditorPane();
 
-        summaryPane.setBounds(0, 0, ANSWERS_PANEL_WIDTH, SUMMARY_PANE_HEIGHT);
+        int x = this.answersPanel.getX();
+        int y = this.answersPanel.getY();
+        this.summaryPane.setBounds(x, y, SUMMARY_PANE_WIDTH, SUMMARY_PANE_HEIGHT);
 
-        summaryPane.setEditable(false);
-        summaryPane.setOpaque(false);
+        this.summaryPane.setEditable(false);
+        this.summaryPane.setOpaque(false);
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
         style.addRule(".rsq-answers { color: #333333; font-family: Arial; font-size: 12px; padding: 15px; }");
-        summaryPane.setEditorKit(kit);
+        this.summaryPane.setEditorKit(kit);
         String text = "<div class='rsq-answers'><b>Water enters, remains, and eventually leaves a lake in a variety of ways.</b></div>";
-        summaryPane.setText(text);
+        this.summaryPane.setText(text);
 
-        this.answersPanel.add(summaryPane);
+        this.add(this.summaryPane);
     }
 
     protected void setAnswerChoicePanes() {
-        for (int i = 0; i < 3; i++) {
+        answerChoicePanes = new JTextPane[3];
+
+        for (int i = 0; i < answerChoicePanes.length; i++) {
 
             // Set dot label
 
             JLabel dotLabel = new JLabel();
-            int dotX = LayoutConstants.MARGIN * 2;
-            int dotY = SUMMARY_PANE_HEIGHT + ANSWER_CHOICE_HEIGHT * i + 5; // FIXME: 5px to make sure the dot vertical middle aligned.
+            int dotX = this.answersPanel.getX() + LayoutConstants.MARGIN * 2;
+            int dotY = this.answersPanel.getY() + SUMMARY_PANE_HEIGHT + ANSWER_CHOICE_HEIGHT * i + 5; // FIXME: 5px to make sure the dot vertical middle aligned.
             dotLabel.setBounds(dotX, dotY, DOT_LABEL_WIDTH, DOT_LABEL_HEIGHT);
 
             ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "dot.png"));
             dotLabel.setIcon(icon);
 
-            this.answersPanel.add(dotLabel);
+            this.add(dotLabel);
 
             // Set answer choice pane
 
-            JTextPane answerChoicePane = new JTextPane();
-            int x = DOT_LABEL_WIDTH + LayoutConstants.MARGIN * 4;
-            int y = SUMMARY_PANE_HEIGHT + ANSWER_CHOICE_HEIGHT * i;
+            answerChoicePanes[i] = new JTextPane();
+            int x = this.answersPanel.getX() + DOT_LABEL_WIDTH + LayoutConstants.MARGIN * 4;
+            int y = this.answersPanel.getY() + SUMMARY_PANE_HEIGHT + ANSWER_CHOICE_HEIGHT * i;
             int width = ANSWERS_PANEL_WIDTH - DOT_LABEL_WIDTH - LayoutConstants.MARGIN * 6;
-            answerChoicePane.setBounds(x, y, width, ANSWER_CHOICE_HEIGHT);
+            answerChoicePanes[i].setBounds(x, y, width, ANSWER_CHOICE_HEIGHT);
 
-            answerChoicePane.setDropMode(DropMode.INSERT);
-            answerChoicePane.setFont(new Font("Arial", Font.PLAIN, 16));
-            answerChoicePane.setText(i + " Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and");
+            answerChoicePanes[i].setFont(new Font("Arial", Font.PLAIN, 16));
+            answerChoicePanes[i].setText(i + " Water enters");
 
-            this.answersPanel.add(answerChoicePane);
+            this.add(answerChoicePanes[i]);
         }
     }
 
@@ -159,8 +167,13 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
     }
 
     protected void setCandidateChoicePanes() {
-        for (int i = 0; i < 6; i++) {
-            JTextPane choicePane = new JTextPane();
+        candidateChoicePanes = new JTextPane[6];
+
+        for (int i = 0; i < candidateChoicePanes.length; i++) {
+
+            // Set candidate choice pane
+
+            candidateChoicePanes[i] = new JTextPane();
 
             int x = (this.getWidth() - CANDIDATE_CHOICE_PANE_WIDTH * 2 - LayoutConstants.MARGIN * 10) / 2;
             if (i % 2 == 1) {
@@ -172,14 +185,17 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
             } else if (i / 2 == 2) {
                 y += (CANDIDATE_CHOICE_PANE_HEIGHT + LayoutConstants.MARGIN) * 2;
             }
-            choicePane.setBounds(x, y, CANDIDATE_CHOICE_PANE_WIDTH, CANDIDATE_CHOICE_PANE_HEIGHT);
+            candidateChoicePanes[i].setBounds(x, y, CANDIDATE_CHOICE_PANE_WIDTH, CANDIDATE_CHOICE_PANE_HEIGHT);
 
-            choicePane.setDragEnabled(true);
-            choicePane.setFont(new Font("Arial", Font.PLAIN, 16));
-            choicePane.setText(i + " Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and");
+            candidateChoicePanes[i].setFont(new Font("Arial", Font.PLAIN, 16));
+            candidateChoicePanes[i].setText(i + " Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and");
 
-            this.add(choicePane);
+            this.add(candidateChoicePanes[i]);
         }
+    }
+
+    protected void setDragAndDrop() {
+        // TODO dnd
     }
 
     /**************************************************

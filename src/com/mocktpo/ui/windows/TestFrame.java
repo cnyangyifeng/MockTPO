@@ -112,15 +112,11 @@ public class TestFrame extends JFrame implements ActionListener {
     protected ListeningQuestionPanel lqPanel;
 
     // Variables
-
-    private String title;
-
-    private Timer timer;
-    private long timeElapsed;
-
     protected Rectangle bodyBounds;
     protected String testIndex;
-
+    private String title;
+    private Timer timer;
+    private long timeElapsed;
     private MReading reading;
     private MListening listening;
 

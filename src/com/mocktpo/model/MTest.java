@@ -25,19 +25,19 @@ public class MTest {
         return download;
     }
 
-    public String getNext() {
-        return next;
-    }
-
-    public String getReports() {
-        return reports;
-    }
-
     public void setDownload(String download) {
         this.download = download;
     }
 
+    public String getNext() {
+        return next;
+    }
+
     public void setNext(String next) {
         this.next = next;
+    }
+
+    public String getReports() {
+        return reports;
     }
 }

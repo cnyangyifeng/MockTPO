@@ -23,11 +23,9 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
 
     protected JLabel conversationLabel;
     protected JProgressBar conversationProgressBar;
-
+    protected MListeningPassage passage;
     private Player audioPlayer;
     private Timer timer;
-
-    protected MListeningPassage passage;
 
     public ListeningPassagePanel(Rectangle bounds, MListeningPassage passage) {
         super(bounds);

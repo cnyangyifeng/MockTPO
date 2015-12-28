@@ -95,108 +95,108 @@ public class BodyPanel extends JPanel {
         return sectionExitButtonAvailable;
     }
 
-    public boolean isQuestionNumberPaneAvailable() {
-        return questionNumberPaneAvailable;
-    }
-
-    public boolean isContinueOvalButtonAvailable() {
-        return continueOvalButtonAvailable;
-    }
-
-    public boolean isNextButtonAvailable() {
-        return nextButtonAvailable;
-    }
-
-    public boolean isBackButtonAvailable() {
-        return backButtonAvailable;
-    }
-
-    public boolean isOkButtonAvailable() {
-        return okButtonAvailable;
-    }
-
-    public boolean isHelpButtonAvailable() {
-        return helpButtonAvailable;
-    }
-
-    public boolean isReviewButtonAvailable() {
-        return reviewButtonAvailable;
-    }
-
-    public boolean isVolumeButtonAvailable() {
-        return volumeButtonAvailable;
-    }
-
-    public boolean isContinueButtonAvailable() {
-        return continueButtonAvailable;
-    }
-
-    public boolean isGoToQuestionButtonAvailable() {
-        return goToQuestionButtonAvailable;
-    }
-
-    public boolean isReturnButtonAvailable() {
-        return returnButtonAvailable;
-    }
-
-    public boolean isTimerLabelAvailable() {
-        return timerLabelAvailable;
-    }
-
-    public boolean isHideOrShowTimerButtonAvailable() {
-        return hideOrShowTimerButtonAvailable;
-    }
-
     public void setSectionExitButtonAvailable(boolean sectionExitButtonAvailable) {
         this.sectionExitButtonAvailable = sectionExitButtonAvailable;
+    }
+
+    public boolean isQuestionNumberPaneAvailable() {
+        return questionNumberPaneAvailable;
     }
 
     public void setQuestionNumberPaneAvailable(boolean questionNumberPaneAvailable) {
         this.questionNumberPaneAvailable = questionNumberPaneAvailable;
     }
 
+    public boolean isContinueOvalButtonAvailable() {
+        return continueOvalButtonAvailable;
+    }
+
     public void setContinueOvalButtonAvailable(boolean continueOvalButtonAvailable) {
         this.continueOvalButtonAvailable = continueOvalButtonAvailable;
+    }
+
+    public boolean isNextButtonAvailable() {
+        return nextButtonAvailable;
     }
 
     public void setNextButtonAvailable(boolean nextButtonAvailable) {
         this.nextButtonAvailable = nextButtonAvailable;
     }
 
+    public boolean isBackButtonAvailable() {
+        return backButtonAvailable;
+    }
+
     public void setBackButtonAvailable(boolean backButtonAvailable) {
         this.backButtonAvailable = backButtonAvailable;
+    }
+
+    public boolean isOkButtonAvailable() {
+        return okButtonAvailable;
     }
 
     public void setOkButtonAvailable(boolean okButtonAvailable) {
         this.okButtonAvailable = okButtonAvailable;
     }
 
+    public boolean isHelpButtonAvailable() {
+        return helpButtonAvailable;
+    }
+
     public void setHelpButtonAvailable(boolean helpButtonAvailable) {
         this.helpButtonAvailable = helpButtonAvailable;
+    }
+
+    public boolean isReviewButtonAvailable() {
+        return reviewButtonAvailable;
     }
 
     public void setReviewButtonAvailable(boolean reviewButtonAvailable) {
         this.reviewButtonAvailable = reviewButtonAvailable;
     }
 
+    public boolean isVolumeButtonAvailable() {
+        return volumeButtonAvailable;
+    }
+
     public void setVolumeButtonAvailable(boolean volumeButtonAvailable) {
         this.volumeButtonAvailable = volumeButtonAvailable;
+    }
+
+    public boolean isContinueButtonAvailable() {
+        return continueButtonAvailable;
     }
 
     public void setContinueButtonAvailable(boolean continueButtonAvailable) {
         this.continueButtonAvailable = continueButtonAvailable;
     }
 
+    public boolean isGoToQuestionButtonAvailable() {
+        return goToQuestionButtonAvailable;
+    }
+
     public void setGoToQuestionButtonAvailable(boolean goToQuestionButtonAvailable) {
         this.goToQuestionButtonAvailable = goToQuestionButtonAvailable;
+    }
+
+    public boolean isReturnButtonAvailable() {
+        return returnButtonAvailable;
     }
 
     public void setReturnButtonAvailable(boolean returnButtonAvailable) {
         this.returnButtonAvailable = returnButtonAvailable;
     }
 
+    public boolean isTimerLabelAvailable() {
+        return timerLabelAvailable;
+    }
+
     public void setTimerLabelAvailable(boolean timerLabelAvailable) {
         this.timerLabelAvailable = timerLabelAvailable;
+    }
+
+    public boolean isHideOrShowTimerButtonAvailable() {
+        return hideOrShowTimerButtonAvailable;
     }
 
     public void setHideOrShowTimerButtonAvailable(boolean hideOrShowTimerButtonAvailable) {
@@ -211,44 +211,44 @@ public class BodyPanel extends JPanel {
         return nextButtonEnabled;
     }
 
-    public boolean isBackButtonEnabled() {
-        return backButtonEnabled;
-    }
-
-    public boolean isOkButtonEnabled() {
-        return okButtonEnabled;
-    }
-
-    public boolean isHelpButtonEnabled() {
-        return helpButtonEnabled;
-    }
-
-    public boolean isReviewButtonEnabled() {
-        return reviewButtonEnabled;
-    }
-
-    public boolean isVolumeButtonEnabled() {
-        return volumeButtonEnabled;
-    }
-
     public void setNextButtonEnabled(boolean nextButtonEnabled) {
         this.nextButtonEnabled = nextButtonEnabled;
+    }
+
+    public boolean isBackButtonEnabled() {
+        return backButtonEnabled;
     }
 
     public void setBackButtonEnabled(boolean backButtonEnabled) {
         this.backButtonEnabled = backButtonEnabled;
     }
 
+    public boolean isOkButtonEnabled() {
+        return okButtonEnabled;
+    }
+
     public void setOkButtonEnabled(boolean okButtonEnabled) {
         this.okButtonEnabled = okButtonEnabled;
+    }
+
+    public boolean isHelpButtonEnabled() {
+        return helpButtonEnabled;
     }
 
     public void setHelpButtonEnabled(boolean helpButtonEnabled) {
         this.helpButtonEnabled = helpButtonEnabled;
     }
 
+    public boolean isReviewButtonEnabled() {
+        return reviewButtonEnabled;
+    }
+
     public void setReviewButtonEnabled(boolean reviewButtonEnabled) {
         this.reviewButtonEnabled = reviewButtonEnabled;
+    }
+
+    public boolean isVolumeButtonEnabled() {
+        return volumeButtonEnabled;
     }
 
     public void setVolumeButtonEnabled(boolean volumeButtonEnabled) {

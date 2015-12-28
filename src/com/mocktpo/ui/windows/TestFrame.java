@@ -224,7 +224,6 @@ public class TestFrame extends JFrame implements ActionListener {
     protected void setBodyPanel() {
         int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
         this.bodyBounds = new Rectangle(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
-
         this.copyrightPanel = new CopyrightPanel(this.bodyBounds);
         this.bodyPanel = this.copyrightPanel;
 

@@ -24,8 +24,8 @@ public class ContactUsDialog extends JDialog implements ActionListener {
     public static final int DESCRIPTION_PANE_WIDTH = 418;
     public static final int DESCRIPTION_PANE_HEIGHT = 260;
 
-    public static final int CONTINUE_BUTTON_WIDTH = 74;
-    public static final int CONTINUE_BUTTON_HEIGHT = 34;
+    public static final int CLOSE_BUTTON_WIDTH = 74;
+    public static final int CLOSE_BUTTON_HEIGHT = 34;
 
     /**************************************************
      * Properties
@@ -34,7 +34,7 @@ public class ContactUsDialog extends JDialog implements ActionListener {
     protected DialogBodyPanel bodyPanel;
     protected JLabel titleLabel;
     protected JEditorPane descriptionPane;
-    protected MButton continueButton;
+    protected MButton closeButton;
 
     public ContactUsDialog(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
@@ -73,11 +73,11 @@ public class ContactUsDialog extends JDialog implements ActionListener {
 
         this.setTitleLabel();
         this.setDescriptionPane();
-        this.setContinueButton();
+        this.setCloseButton();
 
         this.bodyPanel.add(this.titleLabel);
         this.bodyPanel.add(this.descriptionPane);
-        this.bodyPanel.add(this.continueButton);
+        this.bodyPanel.add(this.closeButton);
     }
 
     protected void setTitleLabel() {
@@ -108,26 +108,26 @@ public class ContactUsDialog extends JDialog implements ActionListener {
         this.descriptionPane.setText(text);
     }
 
-    protected void setContinueButton() {
-        this.continueButton = new MButton();
+    protected void setCloseButton() {
+        this.closeButton = new MButton();
 
-        int x = (this.bodyPanel.getWidth() - CONTINUE_BUTTON_WIDTH) / 2;
+        int x = (this.bodyPanel.getWidth() - CLOSE_BUTTON_WIDTH) / 2;
         int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
+        this.closeButton.setBounds(x, y, CLOSE_BUTTON_WIDTH, CLOSE_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
-        this.continueButton.setIcon(icon);
-        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_hi.png"));
-        this.continueButton.setRolloverIcon(rolloverIcon);
-        this.continueButton.setText(null);
-        this.continueButton.setMargin(new Insets(0, 0, 0, 0));
-        this.continueButton.setBorder(null);
-        this.continueButton.setBorderPainted(false);
-        this.continueButton.setFocusPainted(false);
-        this.continueButton.setContentAreaFilled(false);
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "close.png"));
+        this.closeButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "close_hi.png"));
+        this.closeButton.setRolloverIcon(rolloverIcon);
+        this.closeButton.setText(null);
+        this.closeButton.setMargin(new Insets(0, 0, 0, 0));
+        this.closeButton.setBorder(null);
+        this.closeButton.setBorderPainted(false);
+        this.closeButton.setFocusPainted(false);
+        this.closeButton.setContentAreaFilled(false);
 
-        this.continueButton.setActionCommand("doContinue");
-        this.continueButton.addActionListener(this);
+        this.closeButton.setActionCommand("doClose");
+        this.closeButton.addActionListener(this);
     }
 
     /**************************************************
@@ -135,7 +135,7 @@ public class ContactUsDialog extends JDialog implements ActionListener {
      **************************************************/
 
     public void actionPerformed(ActionEvent e) {
-        if ("doContinue".equals(e.getActionCommand())) {
+        if ("doClose".equals(e.getActionCommand())) {
             this.dispose();
         }
     }

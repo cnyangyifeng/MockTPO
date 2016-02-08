@@ -1,6 +1,7 @@
 package com.mocktpo.ui.widgets;
 
 import com.mocktpo.ui.windows.MainFrame;
+import com.mocktpo.ui.windows.TestHomeFrame;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
@@ -52,7 +53,7 @@ public class MTable extends JTable {
         Component c = super.prepareRenderer(renderer, row, column);
         if (column == 2) { // "Download" Column
             String val = this.getValueAt(row, column).toString();
-            if (MainFrame.READY_LABEL.equals(val)) {
+            if (TestHomeFrame.READY_LABEL.equals(val)) {
                 c.setBackground(new Color(255, 255, 255)); // #f5f5f5
                 c.setForeground(new Color(153, 153, 153)); // #999999
             } else {

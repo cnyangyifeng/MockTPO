@@ -23,11 +23,11 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
     public static final int DESCRIPTION_PANE_WIDTH = 418;
     public static final int DESCRIPTION_PANE_HEIGHT = 260;
 
-    public static final int CONTINUE_BUTTON_WIDTH = 74;
-    public static final int CONTINUE_BUTTON_HEIGHT = 34;
-
     public static final int RETURN_BUTTON_WIDTH = 74;
     public static final int RETURN_BUTTON_HEIGHT = 34;
+
+    public static final int EXIT_BUTTON_WIDTH = 74;
+    public static final int EXIT_BUTTON_HEIGHT = 34;
 
     /**************************************************
      * Properties
@@ -36,8 +36,8 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
     protected DialogBodyPanel bodyPanel;
     protected JLabel titleLabel;
     protected JEditorPane descriptionPane;
-    protected MButton continueButton;
     protected MButton returnButton;
+    protected MButton exitButton;
 
     public ApplicationExitDialog(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
@@ -77,12 +77,12 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         this.setTitleLabel();
         this.setDescriptionPane();
         this.setReturnButton();
-        this.setContinueButton();
+        this.setExitButton();
 
         this.bodyPanel.add(this.titleLabel);
         this.bodyPanel.add(this.descriptionPane);
-        this.bodyPanel.add(this.continueButton);
         this.bodyPanel.add(this.returnButton);
+        this.bodyPanel.add(this.exitButton);
     }
 
     protected void setTitleLabel() {
@@ -107,7 +107,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         StyleSheet style = kit.getStyleSheet();
         style.addRule(".desc { background-color: #ffffff; font-family: Arial; font-size: 12px; color: #333333; padding: 30px; }");
         this.descriptionPane.setEditorKit(kit);
-        this.descriptionPane.setText("<div class='desc'>ARE YOU SURE you wish to exit MockTPO?<br /><br />Click on <b>Return</b> to continue with us. Click on <b>Continue</b> if you are sure you want to exit this application.</div>");
+        this.descriptionPane.setText("<div class='desc'>Are you sure you wish to exit?<br /><br />Click on <b>Return</b> to continue with us. Click on <b>Exit</b> if you are sure you want to exit this application.</div>");
     }
 
     protected void setReturnButton() {
@@ -132,26 +132,26 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
         this.returnButton.addActionListener(this);
     }
 
-    protected void setContinueButton() {
-        this.continueButton = new MButton();
+    protected void setExitButton() {
+        this.exitButton = new MButton();
 
         int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;
         int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
+        this.exitButton.setBounds(x, y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
-        this.continueButton.setIcon(icon);
-        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_hi.png"));
-        this.continueButton.setRolloverIcon(rolloverIcon);
-        this.continueButton.setText(null);
-        this.continueButton.setMargin(new Insets(0, 0, 0, 0));
-        this.continueButton.setBorder(null);
-        this.continueButton.setBorderPainted(false);
-        this.continueButton.setFocusPainted(false);
-        this.continueButton.setContentAreaFilled(false);
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit.png"));
+        this.exitButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit_hi.png"));
+        this.exitButton.setRolloverIcon(rolloverIcon);
+        this.exitButton.setText(null);
+        this.exitButton.setMargin(new Insets(0, 0, 0, 0));
+        this.exitButton.setBorder(null);
+        this.exitButton.setBorderPainted(false);
+        this.exitButton.setFocusPainted(false);
+        this.exitButton.setContentAreaFilled(false);
 
-        this.continueButton.setActionCommand("doContinue");
-        this.continueButton.addActionListener(this);
+        this.exitButton.setActionCommand("doExit");
+        this.exitButton.addActionListener(this);
     }
 
     /**************************************************
@@ -159,7 +159,7 @@ public class ApplicationExitDialog extends JDialog implements ActionListener {
      **************************************************/
 
     public void actionPerformed(ActionEvent e) {
-        if ("doContinue".equals(e.getActionCommand())) {
+        if ("doExit".equals(e.getActionCommand())) {
             System.exit(0);
         } else if ("doReturn".equals(e.getActionCommand())) {
             this.dispose();

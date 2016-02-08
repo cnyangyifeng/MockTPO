@@ -2,8 +2,8 @@ package com.mocktpo.ui.dialogs;
 
 import com.mocktpo.ui.widgets.DialogBodyPanel;
 import com.mocktpo.ui.widgets.MButton;
-import com.mocktpo.ui.windows.MainFrame;
 import com.mocktpo.ui.windows.TestFrame;
+import com.mocktpo.ui.windows.TestHomeFrame;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
@@ -168,16 +168,13 @@ public class SectionExitDialog extends JDialog implements ActionListener {
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     GraphicsDevice device = ge.getDefaultScreenDevice();
                     TestFrame testFrame = (TestFrame) SectionExitDialog.this.getOwner();
-                    MainFrame mainFrame = testFrame.getMainFrame();
+                    TestHomeFrame testHomeFrame = testFrame.getTestHomeFrame();
 
                     SectionExitDialog.this.dispose();
                     testFrame.dispose();
 
-                    if (mainFrame == null) {
-                        mainFrame = new MainFrame(device.getDefaultConfiguration());
-                    }
-                    device.setFullScreenWindow(mainFrame);
-                    mainFrame.setVisible(true);
+                    device.setFullScreenWindow(testHomeFrame);
+                    testHomeFrame.setVisible(true);
                 }
             });
         } else if ("doReturn".equals(e.getActionCommand())) {

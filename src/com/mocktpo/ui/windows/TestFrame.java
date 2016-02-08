@@ -72,9 +72,11 @@ public class TestFrame extends JFrame implements ActionListener {
 
     protected static final Logger logger = LogManager.getLogger();
 
-    protected MainFrame mainFrame;
+    // Frames
 
-    // Widgets
+    protected TestHomeFrame testHomeFrame;
+
+    // Components
 
     protected HeaderPanel headerPanel;
     protected BodyPanel bodyPanel;
@@ -97,8 +99,6 @@ public class TestFrame extends JFrame implements ActionListener {
     protected JLabel timerLabel;
     protected MButton hideOrShowTimerButton;
 
-    // Panels
-
     protected CopyrightPanel copyrightPanel;
     protected GeneralTestInfoPanel generalTestInfoPanel;
 
@@ -115,17 +115,22 @@ public class TestFrame extends JFrame implements ActionListener {
     protected ListeningQuestionPanel lqPanel;
 
     // Variables
-    protected Rectangle bodyBounds;
-    protected String testIndex;
+
     private String title;
+
+    protected String testIndex;
+
+    protected Rectangle bodyBounds;
+
     private Timer timer;
     private long timeElapsed;
+
     private MReading reading;
     private MListening listening;
 
-    public TestFrame(GraphicsConfiguration gc, MainFrame mainFrame, String title) {
+    public TestFrame(GraphicsConfiguration gc, TestHomeFrame testHomeFrame, String title) {
         super(gc);
-        this.mainFrame = mainFrame;
+        this.testHomeFrame = testHomeFrame;
         this.title = title;
         this.initComponents();
     }
@@ -792,7 +797,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     /**************************************************
-     * Listeners
+     * Listener Implementations
      **************************************************/
 
     @Override
@@ -1036,7 +1041,7 @@ public class TestFrame extends JFrame implements ActionListener {
      * Getters and setters
      **************************************************/
 
-    public MainFrame getMainFrame() {
-        return this.mainFrame;
+    public TestHomeFrame getTestHomeFrame() {
+        return this.testHomeFrame;
     }
 }

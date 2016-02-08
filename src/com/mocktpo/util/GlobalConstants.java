@@ -2,11 +2,13 @@ package com.mocktpo.util;
 
 public interface GlobalConstants {
 
+    String APPLICATION_NAME = "MockTPO";
+
     String POSTFIX_ZIP = ".zip";
 
-    String FTP_HOST = "123.57.77.54";
-    String FTP_USERNAME = "mocktpo";
-    String FTP_PASSWORD = "MengMa2015";
+    String FTP_HOST = "123.57.17.227";
+    String FTP_USERNAME = "f_ftp";
+    String FTP_PASSWORD = "p_ftp_66xue";
 
     String REMOTE_APPLICATION_DIR = "/MockTPO/";
     String REMOTE_RESOURCES_DIR = "/MockTPO/resources/";

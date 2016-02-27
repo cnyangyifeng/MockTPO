@@ -19,6 +19,7 @@ public interface GlobalConstants {
     String APPLICATION_DIR = "/";
     String RESOURCES_DIR = "/resources/";
     String AUDIOS_DIR = "/resources/audios/";
+    String FONTS_DIR = "/resources/fonts/";
     String IMAGES_DIR = "/resources/images/";
     String TESTS_DIR = "/tests/";
 

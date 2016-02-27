@@ -30,8 +30,8 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
 
     // Constants
 
-    public static final int BACK_HOME_BUTTON_WIDTH = 84;
-    public static final int BACK_HOME_BUTTON_HEIGHT = 34;
+    public static final int GO_BACK_HOME_BUTTON_WIDTH = 84;
+    public static final int GO_BACK_HOME_BUTTON_HEIGHT = 34;
     public static final int SLOGAN_PANE_WIDTH = 1000;
     public static final int SLOGAN_PANE_HEIGHT = 80;
     public static final int BODY_SCROLL_PANE_WIDTH = 1000;
@@ -60,13 +60,10 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
     protected FooterPanel footerPanel;
 
     // Variables
-
-    private String title;
-
     protected MockTPO mockTPO;
-
     protected volatile boolean[] markers; // Download markers
     protected volatile boolean redownload;
+    private String title;
 
     /**************************************************
      * Constructors
@@ -123,7 +120,7 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
 
         this.setLogoLabel();
         this.setTitlePane();
-        this.setBackHomeButton();
+        this.setGoBackHomeButton();
 
         this.getContentPane().add(this.headerPanel);
     }
@@ -151,35 +148,35 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Arial; font-size: 24px; font-weight: bold; color: #ffffff; }");
+        style.addRule(".title { font-family: Impact; font-size: 24px; font-weight: bold; color: #ffffff; }");
         titlePane.setEditorKit(kit);
         titlePane.setText("<div class='title'>" + GlobalConstants.APPLICATION_NAME + "</div>");
 
         this.headerPanel.add(titlePane);
     }
 
-    protected void setBackHomeButton() {
-        MButton backHomeButton = new MButton();
+    protected void setGoBackHomeButton() {
+        MButton goBackHomeButton = new MButton();
 
         int x = LayoutConstants.MARGIN;
-        int y = LayoutConstants.HEADER_PANEL_HEIGHT - BACK_HOME_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        backHomeButton.setBounds(x, y, BACK_HOME_BUTTON_WIDTH, BACK_HOME_BUTTON_HEIGHT);
+        int y = LayoutConstants.HEADER_PANEL_HEIGHT - GO_BACK_HOME_BUTTON_HEIGHT - LayoutConstants.MARGIN;
+        goBackHomeButton.setBounds(x, y, GO_BACK_HOME_BUTTON_WIDTH, GO_BACK_HOME_BUTTON_HEIGHT);
 
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "back_home.png"));
-        backHomeButton.setIcon(icon);
-        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "back_home_hi.png"));
-        backHomeButton.setRolloverIcon(rolloverIcon);
-        backHomeButton.setText(null);
-        backHomeButton.setMargin(new Insets(0, 0, 0, 0));
-        backHomeButton.setBorder(null);
-        backHomeButton.setBorderPainted(false);
-        backHomeButton.setFocusPainted(false);
-        backHomeButton.setContentAreaFilled(false);
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_back_home.png"));
+        goBackHomeButton.setIcon(icon);
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_back_home_hi.png"));
+        goBackHomeButton.setRolloverIcon(rolloverIcon);
+        goBackHomeButton.setText(null);
+        goBackHomeButton.setMargin(new Insets(0, 0, 0, 0));
+        goBackHomeButton.setBorder(null);
+        goBackHomeButton.setBorderPainted(false);
+        goBackHomeButton.setFocusPainted(false);
+        goBackHomeButton.setContentAreaFilled(false);
 
-        backHomeButton.setActionCommand("doBackHome");
-        backHomeButton.addActionListener(this);
+        goBackHomeButton.setActionCommand("doGoBackHome");
+        goBackHomeButton.addActionListener(this);
 
-        this.headerPanel.add(backHomeButton);
+        this.headerPanel.add(goBackHomeButton);
     }
 
     /**************************************************
@@ -209,7 +206,7 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #666666; font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; }");
+        style.addRule(".slogan { color: #666666; font-family: Cambria; font-size: 24px; font-weight: bold; text-align: center; }");
         this.sloganPane.setEditorKit(kit);
         this.sloganPane.setText("<div class='slogan'>TOEFL iBT Complete Model Tests</div>");
         this.sloganPane.addHyperlinkListener(new HyperlinkListener() {
@@ -312,8 +309,8 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if ("doBackHome".equals(e.getActionCommand())) {
-            logger.info("'Back Home' button pressed.");
+        if ("doGoBackHome".equals(e.getActionCommand())) {
+            logger.info("'Go Back Home' button pressed.");
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {

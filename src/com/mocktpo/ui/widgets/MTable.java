@@ -1,6 +1,5 @@
 package com.mocktpo.ui.widgets;
 
-import com.mocktpo.ui.windows.MainFrame;
 import com.mocktpo.ui.windows.TestHomeFrame;
 
 import javax.swing.*;
@@ -39,7 +38,7 @@ public class MTable extends JTable {
         columnModel.getColumn(4).setPreferredWidth(150);
 
         // Set table styles
-        this.setFont(new Font("Georgia", Font.PLAIN, 16));
+        this.setFont(new Font("Cambria", Font.PLAIN, 16));
         this.setBackground(new Color(255, 255, 255));
         this.setForeground(new Color(51, 51, 51));
         this.setGridColor(new Color(245, 245, 245)); // #f5f5f5

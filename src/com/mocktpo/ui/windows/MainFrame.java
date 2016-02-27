@@ -130,7 +130,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Arial; font-size: 24px; font-weight: bold; color: #ffffff; }");
+        style.addRule(".title { font-family: Impact; font-size: 24px; font-weight: bold; color: #ffffff; }");
         titlePane.setEditorKit(kit);
         titlePane.setText("<div class='title'>" + GlobalConstants.APPLICATION_NAME + "</div>");
 
@@ -190,7 +190,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #666666; font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; } .slogan-desc { color: #999999; font-family: Arial; font-size: 16px; font-weight: normal; margin-top: 10px; text-align: center; } span.highlighted { color: #333333; } a.author { color: #333333; }");
+        style.addRule(".slogan { color: #666666; font-family: Cambria; font-size: 24px; font-weight: bold; text-align: center; } .slogan-desc { color: #999999; font-family: Cambria; font-size: 16px; font-weight: normal; margin-top: 10px; text-align: center; } span.highlighted { color: #333333; } a.author { color: #333333; }");
         this.sloganPane.setEditorKit(kit);
         this.sloganPane.setText("<div class='slogan'>" + GlobalConstants.APPLICATION_NAME + " is a TOEFL Practice Offline Application</div>" +
                 "<div class='slogan-desc'> only for <span class='highlighted'>noncommercial</span> use. Please contact <a href='' class='author'>us</a> to report bugs and check updates.</div>");
@@ -221,8 +221,21 @@ public class MainFrame extends JFrame implements ActionListener {
         this.testHomeButton.setBounds(x, y, MODULE_BUTTON_WIDTH, MODULE_BUTTON_HEIGHT);
 
         this.testHomeButton.setText("MODEL TESTS");
-        this.testHomeButton.setFont(new Font("Arial", Font.BOLD, 24));
+        this.testHomeButton.setFont(new Font("Cambria", Font.BOLD, 28));
         this.testHomeButton.setForeground(new Color(102, 102, 102)); // #666666
+        this.testHomeButton.setBackground(new Color(255, 255, 255));
+
+//        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "test.png"));
+//        this.testHomeButton.setIcon(icon);
+
+//        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "test.png"));
+//        this.testHomeButton.setRolloverIcon(rolloverIcon);
+//        this.testHomeButton.setText(null);
+//        this.testHomeButton.setMargin(new Insets(0, 0, 0, 0));
+//        this.testHomeButton.setBorder(null);
+//        this.testHomeButton.setBorderPainted(false);
+//        this.testHomeButton.setFocusPainted(false);
+//        this.testHomeButton.setContentAreaFilled(false);
 
         this.testHomeButton.setActionCommand("goToTestHome");
         this.testHomeButton.addActionListener(this);
@@ -238,7 +251,7 @@ public class MainFrame extends JFrame implements ActionListener {
         this.practiceHomeButton.setBounds(x, y, MODULE_BUTTON_WIDTH, MODULE_BUTTON_HEIGHT);
 
         this.practiceHomeButton.setText("PRACTICES");
-        this.practiceHomeButton.setFont(new Font("Arial", Font.BOLD, 24));
+        this.practiceHomeButton.setFont(new Font("Cambria", Font.BOLD, 28));
         this.practiceHomeButton.setForeground(new Color(102, 102, 102)); // #666666
 
         this.practiceHomeButton.setActionCommand("goToPracticeHome");

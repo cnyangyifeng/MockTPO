@@ -60,13 +60,10 @@ public class TestHomeFrameOld extends JFrame implements ActionListener, MouseLis
     protected FooterPanel footerPanel;
 
     // Variables
-
-    private String title;
-
     protected MockTPO mockTPO;
-
     protected volatile boolean[] markers; // Download markers
     protected volatile boolean redownload;
+    private String title;
 
     public TestHomeFrameOld(GraphicsConfiguration gc, MainFrame mainFrame, String title) {
         super(gc);

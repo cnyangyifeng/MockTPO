@@ -1,6 +1,7 @@
 package com.mocktpo;
 
 import com.mocktpo.ui.windows.MainFrame;
+import com.mocktpo.util.FontsUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,9 @@ public class MApplication {
     public static final Map<String, Object> settings = new HashMap<String, Object>();
 
     public static void main(String[] args) {
+
+        FontsUtils.loadFonts();
+
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = ge.getDefaultScreenDevice();
         SwingUtilities.invokeLater(new Runnable() {

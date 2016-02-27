@@ -24,7 +24,7 @@ public class MTable extends JTable {
         // Set table header
         JTableHeader tableHeader = this.getTableHeader();
         tableHeader.setPreferredSize(new Dimension(TABLE_WIDTH, TABLE_HEADER_HEIGHT));
-        tableHeader.setFont(new Font("Arial", Font.BOLD, 16));
+        tableHeader.setFont(new Font("Roboto", Font.BOLD, 16));
         tableHeader.setForeground(new Color(102, 102, 102)); // #666666
 
         // Set table layout

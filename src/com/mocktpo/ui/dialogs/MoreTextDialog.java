@@ -83,7 +83,7 @@ public class MoreTextDialog extends JDialog implements ActionListener {
     protected void setTitleLabel() {
         this.titleLabel = new JLabel("More Text", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
-        this.titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        this.titleLabel.setFont(new Font("Roboto", Font.BOLD, 16));
         int x = (this.bodyPanel.getWidth() - TITLE_WIDTH) / 2;
         this.titleLabel.setBounds(x, LayoutConstants.MARGIN, TITLE_WIDTH, TITLE_HEIGHT);
     }
@@ -100,7 +100,7 @@ public class MoreTextDialog extends JDialog implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".desc { background-color: #ffffff; font-family: Arial; font-size: 12px; color: #333333; padding: 30px; }");
+        style.addRule(".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 30px; }");
         this.descriptionPane.setEditorKit(kit);
         this.descriptionPane.setText("<div class='desc'>You should use the scroll bar to read the whole passage before you begin to answer the questions.<br /><br />The passage will appear again with each question.</div>");
     }

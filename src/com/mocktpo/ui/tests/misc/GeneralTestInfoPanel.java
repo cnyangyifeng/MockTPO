@@ -32,7 +32,7 @@ public class GeneralTestInfoPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".gti-header { color: #3d4167; font-family: Georgia; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .gti { color: #333333; font-family: Arial; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; }");
+        style.addRule(".gti-header { color: #3d4167; font-family: Cambria; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .gti { color: #333333; font-family: Roboto; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='gti-header'>General Test Information</div>";
         text += "<div class='gti'>This test measures your ability to use English in an academic context. There are 4 sections.</div>";

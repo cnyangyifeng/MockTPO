@@ -7,7 +7,7 @@ public interface LayoutConstants {
     int HEADER_PANEL_HEIGHT = 92;
     int LOGO_LABEL_WIDTH = 79;
     int LOGO_LABEL_HEIGHT = 43;
-    int TITLE_PANE_WIDTH = 240;
+    int TITLE_PANE_WIDTH = 320;
     int TITLE_PANE_HEIGHT = 43;
 
     int FOOTER_PANEL_HEIGHT = 40;

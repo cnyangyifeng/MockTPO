@@ -38,7 +38,7 @@ public class HeadsetPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".hs-header { color: #333333; font-family: Arial; font-size: 12px; margin-bottom: 20px; text-align: center; } .hs-body { margin-bottom: 20px; text-align: center; } .hs-footer { color: #333333; font-family: Arial; font-size: 12px; text-align: center; }");
+        style.addRule(".hs-header { color: #333333; font-family: Roboto; font-size: 12px; margin-bottom: 20px; text-align: center; } .hs-body { margin-bottom: 20px; text-align: center; } .hs-footer { color: #333333; font-family: Roboto; font-size: 12px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='hs-header'>Now put on your headset.</div>";
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "headset.png").toString();

@@ -74,18 +74,16 @@ public class ContactUsDialog extends JDialog implements ActionListener {
         this.setTitleLabel();
         this.setDescriptionPane();
         this.setCloseButton();
-
-        this.bodyPanel.add(this.titleLabel);
-        this.bodyPanel.add(this.descriptionPane);
-        this.bodyPanel.add(this.closeButton);
     }
 
     protected void setTitleLabel() {
         this.titleLabel = new JLabel("Contact Us", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
-        this.titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        this.titleLabel.setFont(new Font("Roboto", Font.BOLD, 16));
         int x = (this.bodyPanel.getWidth() - TITLE_WIDTH) / 2;
         this.titleLabel.setBounds(x, LayoutConstants.MARGIN, TITLE_WIDTH, TITLE_HEIGHT);
+
+        this.bodyPanel.add(this.titleLabel);
     }
 
     protected void setDescriptionPane() {
@@ -100,12 +98,14 @@ public class ContactUsDialog extends JDialog implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".desc { background-color: #ffffff; font-family: Arial; font-size: 12px; color: #333333; padding: 10px; } .desc-img-wrapper { margin-top: 10px; text-align: center; }");
+        style.addRule(".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 10px; } .desc-img-wrapper { margin-top: 10px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "qrcode.png").toString();
         String text = "<div class='desc'>Please open WeChat on phone and scan QR Code to follow us if any technical support is required.<br />";
         text += "<div class='desc-img-wrapper'><img src='" + imgUrl + "' /></div></div>";
         this.descriptionPane.setText(text);
+
+        this.bodyPanel.add(this.descriptionPane);
     }
 
     protected void setCloseButton() {
@@ -128,6 +128,8 @@ public class ContactUsDialog extends JDialog implements ActionListener {
 
         this.closeButton.setActionCommand("doClose");
         this.closeButton.addActionListener(this);
+
+        this.bodyPanel.add(this.closeButton);
     }
 
     /**************************************************

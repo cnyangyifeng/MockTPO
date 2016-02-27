@@ -130,7 +130,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Impact; font-size: 24px; font-weight: bold; color: #ffffff; }");
+        style.addRule(".title { font-family: Impact; font-size: 24px; color: #ffffff; }");
         titlePane.setEditorKit(kit);
         titlePane.setText("<div class='title'>" + GlobalConstants.APPLICATION_NAME + "</div>");
 
@@ -182,7 +182,7 @@ public class MainFrame extends JFrame implements ActionListener {
         this.sloganPane = new JEditorPane();
 
         int x = (this.bodyPanel.getWidth() - SLOGAN_PANE_WIDTH) / 2;
-        int y = LayoutConstants.MARGIN * 5;
+        int y = LayoutConstants.MARGIN * 12;
         this.sloganPane.setBounds(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT);
 
         this.sloganPane.setEditable(false);
@@ -190,10 +190,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #666666; font-family: Cambria; font-size: 24px; font-weight: bold; text-align: center; } .slogan-desc { color: #999999; font-family: Cambria; font-size: 16px; font-weight: normal; margin-top: 10px; text-align: center; } span.highlighted { color: #333333; } a.author { color: #333333; }");
+        style.addRule(".slogan { color: #333333; font-family: Roboto; font-size: 24px; text-align: center; } .slogan-desc { color: #999999; font-family: Roboto; font-size: 16px; margin-top: 10px; text-align: center; } a.author { color: #333333; }");
         this.sloganPane.setEditorKit(kit);
-        this.sloganPane.setText("<div class='slogan'>" + GlobalConstants.APPLICATION_NAME + " is a TOEFL Practice Offline Application</div>" +
-                "<div class='slogan-desc'> only for <span class='highlighted'>noncommercial</span> use. Please contact <a href='' class='author'>us</a> to report bugs and check updates.</div>");
+        this.sloganPane.setText("<div class='slogan'>" + GlobalConstants.APPLICATION_NAME + " is a TOEFL&reg; iBT Practice Offline Application</div>" +
+                "<div class='slogan-desc'>Please contact <a href='' class='author'>us</a> to report bugs and check updates.</div>");
         this.sloganPane.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -221,8 +221,8 @@ public class MainFrame extends JFrame implements ActionListener {
         this.testHomeButton.setBounds(x, y, MODULE_BUTTON_WIDTH, MODULE_BUTTON_HEIGHT);
 
         this.testHomeButton.setText("MODEL TESTS");
-        this.testHomeButton.setFont(new Font("Cambria", Font.BOLD, 28));
-        this.testHomeButton.setForeground(new Color(102, 102, 102)); // #666666
+        this.testHomeButton.setFont(new Font("Roboto", Font.PLAIN, 24));
+        this.testHomeButton.setForeground(new Color(51, 51, 51)); // #333333
         this.testHomeButton.setBackground(new Color(255, 255, 255));
 
 //        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "test.png"));
@@ -251,8 +251,8 @@ public class MainFrame extends JFrame implements ActionListener {
         this.practiceHomeButton.setBounds(x, y, MODULE_BUTTON_WIDTH, MODULE_BUTTON_HEIGHT);
 
         this.practiceHomeButton.setText("PRACTICES");
-        this.practiceHomeButton.setFont(new Font("Cambria", Font.BOLD, 28));
-        this.practiceHomeButton.setForeground(new Color(102, 102, 102)); // #666666
+        this.practiceHomeButton.setFont(new Font("Roboto", Font.PLAIN, 24));
+        this.testHomeButton.setForeground(new Color(51, 51, 51)); // #333333
 
         this.practiceHomeButton.setActionCommand("goToPracticeHome");
         this.practiceHomeButton.addActionListener(this);
@@ -289,7 +289,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".copyright { color: #ffffff; font-family: Arial; font-size: 8px; font-weight: bold; text-align: center; }");
+        style.addRule(".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }");
         copyrightPane.setEditorKit(kit);
         copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
 

@@ -18,6 +18,7 @@ public class MApplication {
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = ge.getDefaultScreenDevice();
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 MainFrame mainFrame = new MainFrame(device.getDefaultConfiguration());
@@ -25,5 +26,6 @@ public class MApplication {
                 mainFrame.setVisible(true);
             }
         });
+
     }
 }

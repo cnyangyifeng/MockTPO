@@ -91,7 +91,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
     protected void setTitleLabel() {
         this.titleLabel = new JLabel("Pause Test", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
-        this.titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        this.titleLabel.setFont(new Font("Roboto", Font.BOLD, 16));
         int x = (this.bodyPanel.getWidth() - TITLE_WIDTH) / 2;
         this.titleLabel.setBounds(x, LayoutConstants.MARGIN, TITLE_WIDTH, TITLE_HEIGHT);
     }
@@ -108,7 +108,7 @@ public class PauseTestDialog extends JDialog implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".desc { background-color: #ffffff; font-family: Arial; font-size: 12px; color: #333333; padding: 30px; }");
+        style.addRule(".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 20px; }");
         this.descriptionPane.setEditorKit(kit);
         this.descriptionPane.setText("<div class='desc'>You may now pause this test and resume work at any later time; however the score you obtain may not be an accurate indication of a score you would earn in a timed test. When you resume the test, you will return to the question from which you left.<br /><br />Are you sure you wish to pause the test? Click on <b>Return</b> to continue working. Click on <b>Continue</b> to pause the test.</div>");
     }

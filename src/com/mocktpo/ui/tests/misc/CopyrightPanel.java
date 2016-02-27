@@ -38,7 +38,7 @@ public class CopyrightPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".cp-img { margin-bottom: 40px; text-align: center; } .cp-img img { height: 90px; width: 160px; } .cp { color: #333333; font-family: Arial; font-size: 12px; text-align: center; }");
+        style.addRule(".cp-img { margin-bottom: 40px; text-align: center; } .cp-img img { height: 90px; width: 160px; } .cp { color: #333333; font-family: Roboto; font-size: 12px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ets_toefl.png").toString();
         String text = "<div class='cp-img'><img src='" + imgUrl + "' /></div>";

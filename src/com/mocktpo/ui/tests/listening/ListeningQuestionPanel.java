@@ -62,7 +62,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".subject { color: #333333; font-family: Arial; font-size: 12px; }");
+        style.addRule(".subject { color: #333333; font-family: Roboto; font-size: 12px; }");
         this.subjectPane.setEditorKit(kit);
         String subject = this.question.getSubject();
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "earphone.png").toString();
@@ -94,7 +94,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
             JRadioButton radioButton = new JRadioButton(option.getText());
             radioButton.setBounds(0, OPTION_BUTTON_HEIGHT * i + LayoutConstants.MARGIN * i * 2, OPTION_BUTTON_WIDTH, OPTION_BUTTON_HEIGHT);
 
-            radioButton.setFont(new Font("Arial", Font.PLAIN, 16));
+            radioButton.setFont(new Font("Roboto", Font.PLAIN, 16));
             radioButton.setForeground(new Color(51, 51, 51));
             radioButton.setName(option.getIndex());
             ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "unchecked.png"));

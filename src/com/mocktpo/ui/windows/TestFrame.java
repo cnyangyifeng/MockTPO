@@ -290,7 +290,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Arial; font-size: 11px; font-weight: bold; color: #ffffff; margin-top: 3px; width: 150px; }");
+        style.addRule(".title { font-family: Impact; font-size: 11px; color: #ffffff; }");
         titlePane.setEditorKit(kit);
         titlePane.setText("<div class='title'>" + this.title + "</div>");
 
@@ -363,7 +363,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".question { font-family: Arial; font-size: 11px; font-weight: bold; color: #f5f5f5; text-align: center; }");
+        style.addRule(".question { font-family: Roboto; font-size: 11px; font-weight: bold; color: #f5f5f5; text-align: center; }");
         this.questionNumberPane.setEditorKit(kit);
 
         this.resetQuestionNumber();
@@ -705,7 +705,7 @@ public class TestFrame extends JFrame implements ActionListener {
         int y = this.headerPanel.getHeight() - TIMER_LABEL_HEIGHT - LayoutConstants.MARGIN * 2;
         this.timerLabel.setBounds(x, y, TIMER_LABEL_WIDTH, TIMER_LABEL_HEIGHT);
 
-        this.timerLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        this.timerLabel.setFont(new Font("Roboto", Font.BOLD, 14));
         this.timerLabel.setForeground(new Color(245, 245, 245));
         this.timerLabel.setText(TimeUtils.displayTime(timeElapsed));
         this.stopCountdown();
@@ -769,7 +769,7 @@ public class TestFrame extends JFrame implements ActionListener {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".copyright { color: #ffffff; font-family: Arial; font-size: 8px; font-weight: bold; text-align: center; }");
+        style.addRule(".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }");
         copyrightPane.setEditorKit(kit);
         copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
 

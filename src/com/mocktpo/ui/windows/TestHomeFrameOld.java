@@ -140,7 +140,7 @@ public class TestHomeFrameOld extends JFrame implements ActionListener, MouseLis
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Arial; font-size: 24px; font-weight: bold; color: #ffffff; }");
+        style.addRule(".title { font-family: Roboto; font-size: 24px; font-weight: bold; color: #ffffff; }");
         titlePane.setEditorKit(kit);
         titlePane.setText("<div class='title'>" + GlobalConstants.APPLICATION_NAME + "</div>");
 
@@ -198,7 +198,7 @@ public class TestHomeFrameOld extends JFrame implements ActionListener, MouseLis
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #666666; font-family: Arial; font-size: 24px; font-weight: bold; text-align: center; } .slogan-desc { color: #999999; font-family: Arial; font-size: 16px; font-weight: normal; margin-top: 10px; text-align: center; } span.highlighted { color: #333333; } a.author { color: #333333; }");
+        style.addRule(".slogan { color: #666666; font-family: Roboto; font-size: 24px; font-weight: bold; text-align: center; } .slogan-desc { color: #999999; font-family: Roboto; font-size: 16px; margin-top: 10px; text-align: center; } span.highlighted { color: #333333; } a.author { color: #333333; }");
         this.sloganPane.setEditorKit(kit);
         this.sloganPane.setText("<div class='slogan'>" + GlobalConstants.APPLICATION_NAME + " is a TOEFL Practice Offline Application</div" +
                 "<div class='slogan-desc'> only for <span class='highlighted'>noncommercial</span> use. Please contact <a href='' class='author'>us</a> to report bugs and check updates.</div>");
@@ -289,7 +289,7 @@ public class TestHomeFrameOld extends JFrame implements ActionListener, MouseLis
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".copyright { color: #ffffff; font-family: Arial; font-size: 8px; font-weight: bold; text-align: center; }");
+        style.addRule(".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }");
         copyrightPane.setEditorKit(kit);
         copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
 

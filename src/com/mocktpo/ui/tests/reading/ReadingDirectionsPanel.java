@@ -43,7 +43,7 @@ public class ReadingDirectionsPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".rd-header { color: #3d4167; font-family: Georgia; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .rd { color: #333333; font-family: Arial; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .rd a { color: #3c4d82; }");
+        style.addRule(".rd-header { color: #3d4167; font-family: Cambria; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .rd { color: #333333; font-family: Roboto; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .rd a { color: #3c4d82; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='rd-header'>Reading Section Directions</div>";
         text += "<div class='rd'>This section measures your ability to understand academic passages in English. You will read <b>3 passages</b>. In an actual test you will have <b>60 minutes (1 hour)</b> to read the passages and answer the questions.</div>";

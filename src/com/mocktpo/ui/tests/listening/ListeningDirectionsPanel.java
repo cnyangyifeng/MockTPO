@@ -43,7 +43,7 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".ld-header { color: #3d4167; font-family: Georgia; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .ld { color: #333333; font-family: Arial; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .ld-footer { color: #333333; font-family: Arial; font-size: 12px; font-style: italic; text-align: center; }");
+        style.addRule(".ld-header { color: #3d4167; font-family: Cambria; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .ld { color: #333333; font-family: Roboto; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .ld-footer { color: #333333; font-family: Roboto; font-size: 12px; font-style: italic; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='ld-header'>Listening Section Directions</div>";
         text += "<div class='ld'>This test measures your ability to understand conversations and lectures in English.</div>";

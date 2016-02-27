@@ -15,7 +15,12 @@ public class FontsUtils {
 
             InputStream impact = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Impact.ttf");
 
+            InputStream roboto = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Regular.ttf");
+            InputStream robotob = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Bold.ttf");
+
+
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
 
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, cambria));
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, cambriab));
@@ -23,6 +28,9 @@ public class FontsUtils {
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, cambriabi));
 
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, impact));
+
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, roboto));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, robotob));
 
         } catch (FontFormatException ffe) {
 

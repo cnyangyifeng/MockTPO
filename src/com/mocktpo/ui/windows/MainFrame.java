@@ -2,10 +2,7 @@ package com.mocktpo.ui.windows;
 
 import com.mocktpo.ui.dialogs.ApplicationExitDialog;
 import com.mocktpo.ui.dialogs.ContactUsDialog;
-import com.mocktpo.ui.widgets.BodyPanel;
-import com.mocktpo.ui.widgets.FooterPanel;
-import com.mocktpo.ui.widgets.HeaderPanel;
-import com.mocktpo.ui.widgets.MButton;
+import com.mocktpo.ui.widgets.*;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 import org.apache.logging.log4j.LogManager;
@@ -14,15 +11,13 @@ import org.apache.logging.log4j.Logger;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame implements ActionListener {
 
-    // Constants
+    /* Constants */
 
     public static final int EXIT_APPLICATION_BUTTON_WIDTH = 84;
     public static final int EXIT_APPLICATION_BUTTON_HEIGHT = 34;
@@ -31,22 +26,22 @@ public class MainFrame extends JFrame implements ActionListener {
     public static final int MODULE_BUTTON_WIDTH = 360;
     public static final int MODULE_BUTTON_HEIGHT = 240;
 
-    // Logger
+    /* Logger */
 
     protected static final Logger logger = LogManager.getLogger();
 
-    // Frames
+    /* Frames */
 
-    protected TestHomeFrame testHomeFrame;
-    protected PracticeHomeFrame practiceHomeFrame;
+    protected TestsHomeFrame testsHomeFrame;
+    protected PracticesHomeFrame practicesHomeFrame;
 
-    // Components
+    /* Components */
 
     protected HeaderPanel headerPanel;
     protected BodyPanel bodyPanel;
-    protected JEditorPane sloganPane;
-    protected MButton testHomeButton;
-    protected MButton practiceHomeButton;
+    protected StyledLabelPane sloganPane;
+    protected ModuleButton testsHomeButton;
+    protected ModuleButton practicesHomeButton;
     protected FooterPanel footerPanel;
 
     /**************************************************
@@ -63,9 +58,11 @@ public class MainFrame extends JFrame implements ActionListener {
      **************************************************/
 
     private void initComponents() {
+        /* Global settings */
         this.globalSettings();
+        /* Set layout */
         this.setLayout(null);
-
+        /* Set components */
         this.setBodyPanel();
         this.setHeaderPanel();
         this.setFooterPanel();
@@ -76,124 +73,102 @@ public class MainFrame extends JFrame implements ActionListener {
      **************************************************/
 
     protected void globalSettings() {
+        /* Set bounds */
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
-
         Rectangle bounds = new Rectangle(screenSize);
         this.setBounds(bounds);
-
+        /* Set maximized, unresizable and undecorated */
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setResizable(false);
         this.setUndecorated(true);
-
+        /* Set title */
         this.setTitle(GlobalConstants.APPLICATION_NAME);
     }
 
     /**************************************************
-     * Set Header Panel
+     * Header Panel Settings
      **************************************************/
 
     protected void setHeaderPanel() {
+        /* Initialize component */
         this.headerPanel = new HeaderPanel();
-
+        /* Set bounds */
         this.headerPanel.setBounds(0, 0, this.getWidth(), LayoutConstants.HEADER_PANEL_HEIGHT);
-
+        /* Set layout */
         this.headerPanel.setLayout(null);
-
+        /* Set children components */
         this.setLogoLabel();
         this.setTitlePane();
         this.setExitApplicationButton();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.headerPanel);
     }
 
     protected void setLogoLabel() {
+        /* Initialize component */
         JLabel logoLabel = new JLabel();
-
+        /* Set bounds */
         logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
-
+        /* Set icon */
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "logo.png"));
         logoLabel.setIcon(icon);
-
+        /* Add to the parent component */
         this.headerPanel.add(logoLabel);
     }
 
     protected void setTitlePane() {
-        JEditorPane titlePane = new JEditorPane();
-
+        /* Initialize component */
         int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
         int y = LayoutConstants.MARGIN;
-        titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
-
-        titlePane.setEditable(false);
-        titlePane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Impact; font-size: 24px; color: #ffffff; }");
-        titlePane.setEditorKit(kit);
-        titlePane.setText("<div class='title'>" + GlobalConstants.APPLICATION_NAME + "</div>");
-
+        String css = ".title { font-family: Impact; font-size: 24px; color: #ffffff; }";
+        String html = "<div class='title'>" + GlobalConstants.APPLICATION_NAME + "</div>";
+        StyledLabelPane titlePane = new StyledLabelPane(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.headerPanel.add(titlePane);
     }
 
     protected void setExitApplicationButton() {
-        MButton exitApplicationButton = new MButton();
-
+        /* Initialize component */
         int x = LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - EXIT_APPLICATION_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        exitApplicationButton.setBounds(x, y, EXIT_APPLICATION_BUTTON_WIDTH, EXIT_APPLICATION_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit_application.png"));
-        exitApplicationButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "exit_application_hi.png"));
-        exitApplicationButton.setRolloverIcon(rolloverIcon);
-        exitApplicationButton.setText(null);
-        exitApplicationButton.setMargin(new Insets(0, 0, 0, 0));
-        exitApplicationButton.setBorder(null);
-        exitApplicationButton.setBorderPainted(false);
-        exitApplicationButton.setFocusPainted(false);
-        exitApplicationButton.setContentAreaFilled(false);
-
+        ImageButton exitApplicationButton = new ImageButton(x, y, EXIT_APPLICATION_BUTTON_WIDTH, EXIT_APPLICATION_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         exitApplicationButton.setActionCommand("doExitApplication");
         exitApplicationButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(exitApplicationButton);
     }
 
     /**************************************************
-     * Set Body Panel
+     * Body Panel Settings
      **************************************************/
 
     protected void setBodyPanel() {
+        /* Initialize component */
         int y = LayoutConstants.HEADER_PANEL_HEIGHT;
         int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
         Rectangle bounds = new Rectangle(0, y, this.getWidth(), height);
         this.bodyPanel = new BodyPanel(bounds);
-
+        /* Set children components */
         this.setSloganPane();
         this.setTestHomeButton();
         this.setPracticeHomeButton();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.bodyPanel);
     }
 
     protected void setSloganPane() {
-        this.sloganPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.bodyPanel.getWidth() - SLOGAN_PANE_WIDTH) / 2;
         int y = LayoutConstants.MARGIN * 12;
-        this.sloganPane.setBounds(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT);
-
-        this.sloganPane.setEditable(false);
-        this.sloganPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #333333; font-family: Roboto; font-size: 24px; text-align: center; } .slogan-desc { color: #999999; font-family: Roboto; font-size: 16px; margin-top: 10px; text-align: center; } a.author { color: #333333; }");
-        this.sloganPane.setEditorKit(kit);
-        this.sloganPane.setText("<div class='slogan'>" + GlobalConstants.APPLICATION_NAME + " is a TOEFL&reg; iBT Practice Offline Application</div>" +
-                "<div class='slogan-desc'>Please contact <a href='' class='author'>us</a> to report bugs and check updates.</div>");
+        String css = ".slogan { color: #333333; font-family: Roboto; font-size: 24px; text-align: center; } .slogan-desc { color: #999999; font-family: Roboto; font-size: 16px; margin-top: 10px; text-align: center; } a.author { color: #333333; }";
+        String html = "<div class='slogan'>" + GlobalConstants.APPLICATION_NAME + " is a TOEFL&reg; iBT Practice Offline Application</div>" +
+                "<div class='slogan-desc'>Please contact <a href='' class='author'>us</a> to report bugs and check updates.</div>";
+        this.sloganPane = new StyledLabelPane(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT, css, html);
+        /* Add hyperlink listener */
         this.sloganPane.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -209,90 +184,60 @@ public class MainFrame extends JFrame implements ActionListener {
                 }
             }
         });
-
+        /* Add to the parent component */
         this.bodyPanel.add(this.sloganPane);
     }
 
     protected void setTestHomeButton() {
-        this.testHomeButton = new MButton();
-
+        /* Initialize component */
         int x = (this.bodyPanel.getWidth() - MODULE_BUTTON_WIDTH * 2 - LayoutConstants.MARGIN * 10) / 2;
         int y = this.sloganPane.getY() + this.sloganPane.getHeight() + LayoutConstants.MARGIN * 20;
-        this.testHomeButton.setBounds(x, y, MODULE_BUTTON_WIDTH, MODULE_BUTTON_HEIGHT);
-
-        this.testHomeButton.setText("MODEL TESTS");
-        this.testHomeButton.setFont(new Font("Roboto", Font.PLAIN, 24));
-        this.testHomeButton.setForeground(new Color(51, 51, 51)); // #333333
-        this.testHomeButton.setBackground(new Color(255, 255, 255));
-
-//        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "test.png"));
-//        this.testHomeButton.setIcon(icon);
-
-//        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "test.png"));
-//        this.testHomeButton.setRolloverIcon(rolloverIcon);
-//        this.testHomeButton.setText(null);
-//        this.testHomeButton.setMargin(new Insets(0, 0, 0, 0));
-//        this.testHomeButton.setBorder(null);
-//        this.testHomeButton.setBorderPainted(false);
-//        this.testHomeButton.setFocusPainted(false);
-//        this.testHomeButton.setContentAreaFilled(false);
-
-        this.testHomeButton.setActionCommand("goToTestHome");
-        this.testHomeButton.addActionListener(this);
-
-        this.bodyPanel.add(testHomeButton);
+        this.testsHomeButton = new ModuleButton(x, y, MODULE_BUTTON_WIDTH, MODULE_BUTTON_HEIGHT, "MODEL TESTS");
+        /* Set actions */
+        this.testsHomeButton.setActionCommand("goToTestsHome");
+        this.testsHomeButton.addActionListener(this);
+        /* Add to the parent component */
+        this.bodyPanel.add(this.testsHomeButton);
     }
 
     protected void setPracticeHomeButton() {
-        this.practiceHomeButton = new MButton();
-
+        /* Initialize component */
         int x = (this.bodyPanel.getWidth() + LayoutConstants.MARGIN * 10) / 2;
-        int y = this.testHomeButton.getY();
-        this.practiceHomeButton.setBounds(x, y, MODULE_BUTTON_WIDTH, MODULE_BUTTON_HEIGHT);
-
-        this.practiceHomeButton.setText("PRACTICES");
-        this.practiceHomeButton.setFont(new Font("Roboto", Font.PLAIN, 24));
-        this.testHomeButton.setForeground(new Color(51, 51, 51)); // #333333
-
-        this.practiceHomeButton.setActionCommand("goToPracticeHome");
-        this.practiceHomeButton.addActionListener(this);
-
-        this.bodyPanel.add(practiceHomeButton);
+        int y = this.testsHomeButton.getY();
+        this.practicesHomeButton = new ModuleButton(x, y, MODULE_BUTTON_WIDTH, MODULE_BUTTON_HEIGHT, "PRACTICES");
+        /* Set actions */
+        this.practicesHomeButton.setActionCommand("goToPracticesHome");
+        this.practicesHomeButton.addActionListener(this);
+        /* Add to the parent component */
+        this.bodyPanel.add(this.practicesHomeButton);
     }
 
     /**************************************************
-     * Set Footer Panel
+     * Footer Panel Settings
      **************************************************/
 
     protected void setFooterPanel() {
+        /* Initialize component */
         this.footerPanel = new FooterPanel();
-
+        /* Set bounds */
         int y = this.getHeight() - LayoutConstants.FOOTER_PANEL_HEIGHT;
         this.footerPanel.setBounds(0, y, this.getWidth(), LayoutConstants.FOOTER_PANEL_HEIGHT);
-
+        /* Set layout */
         this.footerPanel.setLayout(null);
-
+        /* Set children components */
         this.setCopyrightPane();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.footerPanel);
     }
 
     protected void setCopyrightPane() {
-        JEditorPane copyrightPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
         int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
-        copyrightPane.setBounds(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT);
-
-        copyrightPane.setEditable(false);
-        copyrightPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }");
-        copyrightPane.setEditorKit(kit);
-        copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
-
+        String css = ".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }";
+        String html = "<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>";
+        StyledLabelPane copyrightPane = new StyledLabelPane(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.footerPanel.add(copyrightPane);
     }
 
@@ -311,25 +256,27 @@ public class MainFrame extends JFrame implements ActionListener {
                     exit.setVisible(true);
                 }
             });
-        } else if (("goToTestHome").equals(e.getActionCommand())) {
+        } else if (("goToTestsHome").equals(e.getActionCommand())) {
+            logger.info("'Model Tests' button pressed.");
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     GraphicsDevice device = ge.getDefaultScreenDevice();
-                    testHomeFrame = new TestHomeFrame(device.getDefaultConfiguration(), MainFrame.this, GlobalConstants.APPLICATION_NAME);
-                    device.setFullScreenWindow(testHomeFrame);
-                    testHomeFrame.setVisible(true);
+                    testsHomeFrame = new TestsHomeFrame(device.getDefaultConfiguration(), MainFrame.this, GlobalConstants.APPLICATION_NAME);
+                    device.setFullScreenWindow(testsHomeFrame);
+                    testsHomeFrame.setVisible(true);
                     setVisible(false);
                 }
             });
-        } else if (("goToPracticeHome").equals(e.getActionCommand())) {
+        } else if (("goToPracticesHome").equals(e.getActionCommand())) {
+            logger.info("'Practices' button pressed.");
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     GraphicsDevice device = ge.getDefaultScreenDevice();
-                    practiceHomeFrame = new PracticeHomeFrame(device.getDefaultConfiguration(), MainFrame.this, GlobalConstants.APPLICATION_NAME);
-                    device.setFullScreenWindow(practiceHomeFrame);
-                    practiceHomeFrame.setVisible(true);
+                    practicesHomeFrame = new PracticesHomeFrame(device.getDefaultConfiguration(), MainFrame.this, GlobalConstants.APPLICATION_NAME);
+                    device.setFullScreenWindow(practicesHomeFrame);
+                    practicesHomeFrame.setVisible(true);
                     setVisible(false);
                 }
             });

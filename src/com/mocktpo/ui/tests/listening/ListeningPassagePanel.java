@@ -15,17 +15,28 @@ import java.awt.event.ActionListener;
 
 public class ListeningPassagePanel extends BodyPanel implements ActionListener {
 
+    /* Constants */
+
     public static final int CONVERSATION_LABEL_WIDTH = 600;
     public static final int CONVERSATION_LABEL_HEIGHT = 450;
 
     public static final int CONVERSATION_PROGRESS_BAR_WIDTH = 320;
     public static final int CONVERSATION_PROGRESS_BAR_HEIGHT = 6;
 
+    /* Components */
+
     protected JLabel conversationLabel;
     protected JProgressBar conversationProgressBar;
+
+    /* Variables */
+
     protected MListeningPassage passage;
     private Player audioPlayer;
     private Timer timer;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public ListeningPassagePanel(Rectangle bounds, MListeningPassage passage) {
         super(bounds);
@@ -33,12 +44,17 @@ public class ListeningPassagePanel extends BodyPanel implements ActionListener {
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setConversationLabel();
         this.setConversationProgressBar();
-
+        /* Set audio player */
         this.setAudioPlayer();
     }
 

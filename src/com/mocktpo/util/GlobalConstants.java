@@ -1,7 +1,7 @@
 package com.mocktpo.util;
 
 public interface GlobalConstants {
-
+    /* Application name */
     String APPLICATION_NAME = "MockTPO";
 
     String POSTFIX_ZIP = ".zip";

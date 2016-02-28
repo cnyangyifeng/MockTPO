@@ -1,21 +1,21 @@
 package com.mocktpo.ui.dialogs;
 
 import com.mocktpo.ui.widgets.DialogBodyPanel;
-import com.mocktpo.ui.widgets.MButton;
+import com.mocktpo.ui.widgets.ImageButton;
+import com.mocktpo.ui.widgets.StyledLabelPane;
 import com.mocktpo.ui.windows.TestFrame;
-import com.mocktpo.ui.windows.TestHomeFrame;
+import com.mocktpo.ui.windows.TestsHomeFrame;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PauseTestDialog extends JDialog implements ActionListener {
 
+    /* Constants */
 
     public static final int DIALOG_WIDTH = 440;
     public static final int DIALOG_HEIGHT = 420;
@@ -33,41 +33,54 @@ public class PauseTestDialog extends JDialog implements ActionListener {
     public static final int RETURN_BUTTON_HEIGHT = 34;
 
     /**************************************************
-     * Properties
+     * Components
      **************************************************/
 
     protected DialogBodyPanel bodyPanel;
     protected JLabel titleLabel;
-    protected JEditorPane descriptionPane;
-    protected MButton continueButton;
-    protected MButton returnButton;
+    protected StyledLabelPane descriptionPane;
+    protected ImageButton continueButton;
+    protected ImageButton returnButton;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public PauseTestDialog(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
         this.initComponents();
     }
 
+    /**************************************************
+     * Components Initialization
+     **************************************************/
+
     private void initComponents() {
+        /* Global settings */
         this.globalSettings();
-
+        /* Set layout */
         this.setLayout(null);
-
+        /* Set components */
         this.setBodyPanel();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.bodyPanel);
     }
 
+    /**************************************************
+     * Global Settings
+     **************************************************/
+
     protected void globalSettings() {
+        /* Set bounds */
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
-
         int x = ((int) screenSize.getWidth() - DIALOG_WIDTH) / 2;
         int y = ((int) screenSize.getHeight() - DIALOG_HEIGHT) / 2;
         this.setBounds(x, y, DIALOG_WIDTH, DIALOG_HEIGHT);
-
+        /* Set unresizable and dispose on close */
         this.setResizable(false);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
+        /* Set title */
         this.setTitle("");
     }
 
@@ -97,62 +110,34 @@ public class PauseTestDialog extends JDialog implements ActionListener {
     }
 
     protected void setDescriptionPane() {
-        this.descriptionPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.bodyPanel.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = this.titleLabel.getY() + TITLE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.descriptionPane.setBounds(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT);
-
-        this.descriptionPane.setEditable(false);
-        this.descriptionPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 20px; }");
-        this.descriptionPane.setEditorKit(kit);
-        this.descriptionPane.setText("<div class='desc'>You may now pause this test and resume work at any later time; however the score you obtain may not be an accurate indication of a score you would earn in a timed test. When you resume the test, you will return to the question from which you left.<br /><br />Are you sure you wish to pause the test? Click on <b>Return</b> to continue working. Click on <b>Continue</b> to pause the test.</div>");
+        String css = ".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 20px; }";
+        String html = "<div class='desc'>You may now pause this test and resume work at any later time; however the score you obtain may not be an accurate indication of a score you would earn in a timed test. When you resume the test, you will return to the question from which you left.<br /><br />Are you sure you wish to pause the test? Click on <b>Return</b> to continue working. Click on <b>Continue</b> to pause the test.</div>";
+        this.descriptionPane = new StyledLabelPane(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT, css, html);
     }
 
     protected void setReturnButton() {
-        this.returnButton = new MButton();
-
+        /* Initialize component */
         int x = this.bodyPanel.getWidth() / 2 - RETURN_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
         int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.returnButton.setBounds(x, y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return.png"));
-        this.returnButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return_hi.png"));
-        this.returnButton.setRolloverIcon(rolloverIcon);
-        this.returnButton.setText(null);
-        this.returnButton.setMargin(new Insets(0, 0, 0, 0));
-        this.returnButton.setBorder(null);
-        this.returnButton.setBorderPainted(false);
-        this.returnButton.setFocusPainted(false);
-        this.returnButton.setContentAreaFilled(false);
-
+        this.returnButton = new ImageButton(x, y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.returnButton.setActionCommand("doReturn");
         this.returnButton.addActionListener(this);
     }
 
     protected void setContinueButton() {
-        this.continueButton = new MButton();
-
+        /* Initialize component */
         int x = this.bodyPanel.getWidth() / 2 + LayoutConstants.MARGIN * 2;
         int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
-        this.continueButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_hi.png"));
-        this.continueButton.setRolloverIcon(rolloverIcon);
-        this.continueButton.setText(null);
-        this.continueButton.setMargin(new Insets(0, 0, 0, 0));
-        this.continueButton.setBorder(null);
-        this.continueButton.setBorderPainted(false);
-        this.continueButton.setFocusPainted(false);
-        this.continueButton.setContentAreaFilled(false);
-
+        this.continueButton = new ImageButton(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.continueButton.setActionCommand("doContinue");
         this.continueButton.addActionListener(this);
     }
@@ -169,13 +154,13 @@ public class PauseTestDialog extends JDialog implements ActionListener {
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     GraphicsDevice device = ge.getDefaultScreenDevice();
                     TestFrame testFrame = (TestFrame) PauseTestDialog.this.getOwner();
-                    TestHomeFrame testHomeFrame = testFrame.getTestHomeFrame();
+                    TestsHomeFrame testsHomeFrame = testFrame.getTestsHomeFrame();
 
                     PauseTestDialog.this.dispose();
                     testFrame.dispose();
 
-                    device.setFullScreenWindow(testHomeFrame);
-                    testHomeFrame.setVisible(true);
+                    device.setFullScreenWindow(testsHomeFrame);
+                    testsHomeFrame.setVisible(true);
                 }
             });
         } else if ("doReturn".equals(e.getActionCommand())) {

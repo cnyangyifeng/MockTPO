@@ -11,10 +11,7 @@ import com.mocktpo.ui.tests.reading.ReadingDirectionsPanel;
 import com.mocktpo.ui.tests.reading.ReadingPassagePanel;
 import com.mocktpo.ui.tests.reading.ReadingReviewPanel;
 import com.mocktpo.ui.tests.reading.ReadingSummaryQuestionPanel;
-import com.mocktpo.ui.widgets.BodyPanel;
-import com.mocktpo.ui.widgets.FooterPanel;
-import com.mocktpo.ui.widgets.HeaderPanel;
-import com.mocktpo.ui.widgets.MButton;
+import com.mocktpo.ui.widgets.*;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 import com.mocktpo.util.TimeUtils;
@@ -33,7 +30,7 @@ import java.net.URL;
 
 public class TestFrame extends JFrame implements ActionListener {
 
-    // Constants
+    /* Constants */
 
     public static final int PAUSE_TEST_BUTTON_WIDTH = 84;
     public static final int PAUSE_TEST_BUTTON_HEIGHT = 34;
@@ -68,36 +65,36 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int TIMER_LABEL_WIDTH = 60;
     public static final int TIMER_LABEL_HEIGHT = 20;
 
-    // Logger
+    /* Logger */
 
     protected static final Logger logger = LogManager.getLogger();
 
-    // Frames
+    /* Frames */
 
-    protected TestHomeFrame testHomeFrame;
+    protected TestsHomeFrame testsHomeFrame;
 
-    // Components
+    /* Components */
 
     protected HeaderPanel headerPanel;
     protected BodyPanel bodyPanel;
     protected FooterPanel footerPanel;
 
-    protected MButton pauseTestButton;
-    protected MButton sectionExitButton;
-    protected JEditorPane questionNumberPane;
-    protected MButton continueOvalButton;
-    protected MButton nextButton;
-    protected MButton backButton;
-    protected MButton okButton;
-    protected MButton helpButton;
-    protected MButton reviewButton;
-    protected MButton volumeButton;
-    protected MButton viewTextOrQuestionButton;
-    protected MButton continueButton;
-    protected MButton goToQuestionButton;
-    protected MButton returnButton;
+    protected ImageButton pauseTestButton;
+    protected ImageButton sectionExitButton;
+    protected StyledLabelPane questionNumberPane;
+    protected ImageButton continueOvalButton;
+    protected ImageButton nextButton;
+    protected ImageButton backButton;
+    protected ImageButton okButton;
+    protected ImageButton helpButton;
+    protected ImageButton reviewButton;
+    protected ImageButton volumeButton;
+    protected ImageButton viewTextOrQuestionButton;
+    protected ImageButton continueButton;
+    protected ImageButton goToQuestionButton;
+    protected ImageButton returnButton;
     protected JLabel timerLabel;
-    protected MButton hideOrShowTimerButton;
+    protected ImageButton hideOrShowTimerButton;
 
     protected CopyrightPanel copyrightPanel;
     protected GeneralTestInfoPanel generalTestInfoPanel;
@@ -114,7 +111,8 @@ public class TestFrame extends JFrame implements ActionListener {
     protected ListeningHintsPanel lhPanel;
     protected ListeningQuestionPanel lqPanel;
 
-    // Variables
+    /* Variables */
+
     protected String testIndex;
     protected Rectangle bodyBounds;
     private String title;
@@ -124,17 +122,27 @@ public class TestFrame extends JFrame implements ActionListener {
     private MReading reading;
     private MListening listening;
 
-    public TestFrame(GraphicsConfiguration gc, TestHomeFrame testHomeFrame, String title) {
+    /**************************************************
+     * Constructors
+     **************************************************/
+
+    public TestFrame(GraphicsConfiguration gc, TestsHomeFrame testsHomeFrame, String title) {
         super(gc);
-        this.testHomeFrame = testHomeFrame;
+        this.testsHomeFrame = testsHomeFrame;
         this.title = title;
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.globalSettings();
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Global settings */
+        this.globalSettings();
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setBodyPanel();
         this.setHeaderPanel();
         this.setFooterPanel();
@@ -145,18 +153,18 @@ public class TestFrame extends JFrame implements ActionListener {
      **************************************************/
 
     protected void globalSettings() {
+        /* Set bounds */
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
-
         Rectangle bounds = new Rectangle(screenSize);
         this.setBounds(bounds);
-
+        /* Set maximized, unresizable and undecorated */
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setResizable(false);
         this.setUndecorated(true);
-
+        /* Set title */
         this.setTitle(this.title);
-
+        /* Configure data */
         this.configData();
     }
 
@@ -218,7 +226,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     /**************************************************
-     * Set Body Panel
+     * Body Panel Settings
      **************************************************/
 
     protected void setBodyPanel() {
@@ -231,7 +239,7 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     /**************************************************
-     * Set Header Panel
+     * Header Panel Settings
      **************************************************/
 
     protected void setHeaderPanel() {
@@ -279,45 +287,27 @@ public class TestFrame extends JFrame implements ActionListener {
     }
 
     protected void setTitlePane() {
-        JEditorPane titlePane = new JEditorPane();
-
+        /* Initialize component */
         int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
         int y = LayoutConstants.MARGIN;
-        titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
-
-        titlePane.setEditable(false);
-        titlePane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Impact; font-size: 11px; color: #ffffff; }");
-        titlePane.setEditorKit(kit);
-        titlePane.setText("<div class='title'>" + this.title + "</div>");
-
+        String css = ".title { font-family: Impact; font-size: 11px; color: #ffffff; }";
+        String html = "<div class='title'>" + this.title + "</div>";
+        StyledLabelPane titlePane = new StyledLabelPane(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.headerPanel.add(titlePane);
     }
 
     protected void setPauseTestButton() {
-        this.pauseTestButton = new MButton();
-
+        /* Initialize component */
         int x = LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - PAUSE_TEST_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        this.pauseTestButton.setBounds(x, y, PAUSE_TEST_BUTTON_WIDTH, PAUSE_TEST_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "pause_test.png"));
-        this.pauseTestButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "pause_test_hi.png"));
-        this.pauseTestButton.setRolloverIcon(rolloverIcon);
-        this.pauseTestButton.setText(null);
-        this.pauseTestButton.setMargin(new Insets(0, 0, 0, 0));
-        this.pauseTestButton.setBorder(null);
-        this.pauseTestButton.setBorderPainted(false);
-        this.pauseTestButton.setFocusPainted(false);
-        this.pauseTestButton.setContentAreaFilled(false);
-
+        this.pauseTestButton = new ImageButton(x, y, PAUSE_TEST_BUTTON_WIDTH, PAUSE_TEST_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.pauseTestButton.setActionCommand("doPauseTest");
         this.pauseTestButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.pauseTestButton);
     }
 
@@ -325,26 +315,16 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isSectionExitButtonAvailable()) {
             return;
         }
-        this.sectionExitButton = new MButton();
-
+        /* Initialize component */
         int x = this.pauseTestButton.getX() + PAUSE_TEST_BUTTON_WIDTH + LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - SECTION_EXIT_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        this.sectionExitButton.setBounds(x, y, SECTION_EXIT_BUTTON_WIDTH, SECTION_EXIT_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "section_exit.png"));
-        this.sectionExitButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "section_exit_hi.png"));
-        this.sectionExitButton.setRolloverIcon(rolloverIcon);
-        this.sectionExitButton.setText(null);
-        this.sectionExitButton.setMargin(new Insets(0, 0, 0, 0));
-        this.sectionExitButton.setBorder(null);
-        this.sectionExitButton.setBorderPainted(false);
-        this.sectionExitButton.setFocusPainted(false);
-        this.sectionExitButton.setContentAreaFilled(false);
-
+        this.sectionExitButton = new ImageButton(x, y, SECTION_EXIT_BUTTON_WIDTH, SECTION_EXIT_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.sectionExitButton.setActionCommand("doSectionExit");
         this.sectionExitButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.sectionExitButton);
     }
 
@@ -352,22 +332,15 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isQuestionNumberPaneAvailable()) {
             return;
         }
-        this.questionNumberPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.headerPanel.getWidth() - QUESTION_NUMBER_PANE_WIDTH) / 2;
         int y = (this.headerPanel.getHeight() - QUESTION_NUMBER_PANE_HEIGHT) / 2;
-        this.questionNumberPane.setBounds(x, y, QUESTION_NUMBER_PANE_WIDTH, QUESTION_NUMBER_PANE_HEIGHT);
-
-        this.questionNumberPane.setEditable(false);
-        this.questionNumberPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".question { font-family: Roboto; font-size: 11px; font-weight: bold; color: #f5f5f5; text-align: center; }");
-        this.questionNumberPane.setEditorKit(kit);
-
+        String css = ".question { font-family: Roboto; font-size: 11px; font-weight: bold; color: #f5f5f5; text-align: center; }";
+        String html = "";
+        this.questionNumberPane = new StyledLabelPane(x, y, QUESTION_NUMBER_PANE_WIDTH, QUESTION_NUMBER_PANE_HEIGHT, css, html);
+        /* Reset question number */
         this.resetQuestionNumber();
-
+        /* Add to the parent component */
         this.headerPanel.add(this.questionNumberPane);
     }
 
@@ -384,24 +357,15 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isContinueOvalButtonAvailable()) {
             return;
         }
-        this.continueOvalButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - CONTINUE_OVAL_BUTTON_WIDTH - LayoutConstants.MARGIN;
-        this.continueOvalButton.setBounds(x, 0, CONTINUE_OVAL_BUTTON_WIDTH, CONTINUE_OVAL_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_oval.png"));
-        this.continueOvalButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_oval_hi.png"));
-        this.continueOvalButton.setRolloverIcon(rolloverIcon);
-        this.continueOvalButton.setMargin(new Insets(0, 0, 0, 0));
-        this.continueOvalButton.setBorder(null);
-        this.continueOvalButton.setBorderPainted(false);
-        this.continueOvalButton.setFocusPainted(false);
-        this.continueOvalButton.setContentAreaFilled(false);
-
+        this.continueOvalButton = new ImageButton(x, 0, CONTINUE_OVAL_BUTTON_WIDTH, CONTINUE_OVAL_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.continueOvalButton.setActionCommand("doContinueOval");
         this.continueOvalButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.continueOvalButton);
     }
 
@@ -409,26 +373,17 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isNextButtonAvailable()) {
             return;
         }
-        this.nextButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN;
-        this.nextButton.setBounds(x, 0, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "next.png"));
-        this.nextButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "next_hi.png"));
-        this.nextButton.setRolloverIcon(rolloverIcon);
-        this.nextButton.setMargin(new Insets(0, 0, 0, 0));
-        this.nextButton.setBorder(null);
-        this.nextButton.setBorderPainted(false);
-        this.nextButton.setFocusPainted(false);
-        this.nextButton.setContentAreaFilled(false);
-
+        this.nextButton = new ImageButton(x, 0, NEXT_BUTTON_WIDTH, NEXT_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set enabled */
         this.nextButton.setEnabled(this.bodyPanel.isNextButtonEnabled());
-
+        /* Set actions */
         this.nextButton.setActionCommand("doNext");
         this.nextButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.nextButton);
     }
 
@@ -436,26 +391,17 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isBackButtonAvailable()) {
             return;
         }
-        this.backButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
-        this.backButton.setBounds(x, 0, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "back.png"));
-        this.backButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "back_hi.png"));
-        this.backButton.setRolloverIcon(rolloverIcon);
-        this.backButton.setMargin(new Insets(0, 0, 0, 0));
-        this.backButton.setBorder(null);
-        this.backButton.setBorderPainted(false);
-        this.backButton.setFocusPainted(false);
-        this.backButton.setContentAreaFilled(false);
-
+        this.backButton = new ImageButton(x, 0, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set enabled */
         this.backButton.setEnabled(this.bodyPanel.isBackButtonEnabled());
-
+        /* Set actions */
         this.backButton.setActionCommand("doBack");
         this.backButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.backButton);
     }
 
@@ -463,26 +409,17 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isOkButtonAvailable()) {
             return;
         }
-        this.okButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
-        this.okButton.setBounds(x, 0, OK_BUTTON_WIDTH, OK_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ok.png"));
-        this.okButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ok_hi.png"));
-        this.okButton.setRolloverIcon(rolloverIcon);
-        this.okButton.setMargin(new Insets(0, 0, 0, 0));
-        this.okButton.setBorder(null);
-        this.okButton.setBorderPainted(false);
-        this.okButton.setFocusPainted(false);
-        this.okButton.setContentAreaFilled(false);
-
+        this.okButton = new ImageButton(x, 0, OK_BUTTON_WIDTH, OK_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set enabled */
         this.okButton.setEnabled(this.bodyPanel.isOkButtonEnabled());
-
+        /* Set actions */
         this.okButton.setActionCommand("doOk");
         this.okButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.okButton);
     }
 
@@ -490,26 +427,17 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isHelpButtonAvailable()) {
             return;
         }
-        this.helpButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 3;
-        this.helpButton.setBounds(x, 0, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "help.png"));
-        this.helpButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "help_hi.png"));
-        this.helpButton.setRolloverIcon(rolloverIcon);
-        this.helpButton.setMargin(new Insets(0, 0, 0, 0));
-        this.helpButton.setBorder(null);
-        this.helpButton.setBorderPainted(false);
-        this.helpButton.setFocusPainted(false);
-        this.helpButton.setContentAreaFilled(false);
-
+        this.helpButton = new ImageButton(x, 0, HELP_BUTTON_WIDTH, HELP_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set enabled */
         this.helpButton.setEnabled(this.bodyPanel.isHelpButtonEnabled());
-
+        /* Set actions */
         this.helpButton.setActionCommand("doHelp");
         this.helpButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.helpButton);
     }
 
@@ -517,29 +445,20 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isReviewButtonAvailable()) {
             return;
         }
-        this.reviewButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - REVIEW_BUTTON_WIDTH - LayoutConstants.MARGIN;
         if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isBackButtonAvailable() && this.bodyPanel.isHelpButtonAvailable()) {
             x = this.headerPanel.getWidth() - REVIEW_BUTTON_WIDTH - HELP_BUTTON_WIDTH - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
         }
-        this.reviewButton.setBounds(x, 0, REVIEW_BUTTON_WIDTH, REVIEW_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "review.png"));
-        this.reviewButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "review_hi.png"));
-        this.reviewButton.setRolloverIcon(rolloverIcon);
-        this.reviewButton.setMargin(new Insets(0, 0, 0, 0));
-        this.reviewButton.setBorder(null);
-        this.reviewButton.setBorderPainted(false);
-        this.reviewButton.setFocusPainted(false);
-        this.reviewButton.setContentAreaFilled(false);
-
+        this.reviewButton = new ImageButton(x, 0, REVIEW_BUTTON_WIDTH, REVIEW_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set enabled */
         this.reviewButton.setEnabled(this.bodyPanel.isReviewButtonEnabled());
-
+        /* Set actions */
         this.reviewButton.setActionCommand("doReview");
         this.reviewButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.reviewButton);
     }
 
@@ -547,29 +466,20 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isVolumeButtonAvailable()) {
             return;
         }
-        this.volumeButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN;
         if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isOkButtonAvailable() && this.bodyPanel.isHelpButtonAvailable()) {
             x = this.headerPanel.getWidth() - VOLUME_BUTTON_WIDTH - HELP_BUTTON_WIDTH - OK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 4;
         }
-        this.volumeButton.setBounds(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "volume.png"));
-        this.volumeButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "volume_hi.png"));
-        this.volumeButton.setRolloverIcon(rolloverIcon);
-        this.volumeButton.setMargin(new Insets(0, 0, 0, 0));
-        this.volumeButton.setBorder(null);
-        this.volumeButton.setBorderPainted(false);
-        this.volumeButton.setFocusPainted(false);
-        this.volumeButton.setContentAreaFilled(false);
-
+        this.volumeButton = new ImageButton(x, 0, VOLUME_BUTTON_WIDTH, VOLUME_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set enabled */
         this.volumeButton.setEnabled(this.bodyPanel.isVolumeButtonEnabled());
-
+        /* Set actions */
         this.volumeButton.setActionCommand("doVolume");
         this.volumeButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.volumeButton);
     }
 
@@ -577,29 +487,19 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isViewTextOrQuestionButtonAvailable()) {
             return;
         }
-        this.viewTextOrQuestionButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - VIEW_TEXT_OR_QUESTION_BUTTON_WIDTH - LayoutConstants.MARGIN;
         if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isBackButtonAvailable() && this.bodyPanel.isHelpButtonAvailable() && this.bodyPanel.isReviewButtonAvailable()) {
             x = this.headerPanel.getWidth() - VIEW_TEXT_OR_QUESTION_BUTTON_WIDTH - REVIEW_BUTTON_WIDTH - HELP_BUTTON_WIDTH - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
         }
         int y = LayoutConstants.MARGIN * 3;
-        this.viewTextOrQuestionButton.setBounds(x, y, VIEW_TEXT_OR_QUESTION_BUTTON_WIDTH, VIEW_TEXT_OR_QUESTION_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "view_text.png"));
-        this.viewTextOrQuestionButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "view_text_hi.png"));
-        this.viewTextOrQuestionButton.setRolloverIcon(rolloverIcon);
-        this.viewTextOrQuestionButton.setText(null);
-        this.viewTextOrQuestionButton.setMargin(new Insets(0, 0, 0, 0));
-        this.viewTextOrQuestionButton.setBorder(null);
-        this.viewTextOrQuestionButton.setBorderPainted(false);
-        this.viewTextOrQuestionButton.setFocusPainted(false);
-        this.viewTextOrQuestionButton.setContentAreaFilled(false);
-
+        this.viewTextOrQuestionButton = new ImageButton(x, y, VIEW_TEXT_OR_QUESTION_BUTTON_WIDTH, VIEW_TEXT_OR_QUESTION_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.viewTextOrQuestionButton.setActionCommand("doViewText");
         this.viewTextOrQuestionButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.viewTextOrQuestionButton);
     }
 
@@ -607,8 +507,7 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isContinueButtonAvailable()) {
             return;
         }
-        this.continueButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - LayoutConstants.MARGIN;
         if (this.bodyPanel.isNextButtonAvailable() && this.bodyPanel.isBackButtonAvailable() && this.bodyPanel.isHelpButtonAvailable() && this.bodyPanel.isReviewButtonAvailable()) {
             x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - REVIEW_BUTTON_WIDTH - HELP_BUTTON_WIDTH - BACK_BUTTON_WIDTH - NEXT_BUTTON_WIDTH - LayoutConstants.MARGIN * 6;
@@ -618,22 +517,13 @@ public class TestFrame extends JFrame implements ActionListener {
             x = this.headerPanel.getWidth() - CONTINUE_BUTTON_WIDTH - VOLUME_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
         }
         int y = LayoutConstants.MARGIN * 3;
-        this.continueButton.setBounds(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue.png"));
-        this.continueButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "continue_hi.png"));
-        this.continueButton.setRolloverIcon(rolloverIcon);
-        this.continueButton.setText(null);
-        this.continueButton.setMargin(new Insets(0, 0, 0, 0));
-        this.continueButton.setBorder(null);
-        this.continueButton.setBorderPainted(false);
-        this.continueButton.setFocusPainted(false);
-        this.continueButton.setContentAreaFilled(false);
-
+        this.continueButton = new ImageButton(x, y, CONTINUE_BUTTON_WIDTH, CONTINUE_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.continueButton.setActionCommand("doContinue");
         this.continueButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.continueButton);
     }
 
@@ -641,26 +531,16 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isGoToQuestionButtonAvailable()) {
             return;
         }
-        this.goToQuestionButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - GO_TO_QUESTION_BUTTON_WIDTH - LayoutConstants.MARGIN;
         int y = LayoutConstants.MARGIN * 3;
-        this.goToQuestionButton.setBounds(x, y, GO_TO_QUESTION_BUTTON_WIDTH, GO_TO_QUESTION_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_to_question.png"));
-        this.goToQuestionButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_to_question_hi.png"));
-        this.goToQuestionButton.setRolloverIcon(rolloverIcon);
-        this.goToQuestionButton.setText(null);
-        this.goToQuestionButton.setMargin(new Insets(0, 0, 0, 0));
-        this.goToQuestionButton.setBorder(null);
-        this.goToQuestionButton.setBorderPainted(false);
-        this.goToQuestionButton.setFocusPainted(false);
-        this.goToQuestionButton.setContentAreaFilled(false);
-
+        this.goToQuestionButton = new ImageButton(x, y, GO_TO_QUESTION_BUTTON_WIDTH, GO_TO_QUESTION_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.goToQuestionButton.setActionCommand("doGoToQuestion");
         this.goToQuestionButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.goToQuestionButton);
     }
 
@@ -668,30 +548,20 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isReturnButtonAvailable()) {
             return;
         }
-        this.returnButton = new MButton();
-
         if (this.bodyPanel.isGoToQuestionButtonAvailable() && this.bodyPanel.isReturnButtonAvailable()) {
+            /* Initialize component */
             int x = this.headerPanel.getWidth() - GO_TO_QUESTION_BUTTON_WIDTH - RETURN_BUTTON_WIDTH - LayoutConstants.MARGIN * 2;
             int y = LayoutConstants.MARGIN * 3;
-            this.returnButton.setBounds(x, y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT);
+            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return.png"));
+            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return_hi.png"));
+            this.returnButton = new ImageButton(x, y, RETURN_BUTTON_WIDTH, RETURN_BUTTON_HEIGHT, icon, rolloverIcon);
         } else {
             return;
         }
-
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return.png"));
-        this.returnButton.setIcon(icon);
-        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "return_hi.png"));
-        this.returnButton.setRolloverIcon(rolloverIcon);
-        this.returnButton.setText(null);
-        this.returnButton.setMargin(new Insets(0, 0, 0, 0));
-        this.returnButton.setBorder(null);
-        this.returnButton.setBorderPainted(false);
-        this.returnButton.setFocusPainted(false);
-        this.returnButton.setContentAreaFilled(false);
-
+        /* Set actions */
         this.returnButton.setActionCommand("doReturn");
         this.returnButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.returnButton);
     }
 
@@ -718,26 +588,16 @@ public class TestFrame extends JFrame implements ActionListener {
         if (!this.bodyPanel.isHideOrShowTimerButtonAvailable()) {
             return;
         }
-        this.hideOrShowTimerButton = new MButton();
-
+        /* Initialize component */
         int x = this.headerPanel.getWidth() - HIDE_OR_SHOW_TIMER_BUTTON_WIDTH - TIMER_LABEL_WIDTH - LayoutConstants.MARGIN * 4;
         int y = this.headerPanel.getHeight() - HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT - LayoutConstants.MARGIN * 2;
-        this.hideOrShowTimerButton.setBounds(x, y, HIDE_OR_SHOW_TIMER_BUTTON_WIDTH, HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer.png"));
-        this.hideOrShowTimerButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer_hi.png"));
-        this.hideOrShowTimerButton.setRolloverIcon(rolloverIcon);
-        this.hideOrShowTimerButton.setText(null);
-        this.hideOrShowTimerButton.setMargin(new Insets(0, 0, 0, 0));
-        this.hideOrShowTimerButton.setBorder(null);
-        this.hideOrShowTimerButton.setBorderPainted(false);
-        this.hideOrShowTimerButton.setFocusPainted(false);
-        this.hideOrShowTimerButton.setContentAreaFilled(false);
-
+        this.hideOrShowTimerButton = new ImageButton(x, y, HIDE_OR_SHOW_TIMER_BUTTON_WIDTH, HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.hideOrShowTimerButton.setActionCommand("doHideOrShowTimer");
         this.hideOrShowTimerButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(this.hideOrShowTimerButton);
     }
 
@@ -746,33 +606,26 @@ public class TestFrame extends JFrame implements ActionListener {
      **************************************************/
 
     protected void setFooterPanel() {
+        /* Initialize component */
         this.footerPanel = new FooterPanel();
-
+        /* Set bounds */
         this.footerPanel.setBounds(0, this.getHeight() - LayoutConstants.FOOTER_PANEL_HEIGHT, this.getWidth(), LayoutConstants.FOOTER_PANEL_HEIGHT);
-
+        /* Set layout */
         this.footerPanel.setLayout(null);
-
+        /* Set children components */
         this.setCopyrightPane();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.footerPanel);
     }
 
     protected void setCopyrightPane() {
-        JEditorPane copyrightPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
         int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
-        copyrightPane.setBounds(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT);
-
-        copyrightPane.setEditable(false);
-        copyrightPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }");
-        copyrightPane.setEditorKit(kit);
-        copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
-
+        String css = ".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }";
+        String html = "<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>";
+        StyledLabelPane copyrightPane = new StyledLabelPane(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.footerPanel.add(copyrightPane);
     }
 
@@ -1037,7 +890,7 @@ public class TestFrame extends JFrame implements ActionListener {
      * Getters and setters
      **************************************************/
 
-    public TestHomeFrame getTestHomeFrame() {
-        return this.testHomeFrame;
+    public TestsHomeFrame getTestsHomeFrame() {
+        return this.testsHomeFrame;
     }
 }

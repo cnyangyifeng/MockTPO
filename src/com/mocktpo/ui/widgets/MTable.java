@@ -1,6 +1,6 @@
 package com.mocktpo.ui.widgets;
 
-import com.mocktpo.ui.windows.TestHomeFrame;
+import com.mocktpo.ui.windows.TestsHomeFrame;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
@@ -11,23 +11,32 @@ import java.awt.*;
 
 public class MTable extends JTable {
 
+    /* Constants */
+
     public static final int TABLE_WIDTH = 1000;
     public static final int TABLE_HEADER_HEIGHT = 40;
     public static final int TABLE_CELL_HEIGHT = 50;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public MTable(TableModel tableModel) {
         super(tableModel);
         initComponents();
     }
 
+    /**************************************************
+     * Components Initialization
+     **************************************************/
+
     protected void initComponents() {
-        // Set table header
+        /* Set table header */
         JTableHeader tableHeader = this.getTableHeader();
         tableHeader.setPreferredSize(new Dimension(TABLE_WIDTH, TABLE_HEADER_HEIGHT));
         tableHeader.setFont(new Font("Roboto", Font.BOLD, 16));
         tableHeader.setForeground(new Color(102, 102, 102)); // #666666
-
-        // Set table layout
+        /* Set table layout */
         this.setRowHeight(TABLE_CELL_HEIGHT);
         this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         TableColumnModel columnModel = this.getColumnModel();
@@ -36,8 +45,7 @@ public class MTable extends JTable {
         columnModel.getColumn(2).setPreferredWidth(150);
         columnModel.getColumn(3).setPreferredWidth(150);
         columnModel.getColumn(4).setPreferredWidth(150);
-
-        // Set table styles
+        /* Set table styles */
         this.setFont(new Font("Cambria", Font.PLAIN, 16));
         this.setBackground(new Color(255, 255, 255));
         this.setForeground(new Color(51, 51, 51));
@@ -52,7 +60,7 @@ public class MTable extends JTable {
         Component c = super.prepareRenderer(renderer, row, column);
         if (column == 2) { // "Download" Column
             String val = this.getValueAt(row, column).toString();
-            if (TestHomeFrame.READY_LABEL.equals(val)) {
+            if (TestsHomeFrame.READY_LABEL.equals(val)) {
                 c.setBackground(new Color(255, 255, 255)); // #f5f5f5
                 c.setForeground(new Color(153, 153, 153)); // #999999
             } else {

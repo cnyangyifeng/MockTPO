@@ -28,7 +28,7 @@ import java.util.zip.ZipInputStream;
 
 public class TestHomeFrameOld extends JFrame implements ActionListener, MouseListener {
 
-    // Constants
+    /* Constants */
 
     public static final int BACK_HOME_BUTTON_WIDTH = 84;
     public static final int BACK_HOME_BUTTON_HEIGHT = 34;
@@ -42,16 +42,16 @@ public class TestHomeFrameOld extends JFrame implements ActionListener, MouseLis
     public static final String READY_LABEL = "Ready";
     public static final String ERROR_LABEL = "Error";
 
-    // Logger
+    /* Logger */
 
     protected static final Logger logger = LogManager.getLogger();
 
-    // Frames
+    /* Frames */
 
     protected MainFrame mainFrame;
     protected TestFrame testFrame;
 
-    // Components
+    /* Components */
 
     protected HeaderPanel headerPanel;
     protected BodyPanel bodyPanel;
@@ -59,11 +59,16 @@ public class TestHomeFrameOld extends JFrame implements ActionListener, MouseLis
     protected MTable bodyTable;
     protected FooterPanel footerPanel;
 
-    // Variables
+    /* Variables */
+
     protected MockTPO mockTPO;
     protected volatile boolean[] markers; // Download markers
     protected volatile boolean redownload;
     private String title;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public TestHomeFrameOld(GraphicsConfiguration gc, MainFrame mainFrame, String title) {
         super(gc);
@@ -72,10 +77,16 @@ public class TestHomeFrameOld extends JFrame implements ActionListener, MouseLis
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.globalSettings();
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Global settings */
+        this.globalSettings();
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setBodyPanel();
         this.setHeaderPanel();
         this.setFooterPanel();
@@ -148,26 +159,16 @@ public class TestHomeFrameOld extends JFrame implements ActionListener, MouseLis
     }
 
     protected void setBackHomeButton() {
-        MButton backHomeButton = new MButton();
-
+        /* Initialize component */
         int x = LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - BACK_HOME_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        backHomeButton.setBounds(x, y, BACK_HOME_BUTTON_WIDTH, BACK_HOME_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "back_home.png"));
-        backHomeButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "back_home_hi.png"));
-        backHomeButton.setRolloverIcon(rolloverIcon);
-        backHomeButton.setText(null);
-        backHomeButton.setMargin(new Insets(0, 0, 0, 0));
-        backHomeButton.setBorder(null);
-        backHomeButton.setBorderPainted(false);
-        backHomeButton.setFocusPainted(false);
-        backHomeButton.setContentAreaFilled(false);
-
+        ImageButton backHomeButton = new ImageButton(x, y, BACK_HOME_BUTTON_WIDTH, BACK_HOME_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         backHomeButton.setActionCommand("doBackHome");
         backHomeButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(backHomeButton);
     }
 

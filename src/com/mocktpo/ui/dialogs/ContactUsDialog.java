@@ -1,19 +1,19 @@
 package com.mocktpo.ui.dialogs;
 
 import com.mocktpo.ui.widgets.DialogBodyPanel;
-import com.mocktpo.ui.widgets.MButton;
+import com.mocktpo.ui.widgets.ImageButton;
+import com.mocktpo.ui.widgets.StyledLabelPane;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ContactUsDialog extends JDialog implements ActionListener {
 
+    /* Constants */
 
     public static final int DIALOG_WIDTH = 440;
     public static final int DIALOG_HEIGHT = 420;
@@ -28,40 +28,53 @@ public class ContactUsDialog extends JDialog implements ActionListener {
     public static final int CLOSE_BUTTON_HEIGHT = 34;
 
     /**************************************************
-     * Properties
+     * Components
      **************************************************/
 
     protected DialogBodyPanel bodyPanel;
     protected JLabel titleLabel;
-    protected JEditorPane descriptionPane;
-    protected MButton closeButton;
+    protected StyledLabelPane descriptionPane;
+    protected ImageButton closeButton;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public ContactUsDialog(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
         this.initComponents();
     }
 
+    /**************************************************
+     * Components Initialization
+     **************************************************/
+
     private void initComponents() {
+        /* Global settings */
         this.globalSettings();
-
+        /* Set layout */
         this.setLayout(null);
-
+        /* Set components */
         this.setBodyPanel();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.bodyPanel);
     }
 
+    /**************************************************
+     * Global Settings
+     **************************************************/
+
     protected void globalSettings() {
+        /* Set bounds */
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
-
         int x = ((int) screenSize.getWidth() - DIALOG_WIDTH) / 2;
         int y = ((int) screenSize.getHeight() - DIALOG_HEIGHT) / 2;
         this.setBounds(x, y, DIALOG_WIDTH, DIALOG_HEIGHT);
-
+        /* Set unresizable and dispose on close */
         this.setResizable(false);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
+        /* Set title */
         this.setTitle("");
     }
 
@@ -87,48 +100,29 @@ public class ContactUsDialog extends JDialog implements ActionListener {
     }
 
     protected void setDescriptionPane() {
-        this.descriptionPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.bodyPanel.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = this.titleLabel.getY() + TITLE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.descriptionPane.setBounds(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT);
-
-        this.descriptionPane.setEditable(false);
-        this.descriptionPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 10px; } .desc-img-wrapper { margin-top: 10px; text-align: center; }");
-        this.descriptionPane.setEditorKit(kit);
+        String css = ".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 10px; } .desc-img-wrapper { margin-top: 10px; text-align: center; }";
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "qrcode.png").toString();
-        String text = "<div class='desc'>Please open WeChat on phone and scan QR Code to follow us if any technical support is required.<br />";
-        text += "<div class='desc-img-wrapper'><img src='" + imgUrl + "' /></div></div>";
-        this.descriptionPane.setText(text);
-
+        String html = "<div class='desc'>Please open WeChat on phone and scan QR Code to follow us if any technical support is required.<br />";
+        html += "<div class='desc-img-wrapper'><img src='" + imgUrl + "' /></div></div>";
+        this.descriptionPane = new StyledLabelPane(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.bodyPanel.add(this.descriptionPane);
     }
 
     protected void setCloseButton() {
-        this.closeButton = new MButton();
-
+        /* Initialize component */
         int x = (this.bodyPanel.getWidth() - CLOSE_BUTTON_WIDTH) / 2;
         int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;
-        this.closeButton.setBounds(x, y, CLOSE_BUTTON_WIDTH, CLOSE_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "close.png"));
-        this.closeButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "close_hi.png"));
-        this.closeButton.setRolloverIcon(rolloverIcon);
-        this.closeButton.setText(null);
-        this.closeButton.setMargin(new Insets(0, 0, 0, 0));
-        this.closeButton.setBorder(null);
-        this.closeButton.setBorderPainted(false);
-        this.closeButton.setFocusPainted(false);
-        this.closeButton.setContentAreaFilled(false);
-
+        this.closeButton = new ImageButton(x, y, CLOSE_BUTTON_WIDTH, CLOSE_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         this.closeButton.setActionCommand("doClose");
         this.closeButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.bodyPanel.add(this.closeButton);
     }
 

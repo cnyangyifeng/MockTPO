@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.zip.ZipInputStream;
 
-public class TestHomeFrame extends JFrame implements ActionListener, MouseListener {
+public class TestsHomeFrame extends JFrame implements ActionListener, MouseListener {
 
     // Constants
 
@@ -60,6 +60,7 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
     protected FooterPanel footerPanel;
 
     // Variables
+
     protected MockTPO mockTPO;
     protected volatile boolean[] markers; // Download markers
     protected volatile boolean redownload;
@@ -69,7 +70,7 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
      * Constructors
      **************************************************/
 
-    public TestHomeFrame(GraphicsConfiguration gc, MainFrame mainFrame, String title) {
+    public TestsHomeFrame(GraphicsConfiguration gc, MainFrame mainFrame, String title) {
         super(gc);
         this.mainFrame = mainFrame;
         this.title = title;
@@ -81,9 +82,11 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
      **************************************************/
 
     private void initComponents() {
+        /* Global settings */
         this.globalSettings();
+        /* Set layout */
         this.setLayout(null);
-
+        /* Set components */
         this.setBodyPanel();
         this.setHeaderPanel();
         this.setFooterPanel();
@@ -108,7 +111,7 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
     }
 
     /**************************************************
-     * Set Header Panel
+     * Header Panel Settings
      **************************************************/
 
     protected void setHeaderPanel() {
@@ -156,31 +159,21 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
     }
 
     protected void setGoBackHomeButton() {
-        MButton goBackHomeButton = new MButton();
-
+        /* Initialize component */
         int x = LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - GO_BACK_HOME_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        goBackHomeButton.setBounds(x, y, GO_BACK_HOME_BUTTON_WIDTH, GO_BACK_HOME_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_back_home.png"));
-        goBackHomeButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_back_home_hi.png"));
-        goBackHomeButton.setRolloverIcon(rolloverIcon);
-        goBackHomeButton.setText(null);
-        goBackHomeButton.setMargin(new Insets(0, 0, 0, 0));
-        goBackHomeButton.setBorder(null);
-        goBackHomeButton.setBorderPainted(false);
-        goBackHomeButton.setFocusPainted(false);
-        goBackHomeButton.setContentAreaFilled(false);
-
+        ImageButton goBackHomeButton = new ImageButton(x, y, GO_BACK_HOME_BUTTON_WIDTH, GO_BACK_HOME_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         goBackHomeButton.setActionCommand("doGoBackHome");
         goBackHomeButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(goBackHomeButton);
     }
 
     /**************************************************
-     * Set Body Panel
+     * Body Panel Settings
      **************************************************/
 
     protected void setBodyPanel() {
@@ -217,7 +210,7 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            ContactUsDialog contactUs = new ContactUsDialog(TestHomeFrame.this, "", true);
+                            ContactUsDialog contactUs = new ContactUsDialog(TestsHomeFrame.this, "", true);
                             contactUs.setVisible(true);
                         }
                     });
@@ -269,7 +262,7 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
     }
 
     /**************************************************
-     * Set Footer Panel
+     * Footer Panel Settings
      **************************************************/
 
     protected void setFooterPanel() {
@@ -316,9 +309,9 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
                 public void run() {
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     GraphicsDevice device = ge.getDefaultScreenDevice();
-                    MainFrame mainFrame = TestHomeFrame.this.getMainFrame();
+                    MainFrame mainFrame = TestsHomeFrame.this.getMainFrame();
 
-                    TestHomeFrame.this.dispose();
+                    TestsHomeFrame.this.dispose();
 
                     if (mainFrame == null) {
                         mainFrame = new MainFrame(device.getDefaultConfiguration());
@@ -499,7 +492,7 @@ public class TestHomeFrame extends JFrame implements ActionListener, MouseListen
         GraphicsDevice device = ge.getDefaultScreenDevice();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                testFrame = new TestFrame(device.getDefaultConfiguration(), TestHomeFrame.this, testDescription);
+                testFrame = new TestFrame(device.getDefaultConfiguration(), TestsHomeFrame.this, testDescription);
                 device.setFullScreenWindow(testFrame);
                 testFrame.setVisible(true);
                 setVisible(false);

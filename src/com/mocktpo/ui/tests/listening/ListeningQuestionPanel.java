@@ -4,14 +4,13 @@ import com.mocktpo.MApplication;
 import com.mocktpo.model.MChoiceOption;
 import com.mocktpo.model.MListeningQuestion;
 import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.ui.widgets.StyledLabelPane;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
 import javax.media.*;
 import javax.media.format.AudioFormat;
 import javax.swing.*;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +20,8 @@ import java.util.List;
 
 public class ListeningQuestionPanel extends BodyPanel implements ActionListener, ItemListener {
 
+    /* Constants */
+
     public static final int SUBJECT_PANE_WIDTH = 800;
     public static final int SUBJECT_PANE_HEIGHT = 60;
     public static final int OPTIONS_PANEL_WIDTH = 800;
@@ -28,13 +29,21 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
     public static final int OPTION_BUTTON_WIDTH = 800;
     public static final int OPTION_BUTTON_HEIGHT = 30;
 
-    protected JEditorPane subjectPane;
+    /* Components */
+
+    protected StyledLabelPane subjectPane;
     protected JPanel optionsPanel;
+
+    /* Variables */
 
     private Player audioPlayer;
     private Timer timer;
 
     private MListeningQuestion question;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public ListeningQuestionPanel(Rectangle bounds, MListeningQuestion question) {
         super(bounds);
@@ -42,36 +51,32 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         this.initComponents();
     }
 
+    /**************************************************
+     * Components Initialization
+     **************************************************/
+
     private void initComponents() {
+        /* Set layout */
         this.setLayout(null);
-
+        /* Set components */
         this.setSubjectPane();
-
+        /* Set audio player */
         this.setAudioPlayer();
     }
 
     protected void setSubjectPane() {
-        this.subjectPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.getWidth() - SUBJECT_PANE_WIDTH) / 2;
         int y = (this.getHeight() - SUBJECT_PANE_HEIGHT - OPTIONS_PANEL_HEIGHT) / 2;
-        this.subjectPane.setBounds(x, y, SUBJECT_PANE_WIDTH, SUBJECT_PANE_HEIGHT);
-
-        this.subjectPane.setEditable(false);
-        this.subjectPane.setOpaque(true);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".subject { color: #333333; font-family: Roboto; font-size: 12px; }");
-        this.subjectPane.setEditorKit(kit);
+        String css = ".subject { color: #333333; font-family: Roboto; font-size: 12px; }";
         String subject = this.question.getSubject();
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "earphone.png").toString();
         if (subject.contains("[earphone]")) {
             subject = subject.replace("[earphone]", "&nbsp;&nbsp;<img class='' src='" + imgUrl + "' />");
         }
-        String text = "<div class='subject'>" + subject + "</div>";
-        this.subjectPane.setText(text);
-
+        String html = "<div class='subject'>" + subject + "</div>";
+        this.subjectPane = new StyledLabelPane(x, y, SUBJECT_PANE_WIDTH, SUBJECT_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.add(this.subjectPane);
     }
 

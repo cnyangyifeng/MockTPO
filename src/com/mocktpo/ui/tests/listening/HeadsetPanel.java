@@ -1,51 +1,53 @@
 package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.ui.widgets.StyledLabelPane;
 import com.mocktpo.util.GlobalConstants;
 
-import javax.swing.*;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 
 public class HeadsetPanel extends BodyPanel {
 
+    /* Constants */
+
     public static final int DESCRIPTION_PANE_WIDTH = 600;
     public static final int DESCRIPTION_PANE_HEIGHT = 480;
 
-    protected JEditorPane descriptionPane;
+    /* Variables */
+
+    protected StyledLabelPane descriptionPane;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public HeadsetPanel(Rectangle bounds) {
         super(bounds);
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setDescriptionPane();
     }
 
     protected void setDescriptionPane() {
-        this.descriptionPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = (this.getHeight() - DESCRIPTION_PANE_HEIGHT) / 2;
-        this.descriptionPane.setBounds(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT);
-
-        this.descriptionPane.setEditable(false);
-        this.descriptionPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".hs-header { color: #333333; font-family: Roboto; font-size: 12px; margin-bottom: 20px; text-align: center; } .hs-body { margin-bottom: 20px; text-align: center; } .hs-footer { color: #333333; font-family: Roboto; font-size: 12px; text-align: center; }");
-        this.descriptionPane.setEditorKit(kit);
-        String text = "<div class='hs-header'>Now put on your headset.</div>";
+        String css = ".hs-header { color: #333333; font-family: Roboto; font-size: 12px; margin-bottom: 20px; text-align: center; } .hs-body { margin-bottom: 20px; text-align: center; } .hs-footer { color: #333333; font-family: Roboto; font-size: 12px; text-align: center; }";
+        String html = "<div class='hs-header'>Now put on your headset.</div>";
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "headset.png").toString();
-        text += "<div class='hs-body'><img src='" + imgUrl + "' /></div>";
-        text += "<div class='hs-footer'>Click on <b>Continue</b> to go on.</div>";
-        this.descriptionPane.setText(text);
-
+        html += "<div class='hs-body'><img src='" + imgUrl + "' /></div>";
+        html += "<div class='hs-footer'>Click on <b>Continue</b> to go on.</div>";
+        this.descriptionPane = new StyledLabelPane(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.add(this.descriptionPane);
     }
 

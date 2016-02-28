@@ -1,50 +1,52 @@
 package com.mocktpo.ui.tests.misc;
 
 import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.ui.widgets.StyledLabelPane;
 import com.mocktpo.util.GlobalConstants;
 
-import javax.swing.*;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 
 public class CopyrightPanel extends BodyPanel {
 
+    /* Constants */
+
     public static final int DESCRIPTION_PANE_WIDTH = 800;
     public static final int DESCRIPTION_PANE_HEIGHT = 400;
 
-    protected JEditorPane descriptionPane;
+    /* Components */
+
+    protected StyledLabelPane descriptionPane;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public CopyrightPanel(Rectangle bounds) {
         super(bounds);
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setDescriptionPane();
     }
 
     protected void setDescriptionPane() {
-        this.descriptionPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = (this.getHeight() - DESCRIPTION_PANE_HEIGHT) / 2;
-        this.descriptionPane.setBounds(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT);
-
-        this.descriptionPane.setEditable(false);
-        this.descriptionPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".cp-img { margin-bottom: 40px; text-align: center; } .cp-img img { height: 90px; width: 160px; } .cp { color: #333333; font-family: Roboto; font-size: 12px; text-align: center; }");
-        this.descriptionPane.setEditorKit(kit);
+        String css = ".cp-img { margin-bottom: 40px; text-align: center; } .cp-img img { height: 90px; width: 160px; } .cp { color: #333333; font-family: Roboto; font-size: 12px; text-align: center; }";
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ets_toefl.png").toString();
-        String text = "<div class='cp-img'><img src='" + imgUrl + "' /></div>";
-        text += "<div class='cp'>Copyright 2009, 2011 by Educational Testing Service. All rights reserved.<br />EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of<br />Educational Testing Service (ETS) in the United States and other countries.<br /><br />Click on <b>Continue</b> to go on.</div>";
-        this.descriptionPane.setText(text);
-
+        String html = "<div class='cp-img'><img src='" + imgUrl + "' /></div>";
+        html += "<div class='cp'>Copyright 2009, 2011 by Educational Testing Service. All rights reserved.<br />EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of<br />Educational Testing Service (ETS) in the United States and other countries.<br /><br />Click on <b>Continue</b> to go on.</div>";
+        this.descriptionPane = new StyledLabelPane(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.add(this.descriptionPane);
     }
 

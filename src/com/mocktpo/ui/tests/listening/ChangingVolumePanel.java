@@ -9,19 +9,32 @@ import java.awt.*;
 
 public class ChangingVolumePanel extends BodyPanel {
 
+    /* Constants */
+
     public static final int DESCRIPTION_PANE_WIDTH = 680;
     public static final int DESCRIPTION_PANE_HEIGHT = 600;
 
+    /* Components */
+
     protected JEditorPane descriptionPane;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public ChangingVolumePanel(Rectangle bounds) {
         super(bounds);
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setDescriptionPane();
     }
 

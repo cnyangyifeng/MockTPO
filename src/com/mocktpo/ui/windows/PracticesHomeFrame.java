@@ -14,8 +14,6 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,9 +24,9 @@ import java.util.List;
 import java.util.Vector;
 import java.util.zip.ZipInputStream;
 
-public class PracticeHomeFrame extends JFrame implements ActionListener, MouseListener {
+public class PracticesHomeFrame extends JFrame implements ActionListener, MouseListener {
 
-    // Constants
+    /* Constants */
 
     public static final int GO_BACK_HOME_BUTTON_WIDTH = 84;
     public static final int GO_BACK_HOME_BUTTON_HEIGHT = 34;
@@ -42,24 +40,25 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
     public static final String READY_LABEL = "Ready";
     public static final String ERROR_LABEL = "Error";
 
-    // Logger
+    /* Logger */
 
     protected static final Logger logger = LogManager.getLogger();
 
-    // Frames
+    /* Frames */
 
     protected MainFrame mainFrame;
     protected TestFrame testFrame;
 
-    // Components
+    /* Components */
 
     protected HeaderPanel headerPanel;
     protected BodyPanel bodyPanel;
-    protected JEditorPane sloganPane;
+    protected StyledLabelPane sloganPane;
     protected MTable bodyTable;
     protected FooterPanel footerPanel;
 
-    // Variables
+    /* Variables */
+
     protected MockTPO mockTPO;
     protected volatile boolean[] markers; // Download markers
     protected volatile boolean redownload;
@@ -69,7 +68,7 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
      * Constructors
      **************************************************/
 
-    public PracticeHomeFrame(GraphicsConfiguration gc, MainFrame mainFrame, String title) {
+    public PracticesHomeFrame(GraphicsConfiguration gc, MainFrame mainFrame, String title) {
         super(gc);
         this.mainFrame = mainFrame;
         this.title = title;
@@ -81,9 +80,11 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
      **************************************************/
 
     private void initComponents() {
+        /* Global settings */
         this.globalSettings();
+        /* Set layout */
         this.setLayout(null);
-
+        /* Set components */
         this.setBodyPanel();
         this.setHeaderPanel();
         this.setFooterPanel();
@@ -94,88 +95,72 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
      **************************************************/
 
     protected void globalSettings() {
+        /* Set bounds */
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
-
         Rectangle bounds = new Rectangle(screenSize);
         this.setBounds(bounds);
-
+        /* Set maximized, unresizable and undecorated */
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setResizable(false);
         this.setUndecorated(true);
-
+        /* Set title */
         this.setTitle(this.title);
     }
 
     /**************************************************
-     * Set Header Panel
+     * Header Panel Settings
      **************************************************/
 
     protected void setHeaderPanel() {
+        /* Initialize component */
         this.headerPanel = new HeaderPanel();
-
+        /* Set bounds */
         this.headerPanel.setBounds(0, 0, this.getWidth(), LayoutConstants.HEADER_PANEL_HEIGHT);
-
+        /* Set layouts */
         this.headerPanel.setLayout(null);
-
+        /* Set children components */
         this.setLogoLabel();
         this.setTitlePane();
         this.setGoBackHomeButton();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.headerPanel);
     }
 
     protected void setLogoLabel() {
+        /* Initialize component */
         JLabel logoLabel = new JLabel();
-
+        /* Set bounds */
         logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
-
+        /* Set icon */
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "logo.png"));
         logoLabel.setIcon(icon);
-
+        /* Add to the parent component */
         this.headerPanel.add(logoLabel);
     }
 
     protected void setTitlePane() {
-        JEditorPane titlePane = new JEditorPane();
-
+        /* Initialize component */
         int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
         int y = LayoutConstants.MARGIN;
-        titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
-
-        titlePane.setEditable(false);
-        titlePane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Impact; font-size: 24px; font-weight: bold; color: #ffffff; }");
-        titlePane.setEditorKit(kit);
-        titlePane.setText("<div class='title'>PRACTICES</div>");
-
+        String css = ".title { font-family: Impact; font-size: 24px; font-weight: bold; color: #ffffff; }";
+        String html = "<div class='title'>PRACTICES</div>";
+        StyledLabelPane titlePane = new StyledLabelPane(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.headerPanel.add(titlePane);
     }
 
     protected void setGoBackHomeButton() {
-        MButton goBackHomeButton = new MButton();
-
+        /* Initialize component */
         int x = LayoutConstants.MARGIN;
         int y = LayoutConstants.HEADER_PANEL_HEIGHT - GO_BACK_HOME_BUTTON_HEIGHT - LayoutConstants.MARGIN;
-        goBackHomeButton.setBounds(x, y, GO_BACK_HOME_BUTTON_WIDTH, GO_BACK_HOME_BUTTON_HEIGHT);
-
         ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_back_home.png"));
-        goBackHomeButton.setIcon(icon);
         ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "go_back_home_hi.png"));
-        goBackHomeButton.setRolloverIcon(rolloverIcon);
-        goBackHomeButton.setText(null);
-        goBackHomeButton.setMargin(new Insets(0, 0, 0, 0));
-        goBackHomeButton.setBorder(null);
-        goBackHomeButton.setBorderPainted(false);
-        goBackHomeButton.setFocusPainted(false);
-        goBackHomeButton.setContentAreaFilled(false);
-
+        ImageButton goBackHomeButton = new ImageButton(x, y, GO_BACK_HOME_BUTTON_WIDTH, GO_BACK_HOME_BUTTON_HEIGHT, icon, rolloverIcon);
+        /* Set actions */
         goBackHomeButton.setActionCommand("doGoBackHome");
         goBackHomeButton.addActionListener(this);
-
+        /* Add to the parent component */
         this.headerPanel.add(goBackHomeButton);
     }
 
@@ -184,31 +169,25 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
      **************************************************/
 
     protected void setBodyPanel() {
+        /* Initialize component */
         int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
         Rectangle bounds = new Rectangle(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
         this.bodyPanel = new BodyPanel(bounds);
-
+        /* Set children components */
         this.setSloganPane();
         this.setBodyScrollPane();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.bodyPanel);
     }
 
     protected void setSloganPane() {
-        this.sloganPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.bodyPanel.getWidth() - SLOGAN_PANE_WIDTH) / 2;
         int y = LayoutConstants.MARGIN * 12;
-        this.sloganPane.setBounds(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT);
-
-        this.sloganPane.setEditable(false);
-        this.sloganPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #333333; font-family: Roboto; font-size: 24px; text-align: center; }");
-        this.sloganPane.setEditorKit(kit);
-        this.sloganPane.setText("<div class='slogan'>TOEFL&reg; iBT PRACTICES</div>");
+        String css = ".slogan { color: #333333; font-family: Roboto; font-size: 24px; text-align: center; }";
+        String html = "<div class='slogan'>TOEFL&reg; iBT PRACTICES</div>";
+        this.sloganPane = new StyledLabelPane(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT, css, html);
+        /* Add hyperlink listener */
         this.sloganPane.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -217,14 +196,14 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            ContactUsDialog contactUs = new ContactUsDialog(PracticeHomeFrame.this, "", true);
+                            ContactUsDialog contactUs = new ContactUsDialog(PracticesHomeFrame.this, "", true);
                             contactUs.setVisible(true);
                         }
                     });
                 }
             }
         });
-
+        /* Add to the parent component */
         this.bodyPanel.add(this.sloganPane);
     }
 
@@ -273,33 +252,26 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
      **************************************************/
 
     protected void setFooterPanel() {
+        /* Initialize component */
         this.footerPanel = new FooterPanel();
-
+        /* Set bounds */
         this.footerPanel.setBounds(0, this.getHeight() - LayoutConstants.FOOTER_PANEL_HEIGHT, this.getWidth(), LayoutConstants.FOOTER_PANEL_HEIGHT);
-
+        /* Set layout */
         this.footerPanel.setLayout(null);
-
+        /* Set children components */
         this.setCopyrightPane();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.footerPanel);
     }
 
     protected void setCopyrightPane() {
-        JEditorPane copyrightPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
         int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
-        copyrightPane.setBounds(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT);
-
-        copyrightPane.setEditable(false);
-        copyrightPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }");
-        copyrightPane.setEditorKit(kit);
-        copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
-
+        String css = ".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }";
+        String html = "<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>";
+        StyledLabelPane copyrightPane = new StyledLabelPane(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.footerPanel.add(copyrightPane);
     }
 
@@ -316,9 +288,9 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
                 public void run() {
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     GraphicsDevice device = ge.getDefaultScreenDevice();
-                    MainFrame mainFrame = PracticeHomeFrame.this.getMainFrame();
+                    MainFrame mainFrame = PracticesHomeFrame.this.getMainFrame();
 
-                    PracticeHomeFrame.this.dispose();
+                    PracticesHomeFrame.this.dispose();
 
                     if (mainFrame == null) {
                         mainFrame = new MainFrame(device.getDefaultConfiguration());
@@ -499,7 +471,7 @@ public class PracticeHomeFrame extends JFrame implements ActionListener, MouseLi
         GraphicsDevice device = ge.getDefaultScreenDevice();
 //        SwingUtilities.invokeLater(new Runnable() {
 //            public void run() {
-//                testFrame = new TestFrame(device.getDefaultConfiguration(), PracticeHomeFrame.this, testDescription);
+//                testFrame = new TestFrame(device.getDefaultConfiguration(), PracticesHomeFrame.this, testDescription);
 //                device.setFullScreenWindow(testFrame);
 //                testFrame.setVisible(true);
 //                setVisible(false);

@@ -16,6 +16,8 @@ import java.util.List;
 
 public class ReadingPassagePanel extends BodyPanel {
 
+    /* Constants */
+
     public static final int SUBJECT_PANE_HEIGHT = 60;
     public static final int OPTIONS_PANEL_HEIGHT = 300;
     public static final int OPTION_BUTTON_WIDTH = 600;
@@ -23,6 +25,8 @@ public class ReadingPassagePanel extends BodyPanel {
 
     public static final int INDICATOR_PANEL_HEIGHT = 24;
     public static final int INDICATOR_LABEL_WIDTH = 100;
+
+    /* Components */
 
     protected JPanel questionPanel;
     protected JEditorPane subjectPane;
@@ -33,8 +37,14 @@ public class ReadingPassagePanel extends BodyPanel {
 
     protected JEditorPane passagePane;
 
+    /* Variables */
+
     private MReadingPassage passage;
     private int questionIndex;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public ReadingPassagePanel(Rectangle bounds, MReadingPassage passage) {
         super(bounds);
@@ -43,9 +53,14 @@ public class ReadingPassagePanel extends BodyPanel {
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setQuestionPanel();
         this.setIndicatorPanel();
         this.setPassagePane();

@@ -16,12 +16,22 @@ import java.util.Vector;
 
 public class ReadingReviewPanel extends BodyPanel {
 
+    /* Constants */
+
     public static final int DESCRIPTION_PANE_HEIGHT = 160;
+
+    /* Components */
 
     protected JEditorPane descriptionPane;
     protected MReadingReviewTable bodyTable;
 
+    /* Variables */
+
     private MReadingPassage passage;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public ReadingReviewPanel(Rectangle bounds, MReadingPassage passage) {
         super(bounds);
@@ -29,9 +39,14 @@ public class ReadingReviewPanel extends BodyPanel {
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setDescriptionPane();
         this.setBodyScrollPane();
     }

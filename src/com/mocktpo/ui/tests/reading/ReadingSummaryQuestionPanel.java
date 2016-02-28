@@ -12,6 +12,8 @@ import java.awt.*;
 
 public class ReadingSummaryQuestionPanel extends BodyPanel {
 
+    /* Constants */
+
     public static final int DESCRIPTION_PANE_HEIGHT = 160;
     public static final int ANSWERS_PANEL_WIDTH = 500;
     public static final int ANSWERS_PANEL_HEIGHT = 340;
@@ -25,6 +27,8 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
     public static final int CANDIDATE_CHOICE_PANE_WIDTH = 600;
     public static final int CANDIDATE_CHOICE_PANE_HEIGHT = 60;
 
+    /* Components */
+
     protected JEditorPane descriptionPane;
     protected JPanel answersPanel;
     protected JEditorPane summaryPane;
@@ -33,7 +37,13 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
     protected JLabel separatorLabel;
     protected JTextPane[] candidateChoicePanes;
 
+    /* Variables */
+
     private MReadingPassage passage;
+
+    /**************************************************
+     * Constructors
+     **************************************************/
 
     public ReadingSummaryQuestionPanel(Rectangle bounds, MReadingPassage passage) {
         super(bounds);
@@ -41,16 +51,21 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
         this.initComponents();
     }
 
-    private void initComponents() {
-        this.setLayout(null);
+    /**************************************************
+     * Components Initialization
+     **************************************************/
 
+    private void initComponents() {
+        /* Set layout */
+        this.setLayout(null);
+        /* Set components */
         this.setDescriptionPane();
         this.setAnswersPanel();
         this.setSummaryPane();
         this.setAnswerChoicePanes();
         this.setSeparatorLabel();
         this.setCandidateChoicePanes();
-
+        /* Set drag and drop features */
         this.setDragAndDrop();
     }
 

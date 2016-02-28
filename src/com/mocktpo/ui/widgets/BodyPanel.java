@@ -8,6 +8,8 @@ import java.awt.*;
 
 public class BodyPanel extends JPanel {
 
+    /* Logger */
+
     protected static final Logger logger = LogManager.getLogger();
 
     /**************************************************
@@ -41,6 +43,10 @@ public class BodyPanel extends JPanel {
     private boolean reviewButtonEnabled;
     private boolean volumeButtonEnabled;
 
+    /**************************************************
+     * Constructors
+     **************************************************/
+
     public BodyPanel(Rectangle bounds) {
         super();
         this.setBounds(bounds);
@@ -48,7 +54,12 @@ public class BodyPanel extends JPanel {
         this.initButtonStatus();
     }
 
+    /**************************************************
+     * Components Initialization
+     **************************************************/
+
     private void initComponents() {
+        /* Set layout */
         this.setLayout(null);
     }
 

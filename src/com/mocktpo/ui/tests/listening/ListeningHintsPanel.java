@@ -4,9 +4,6 @@ import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.StyledLabelPane;
 import com.mocktpo.util.LayoutConstants;
 
-import javax.swing.*;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 
 public class ListeningHintsPanel extends BodyPanel {

@@ -6,15 +6,15 @@ public interface GlobalConstants {
 
     String POSTFIX_ZIP = ".zip";
 
-    String FTP_HOST = "123.57.17.227";
-    String FTP_USERNAME = "f_ftp";
-    String FTP_PASSWORD = "p_ftp_66xue";
+    String FTP_HOST = "localhost";
+    String FTP_USERNAME = "yangyifeng";
+    String FTP_PASSWORD = "itdreamer";
 
     String REMOTE_APPLICATION_DIR = "/MockTPO/";
     String REMOTE_RESOURCES_DIR = "/MockTPO/resources/";
     String REMOTE_AUDIOS_DIR = "/MockTPO/resources/audios/";
     String REMOTE_IMAGES_DIR = "/MockTPO/resources/images/";
-    String REMOTE_TESTS_DIR = "/MockTPO/tests/";
+    String REMOTE_TESTS_DIR = "/Users/yangyifeng/MockTPO/tests/";
 
     String APPLICATION_DIR = "/";
     String RESOURCES_DIR = "/resources/";

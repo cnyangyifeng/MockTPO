@@ -58,8 +58,8 @@ public class TestFrame extends JFrame implements ActionListener {
     public static final int GO_TO_QUESTION_BUTTON_HEIGHT = 34;
     public static final int RETURN_BUTTON_WIDTH = 74;
     public static final int RETURN_BUTTON_HEIGHT = 34;
-    public static final int HIDE_OR_SHOW_TIMER_BUTTON_WIDTH = 72;
-    public static final int HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT = 18;
+    public static final int HIDE_OR_SHOW_TIME_BUTTON_WIDTH = 72;
+    public static final int HIDE_OR_SHOW_TIME_BUTTON_HEIGHT = 18;
     public static final int TIMER_LABEL_WIDTH = 60;
     public static final int TIMER_LABEL_HEIGHT = 20;
 
@@ -92,7 +92,7 @@ public class TestFrame extends JFrame implements ActionListener {
     protected ImageButton goToQuestionButton;
     protected ImageButton returnButton;
     protected JLabel timerLabel;
-    protected ImageButton hideOrShowTimerButton;
+    protected ImageButton hideOrShowTimeButton;
 
     protected CopyrightPanel copyrightPanel;
     protected GeneralTestInfoPanel generalTestInfoPanel;
@@ -270,7 +270,7 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setGoToQuestionButton();
         this.setReturnButton();
         this.setTimerLabel();
-        this.setHideOrShowTimerButton();
+        this.setHideOrShowTimeButton();
     }
 
     protected void setLogoLabel() {
@@ -582,21 +582,21 @@ public class TestFrame extends JFrame implements ActionListener {
         this.headerPanel.add(this.timerLabel);
     }
 
-    protected void setHideOrShowTimerButton() {
+    protected void setHideOrShowTimeButton() {
         if (!this.bodyPanel.isHideOrShowTimerButtonAvailable()) {
             return;
         }
         /* Initialize component */
-        int x = this.headerPanel.getWidth() - HIDE_OR_SHOW_TIMER_BUTTON_WIDTH - TIMER_LABEL_WIDTH - LayoutConstants.MARGIN * 4;
-        int y = this.headerPanel.getHeight() - HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT - LayoutConstants.MARGIN * 2;
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer.png"));
-        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer_hi.png"));
-        this.hideOrShowTimerButton = new ImageButton(x, y, HIDE_OR_SHOW_TIMER_BUTTON_WIDTH, HIDE_OR_SHOW_TIMER_BUTTON_HEIGHT, icon, rolloverIcon);
+        int x = this.headerPanel.getWidth() - HIDE_OR_SHOW_TIME_BUTTON_WIDTH - TIMER_LABEL_WIDTH - LayoutConstants.MARGIN * 4;
+        int y = this.headerPanel.getHeight() - HIDE_OR_SHOW_TIME_BUTTON_HEIGHT - LayoutConstants.MARGIN * 2;
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_time.png"));
+        ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_time_hi.png"));
+        this.hideOrShowTimeButton = new ImageButton(x, y, HIDE_OR_SHOW_TIME_BUTTON_WIDTH, HIDE_OR_SHOW_TIME_BUTTON_HEIGHT, icon, rolloverIcon);
         /* Set actions */
-        this.hideOrShowTimerButton.setActionCommand("doHideOrShowTimer");
-        this.hideOrShowTimerButton.addActionListener(this);
+        this.hideOrShowTimeButton.setActionCommand("doHideOrShowTimer");
+        this.hideOrShowTimeButton.addActionListener(this);
         /* Add to the parent component */
-        this.headerPanel.add(this.hideOrShowTimerButton);
+        this.headerPanel.add(this.hideOrShowTimeButton);
     }
 
     /**************************************************
@@ -863,18 +863,18 @@ public class TestFrame extends JFrame implements ActionListener {
                             // Reset timerLabel
                             timerLabel.setVisible(false);
                             // Reset hideOrShowTimerButton
-                            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "show_timer.png"));
-                            hideOrShowTimerButton.setIcon(icon);
-                            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "show_timer_hi.png"));
-                            hideOrShowTimerButton.setRolloverIcon(rolloverIcon);
+                            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "show_time.png"));
+                            hideOrShowTimeButton.setIcon(icon);
+                            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "show_time_hi.png"));
+                            hideOrShowTimeButton.setRolloverIcon(rolloverIcon);
                         } else {
                             // Reset timerLabel
                             timerLabel.setVisible(true);
                             // Reset hideOrShowTimerButton
-                            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer.png"));
-                            hideOrShowTimerButton.setIcon(icon);
-                            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_timer_hi.png"));
-                            hideOrShowTimerButton.setRolloverIcon(rolloverIcon);
+                            ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_time.png"));
+                            hideOrShowTimeButton.setIcon(icon);
+                            ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "hide_time_hi.png"));
+                            hideOrShowTimeButton.setRolloverIcon(rolloverIcon);
                         }
                     }
                 });

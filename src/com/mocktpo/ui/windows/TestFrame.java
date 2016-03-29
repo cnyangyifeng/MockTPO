@@ -573,7 +573,7 @@ public class TestFrame extends JFrame implements ActionListener {
         int y = this.headerPanel.getHeight() - TIMER_LABEL_HEIGHT - LayoutConstants.MARGIN * 2;
         this.timerLabel.setBounds(x, y, TIMER_LABEL_WIDTH, TIMER_LABEL_HEIGHT);
 
-        this.timerLabel.setFont(new Font("Roboto", Font.BOLD, 14));
+        this.timerLabel.setFont(new Font("Roboto", Font.BOLD, 12));
         this.timerLabel.setForeground(new Color(245, 245, 245));
         this.timerLabel.setText(TimeUtils.displayTime(timeElapsed));
         this.stopCountdown();

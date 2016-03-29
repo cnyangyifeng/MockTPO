@@ -14,8 +14,6 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +26,7 @@ import java.util.zip.ZipInputStream;
 
 public class TestsHomeFrame extends JFrame implements ActionListener, MouseListener {
 
-    // Constants
+    /* Constants */
 
     public static final int GO_BACK_HOME_BUTTON_WIDTH = 84;
     public static final int GO_BACK_HOME_BUTTON_HEIGHT = 34;
@@ -42,16 +40,16 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
     public static final String READY_LABEL = "Ready";
     public static final String ERROR_LABEL = "Error";
 
-    // Logger
+    /* Logger */
 
     protected static final Logger logger = LogManager.getLogger();
 
-    // Frames
+    /* Frames */
 
     protected MainFrame mainFrame;
     protected TestFrame testFrame;
 
-    // Components
+    /* Components */
 
     protected HeaderPanel headerPanel;
     protected BodyPanel bodyPanel;
@@ -59,7 +57,7 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
     protected MTable bodyTable;
     protected FooterPanel footerPanel;
 
-    // Variables
+    /* Variables */
 
     protected MockTPO mockTPO;
     protected volatile boolean[] markers; // Download markers
@@ -97,16 +95,16 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
      **************************************************/
 
     protected void globalSettings() {
+        /* Set bounds */
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
-
         Rectangle bounds = new Rectangle(screenSize);
         this.setBounds(bounds);
-
+        /* Set maximized, unresizable and undecorated */
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setResizable(false);
         this.setUndecorated(true);
-
+        /* Set title */
         this.setTitle(this.title);
     }
 
@@ -115,34 +113,27 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
      **************************************************/
 
     protected void setHeaderPanel() {
+        /* Initialize component */
         this.headerPanel = new HeaderPanel();
-
+        /* Set bounds */
         this.headerPanel.setBounds(0, 0, this.getWidth(), LayoutConstants.HEADER_PANEL_HEIGHT);
-
+        /* Set layout */
         this.headerPanel.setLayout(null);
-
+        /* Set children components */
         this.setTitlePane();
         this.setGoBackHomeButton();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.headerPanel);
     }
 
     protected void setTitlePane() {
-        JEditorPane titlePane = new JEditorPane();
-
+        /* Initialize component */
         int x = LayoutConstants.MARGIN * 2;
         int y = LayoutConstants.MARGIN;
-        titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
-
-        titlePane.setEditable(false);
-        titlePane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: " + FontsConstants.LOGO_FONT + "; font-size: 20px; font-weight: bold; color: #ffffff; }");
-        titlePane.setEditorKit(kit);
-        titlePane.setText("<div class='title'>" + GlobalConstants.APPLICATION_NAME + " " + GlobalConstants.TESTS_HOME_TITLE + "</div>");
-
+        String css = ".title { font-family: " + FontsConstants.LOGO_FONT + "; font-size: 20px; font-weight: bold; color: #ffffff; }";
+        String html = "<div class='title'>" + GlobalConstants.APPLICATION_NAME + " " + GlobalConstants.TESTS_HOME_TITLE + "</div>";
+        StyledLabelPane titlePane = new StyledLabelPane(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.headerPanel.add(titlePane);
     }
 
@@ -165,31 +156,25 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
      **************************************************/
 
     protected void setBodyPanel() {
+        /* Initialize component */
         int height = this.getHeight() - LayoutConstants.HEADER_PANEL_HEIGHT - LayoutConstants.FOOTER_PANEL_HEIGHT;
         Rectangle bounds = new Rectangle(0, LayoutConstants.HEADER_PANEL_HEIGHT, this.getWidth(), height);
         this.bodyPanel = new BodyPanel(bounds);
-
+        /* Set children components */
         this.setSloganPane();
         this.setBodyScrollPane();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.bodyPanel);
     }
 
     protected void setSloganPane() {
-        this.sloganPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.bodyPanel.getWidth() - SLOGAN_PANE_WIDTH) / 2;
         int y = LayoutConstants.MARGIN * 12;
-        this.sloganPane.setBounds(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT);
-
-        this.sloganPane.setEditable(false);
-        this.sloganPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 24px; text-align: center; }");
-        this.sloganPane.setEditorKit(kit);
-        this.sloganPane.setText("<div class='slogan'>TOEFL&reg; iBT MODEL TESTS</div>");
+        String css = ".slogan { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 24px; text-align: center; }";
+        String html = "<div class='slogan'>TOEFL&reg; iBT " + GlobalConstants.TESTS_HOME_TITLE + "</div>";
+        this.sloganPane = new StyledLabelPane(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT, css, html);
+        /* Add hyperlink listener */
         this.sloganPane.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -205,11 +190,12 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
                 }
             }
         });
-
+        /* Add to the parent component */
         this.bodyPanel.add(this.sloganPane);
     }
 
     protected void setBodyScrollPane() {
+        /* Initialize table model schema */
         String[] columnNames = {"Number" /* Index */, "Description" /* Name */, "Download", "Test" /* Next */, "Reports"};
         DefaultTableModel tableModel = new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int mColIndex) {
@@ -217,35 +203,39 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
             }
         };
         tableModel.setColumnIdentifiers(columnNames);
+        /* Load xml configurations */
         this.mockTPO = XMLUtils.load();
         if (this.mockTPO == null) {
             logger.error("Configuration file 'mocktpo.xml' not found.");
             System.exit(-1);
         }
+        /* Initialize table model data */
         List<MTest> tests = this.mockTPO.getTests();
         for (MTest test : tests) {
             Vector<String> v = new Vector<String>();
-            v.add(0, test.getIndex()); // "TPO"
+            v.add(0, test.getIndex()); // "Number"
             v.add(1, test.getName()); // "Description"
             v.add(2, test.getDownload());
             v.add(3, test.getNext()); // "Test"
             v.add(4, test.getReports());
             tableModel.addRow(v);
         }
+        /* Initialize download markers */
         this.markers = new boolean[tests.size()];
-
+        /* Initialize table */
         this.bodyTable = new MTable(tableModel);
-
+        /* Add mouse listener to the table */
         this.bodyTable.addMouseListener(this);
-
+        /* Initialize scroll pane */
         JScrollPane bodyScrollPane = new JScrollPane();
+        /* Set bounds */
         int x = this.sloganPane.getX();
         int y = this.sloganPane.getY() + this.sloganPane.getHeight() + LayoutConstants.MARGIN * 5;
         int height = this.bodyPanel.getHeight() - y - LayoutConstants.MARGIN * 10;
         bodyScrollPane.setBounds(x, y, BODY_SCROLL_PANE_WIDTH, height);
-
+        /* Set viewport view */
         bodyScrollPane.setViewportView(this.bodyTable);
-
+        /* Add to the parent component */
         this.bodyPanel.add(bodyScrollPane);
     }
 
@@ -254,33 +244,26 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
      **************************************************/
 
     protected void setFooterPanel() {
+        /* Initialize component */
         this.footerPanel = new FooterPanel();
-
+        /* Set bounds */
         this.footerPanel.setBounds(0, this.getHeight() - LayoutConstants.FOOTER_PANEL_HEIGHT, this.getWidth(), LayoutConstants.FOOTER_PANEL_HEIGHT);
-
+        /* Set layout */
         this.footerPanel.setLayout(null);
-
+        /* Set children components */
         this.setCopyrightPane();
-
+        /* Add to the parent component */
         this.getContentPane().add(this.footerPanel);
     }
 
     protected void setCopyrightPane() {
-        JEditorPane copyrightPane = new JEditorPane();
-
+        /* Initialize component */
         int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
         int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
-        copyrightPane.setBounds(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT);
-
-        copyrightPane.setEditable(false);
-        copyrightPane.setOpaque(false);
-
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet style = kit.getStyleSheet();
-        style.addRule(".copyright { color: #ffffff; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 8px; font-weight: bold; text-align: center; }");
-        copyrightPane.setEditorKit(kit);
-        copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
-
+        String css = ".copyright { color: #ffffff; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 8px; font-weight: bold; text-align: center; }";
+        String html = "<div class='copyright'>" + GlobalConstants.COPYRIGHT_INFO + "</div>";
+        StyledLabelPane copyrightPane = new StyledLabelPane(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT, css, html);
+        /* Add to the parent component */
         this.footerPanel.add(copyrightPane);
     }
 
@@ -298,9 +281,9 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                     GraphicsDevice device = ge.getDefaultScreenDevice();
                     MainFrame mainFrame = TestsHomeFrame.this.getMainFrame();
-
+                    /* Dispose current frame */
                     TestsHomeFrame.this.dispose();
-
+                    /* Show main frame */
                     if (mainFrame == null) {
                         mainFrame = new MainFrame(device.getDefaultConfiguration());
                     }

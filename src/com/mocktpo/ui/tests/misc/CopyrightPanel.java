@@ -45,7 +45,7 @@ public class CopyrightPanel extends BodyPanel {
         String css = ".cp-img { margin-bottom: 40px; text-align: center; } .cp-img img { height: 90px; width: 160px; } .cp { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; text-align: center; }";
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ets_toefl.png").toString();
         String html = "<div class='cp-img'><img src='" + imgUrl + "' /></div>";
-        html += "<div class='cp'>Copyright 2009, 2011 by Educational Testing Service. All rights reserved.<br />EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of<br />Educational Testing Service (ETS) in the United States and other countries.<br /><br />Click on <b>Continue</b> to go on.</div>";
+        html += "<div class='cp'>EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of<br />Educational Testing Service (ETS) in the United States and other countries.<br /><br />Click on <b>Continue</b> to go on.</div>";
         this.descriptionPane = new StyledLabelPane(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT, css, html);
         /* Add to the parent component */
         this.add(this.descriptionPane);

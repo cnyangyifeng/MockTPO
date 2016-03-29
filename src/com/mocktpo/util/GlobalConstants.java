@@ -1,10 +1,14 @@
 package com.mocktpo.util;
 
 public interface GlobalConstants {
-    /* Application name */
+    /* Application Name */
     String APPLICATION_NAME = "MOCKTPO";
+    /* Tests Home Title */
     String TESTS_HOME_TITLE = "MODEL TESTS";
+    /* Practices Home Title */
     String PRACTICES_HOME_TITLE = "PRACTICES";
+    /* Copyright information */
+    String COPYRIGHT_INFO = "Copyright &copy; 2016 by Beijing MengMa Educational Technologies Inc. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.";
 
     String POSTFIX_ZIP = ".zip";
 

@@ -5,6 +5,7 @@ import com.mocktpo.model.MChoiceQuestion;
 import com.mocktpo.model.MReadingParagraph;
 import com.mocktpo.model.MReadingPassage;
 import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
@@ -107,7 +108,7 @@ public class ReadingPassagePanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".subject { color: #333333; font-family: Roboto; font-size: 12px; }");
+        style.addRule(".subject { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; }");
         this.subjectPane.setEditorKit(kit);
         String text = "<div class='subject'>" + subject + "</div>";
         this.subjectPane.setText(text);
@@ -132,7 +133,7 @@ public class ReadingPassagePanel extends BodyPanel {
             JRadioButton radioButton = new JRadioButton();
             radioButton.setBounds(0, OPTION_BUTTON_HEIGHT * i + LayoutConstants.MARGIN * i * 2, OPTION_BUTTON_WIDTH, OPTION_BUTTON_HEIGHT);
 
-            radioButton.setFont(new Font("Roboto", Font.PLAIN, 16));
+            radioButton.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.PLAIN, 16));
             radioButton.setForeground(new Color(51, 51, 51));
 
             MChoiceOption option = options.get(i);
@@ -169,7 +170,7 @@ public class ReadingPassagePanel extends BodyPanel {
 
         this.indicatorLabel = new JLabel("More Available", JLabel.RIGHT);
         this.indicatorLabel.setForeground(Color.WHITE);
-        this.indicatorLabel.setFont(new Font("Roboto", Font.BOLD, 12));
+        this.indicatorLabel.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 12));
         int labelX = this.indicatorPanel.getWidth() - INDICATOR_LABEL_WIDTH - LayoutConstants.MARGIN;
         this.indicatorLabel.setBounds(labelX, 0, INDICATOR_LABEL_WIDTH, INDICATOR_PANEL_HEIGHT);
 
@@ -186,7 +187,7 @@ public class ReadingPassagePanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".rp-header { color: #333333; font-family: Roboto; font-size: 12px; font-weight: bold; margin-top: 20px; text-align: center; } .rp { color: #333333; font-family: Roboto; font-size: 12px; margin: 20px; } .rp-gray { background-color: #cccccc; }");
+        style.addRule(".rp-header { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; font-weight: bold; margin-top: 20px; text-align: center; } .rp { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; margin: 20px; } .rp-gray { background-color: #cccccc; }");
         this.passagePane.setEditorKit(kit);
 
         String text = "<div class='rp-header'>" + passage.getTitle() + "</div>";

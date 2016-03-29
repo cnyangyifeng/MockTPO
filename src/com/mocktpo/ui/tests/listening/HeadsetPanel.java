@@ -2,6 +2,7 @@ package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.StyledLabelPane;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 
 import java.awt.*;
@@ -41,7 +42,7 @@ public class HeadsetPanel extends BodyPanel {
         /* Initialize component */
         int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = (this.getHeight() - DESCRIPTION_PANE_HEIGHT) / 2;
-        String css = ".hs-header { color: #333333; font-family: Roboto; font-size: 12px; margin-bottom: 20px; text-align: center; } .hs-body { margin-bottom: 20px; text-align: center; } .hs-footer { color: #333333; font-family: Roboto; font-size: 12px; text-align: center; }";
+        String css = ".hs-header { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; margin-bottom: 20px; text-align: center; } .hs-body { margin-bottom: 20px; text-align: center; } .hs-footer { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; text-align: center; }";
         String html = "<div class='hs-header'>Now put on your headset.</div>";
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "headset.png").toString();
         html += "<div class='hs-body'><img src='" + imgUrl + "' /></div>";

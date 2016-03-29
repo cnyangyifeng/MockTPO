@@ -2,6 +2,7 @@ package com.mocktpo.ui.tests.misc;
 
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.StyledLabelPane;
+import com.mocktpo.util.FontsConstants;
 
 import java.awt.*;
 
@@ -33,7 +34,7 @@ public class GeneralTestInfoPanel extends BodyPanel {
 
     protected void setDescriptionPane() {
         /* Initialize component */
-        String css = ".gti-header { color: #3d4167; font-family: Cambria; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .gti { color: #333333; font-family: Roboto; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; }";
+        String css = ".gti-header { color: #3d4167; font-family: " + FontsConstants.DEFAULT_SERIF_FONT + "; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .gti { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; }";
         String html = "<div class='gti-header'>General Test Information</div>";
         html += "<div class='gti'>This test measures your ability to use English in an academic context. There are 4 sections.</div>";
         html += "<div class='gti'>In the <b>Reading</b> section, you will read several passages and answer questions about them.</div>";

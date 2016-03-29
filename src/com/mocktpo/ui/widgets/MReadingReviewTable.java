@@ -1,5 +1,7 @@
 package com.mocktpo.ui.widgets;
 
+import com.mocktpo.util.FontsConstants;
+
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
@@ -31,7 +33,7 @@ public class MReadingReviewTable extends JTable {
         /* Set table header */
         JTableHeader tableHeader = this.getTableHeader();
         tableHeader.setPreferredSize(new Dimension(TABLE_WIDTH, TABLE_HEADER_HEIGHT));
-        tableHeader.setFont(new Font("Roboto", Font.BOLD, 14));
+        tableHeader.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 14));
         tableHeader.setForeground(new Color(51, 51, 51));
         tableHeader.setBackground(new Color(191, 136, 107));
         /* Set table layout */
@@ -42,7 +44,7 @@ public class MReadingReviewTable extends JTable {
         columnModel.getColumn(1).setPreferredWidth(800);
         columnModel.getColumn(2).setPreferredWidth(180);
         /* Set table styles */
-        this.setFont(new Font("Roboto", Font.PLAIN, 14));
+        this.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.PLAIN, 14));
         this.setBackground(new Color(255, 255, 255));
         this.setForeground(new Color(51, 51, 51));
         this.setGridColor(new Color(245, 245, 245)); // #f5f5f5

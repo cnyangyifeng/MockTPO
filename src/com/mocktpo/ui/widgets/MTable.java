@@ -1,6 +1,7 @@
 package com.mocktpo.ui.widgets;
 
 import com.mocktpo.ui.windows.TestsHomeFrame;
+import com.mocktpo.util.FontsConstants;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
@@ -34,7 +35,7 @@ public class MTable extends JTable {
         /* Set table header */
         JTableHeader tableHeader = this.getTableHeader();
         tableHeader.setPreferredSize(new Dimension(TABLE_WIDTH, TABLE_HEADER_HEIGHT));
-        tableHeader.setFont(new Font("Roboto", Font.BOLD, 16));
+        tableHeader.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 16));
         tableHeader.setForeground(new Color(102, 102, 102)); // #666666
         /* Set table layout */
         this.setRowHeight(TABLE_CELL_HEIGHT);
@@ -46,9 +47,9 @@ public class MTable extends JTable {
         columnModel.getColumn(3).setPreferredWidth(150);
         columnModel.getColumn(4).setPreferredWidth(150);
         /* Set table styles */
-        this.setFont(new Font("Cambria", Font.PLAIN, 16));
+        this.setFont(new Font(FontsConstants.DEFAULT_SERIF_FONT, Font.PLAIN, 16));
         this.setBackground(new Color(255, 255, 255));
-        this.setForeground(new Color(51, 51, 51));
+        this.setForeground(new Color(51, 51, 51)); // #333333
         this.setGridColor(new Color(245, 245, 245)); // #f5f5f5
         this.setFocusable(false);
         this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

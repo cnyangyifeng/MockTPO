@@ -4,6 +4,7 @@ import com.mocktpo.model.MChoiceQuestion;
 import com.mocktpo.model.MReadingPassage;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.MReadingReviewTable;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.LayoutConstants;
 
 import javax.swing.*;
@@ -70,7 +71,7 @@ public class ReadingReviewPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".rr { color: #333333; font-family: Roboto; font-size: 11px; margin-left: 20px; margin-top: 16px; margin-right: 20px; }");
+        style.addRule(".rr { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 11px; margin-left: 20px; margin-top: 16px; margin-right: 20px; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='rr'>Below is the list of questions in this section. The question you were looking at last is highlighted when you enter Review. The Status column shows if a question has been answered, not answered, or not seen. When a question is worth more than one point, the Status column will indicate that the question has been answered, even if it is only partially answered.</div>";
         text += "<div class='rr'>To review a specific question from the list, click on the question to highlight it, then click on <b>Go to Question</b> at the top of the screen. When there are more questions than will fit on the screen, you can use the scroll bar to view the others.</div>";

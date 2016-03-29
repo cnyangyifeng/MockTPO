@@ -5,6 +5,7 @@ import com.mocktpo.model.MChoiceOption;
 import com.mocktpo.model.MListeningQuestion;
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.StyledLabelPane;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
@@ -68,7 +69,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
         /* Initialize component */
         int x = (this.getWidth() - SUBJECT_PANE_WIDTH) / 2;
         int y = (this.getHeight() - SUBJECT_PANE_HEIGHT - OPTIONS_PANEL_HEIGHT) / 2;
-        String css = ".subject { color: #333333; font-family: Roboto; font-size: 12px; }";
+        String css = ".subject { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; }";
         String subject = this.question.getSubject();
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "earphone.png").toString();
         if (subject.contains("[earphone]")) {
@@ -99,7 +100,7 @@ public class ListeningQuestionPanel extends BodyPanel implements ActionListener,
             JRadioButton radioButton = new JRadioButton(option.getText());
             radioButton.setBounds(0, OPTION_BUTTON_HEIGHT * i + LayoutConstants.MARGIN * i * 2, OPTION_BUTTON_WIDTH, OPTION_BUTTON_HEIGHT);
 
-            radioButton.setFont(new Font("Roboto", Font.PLAIN, 16));
+            radioButton.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.PLAIN, 16));
             radioButton.setForeground(new Color(51, 51, 51));
             radioButton.setName(option.getIndex());
             ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "unchecked.png"));

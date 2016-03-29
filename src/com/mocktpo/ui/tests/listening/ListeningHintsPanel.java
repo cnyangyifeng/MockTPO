@@ -2,6 +2,7 @@ package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.StyledLabelPane;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.LayoutConstants;
 
 import java.awt.*;
@@ -46,7 +47,7 @@ public class ListeningHintsPanel extends BodyPanel {
         /* Initialize component */
         int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = LayoutConstants.MARGIN * 5;
-        String css = ".hints { color: #333333; font-family: Roboto; font-size: 16px; margin-top: 80px; padding: 30px; text-align: center; }";
+        String css = ".hints { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 16px; margin-top: 80px; padding: 30px; text-align: center; }";
         String html = "<div class='hints'>" + this.hints + "</div>";
         this.descriptionPane = new StyledLabelPane(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT, css, html);
         /* Set background */

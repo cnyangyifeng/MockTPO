@@ -2,6 +2,7 @@ package com.mocktpo.ui.tests.reading;
 
 import com.mocktpo.model.MReadingPassage;
 import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
@@ -95,7 +96,7 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".rsq-desc { color: #333333; font-family: Roboto; font-size: 12px; margin-left: 20px; margin-top: 20px; margin-right: 20px; } .rsq-desc-gray { background-color: #cccccc; color: #333333; font-family: Roboto; font-size: 12px; margin-left: 20px; margin-top: 20px; margin-right: 20px; padding: 5px; text-align: center; }");
+        style.addRule(".rsq-desc { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; margin-left: 20px; margin-top: 20px; margin-right: 20px; } .rsq-desc-gray { background-color: #cccccc; color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; margin-left: 20px; margin-top: 20px; margin-right: 20px; padding: 5px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='rsq-desc'><b>Directions</b>: An introductory sentence for a brief summary of the passage is provided below. Complete the summary by selecting the THREE answer choices that express the most important ideas in the passage. Some sentences do not belong in the summary because they express ideas that are not presented in the passage or are minor ideas in the passage. <b>This question is worth 2 points</b>.</div>";
         text += "<div class='rsq-desc-gray'>Drag your answer choices to the spaces where they belong. To remove an answer choice, click on it.<br />To review the passage, click <b>VIEW TEXT</b>.</div>";
@@ -129,7 +130,7 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".rsq-answers { color: #333333; font-family: Roboto; font-size: 12px; padding: 15px; }");
+        style.addRule(".rsq-answers { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; padding: 15px; }");
         this.summaryPane.setEditorKit(kit);
         String text = "<div class='rsq-answers'><b>Water enters, remains, and eventually leaves a lake in a variety of ways.</b></div>";
         this.summaryPane.setText(text);
@@ -162,7 +163,7 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
             int width = ANSWERS_PANEL_WIDTH - DOT_LABEL_WIDTH - LayoutConstants.MARGIN * 6;
             answerChoicePanes[i].setBounds(x, y, width, ANSWER_CHOICE_HEIGHT);
 
-            answerChoicePanes[i].setFont(new Font("Roboto", Font.PLAIN, 16));
+            answerChoicePanes[i].setFont(new Font(FontsConstants.SYSTEM_FONT, Font.PLAIN, 16));
             answerChoicePanes[i].setText(i + " Water enters");
 
             this.add(answerChoicePanes[i]);
@@ -176,7 +177,7 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
         int y = this.answersPanel.getY() + ANSWERS_PANEL_HEIGHT + LayoutConstants.MARGIN * 2;
         this.separatorLabel.setBounds(x, y, SEPARATOR_LABEL_WIDTH, SEPARATOR_LABEL_HEIGHT);
 
-        this.separatorLabel.setFont(new Font("Roboto", Font.BOLD, 16));
+        this.separatorLabel.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 16));
         this.separatorLabel.setText("Answer Choices");
 
         this.add(this.separatorLabel);
@@ -203,7 +204,7 @@ public class ReadingSummaryQuestionPanel extends BodyPanel {
             }
             candidateChoicePanes[i].setBounds(x, y, CANDIDATE_CHOICE_PANE_WIDTH, CANDIDATE_CHOICE_PANE_HEIGHT);
 
-            candidateChoicePanes[i].setFont(new Font("Roboto", Font.PLAIN, 16));
+            candidateChoicePanes[i].setFont(new Font(FontsConstants.SYSTEM_FONT, Font.PLAIN, 16));
             candidateChoicePanes[i].setText(i + " Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and eventually leaves.Water enters, remains, and");
 
             this.add(candidateChoicePanes[i]);

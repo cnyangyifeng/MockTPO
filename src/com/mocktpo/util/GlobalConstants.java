@@ -2,7 +2,9 @@ package com.mocktpo.util;
 
 public interface GlobalConstants {
     /* Application name */
-    String APPLICATION_NAME = "MockTPO";
+    String APPLICATION_NAME = "MOCKTPO";
+    String TESTS_HOME_TITLE = "MODEL TESTS";
+    String PRACTICES_HOME_TITLE = "PRACTICES";
 
     String POSTFIX_ZIP = ".zip";
 

@@ -12,6 +12,7 @@ import com.mocktpo.ui.tests.reading.ReadingPassagePanel;
 import com.mocktpo.ui.tests.reading.ReadingReviewPanel;
 import com.mocktpo.ui.tests.reading.ReadingSummaryQuestionPanel;
 import com.mocktpo.ui.widgets.*;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 import com.mocktpo.util.TimeUtils;
@@ -253,7 +254,6 @@ public class TestFrame extends JFrame implements ActionListener {
     protected void resetHeaderPanel() {
         this.headerPanel.removeAll();
 
-        this.setLogoLabel();
         this.setTitlePane();
         this.setPauseTestButton();
         this.setSectionExitButton();
@@ -273,22 +273,11 @@ public class TestFrame extends JFrame implements ActionListener {
         this.setHideOrShowTimeButton();
     }
 
-    protected void setLogoLabel() {
-        JLabel logoLabel = new JLabel();
-
-        logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
-
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "logo.png"));
-        logoLabel.setIcon(icon);
-
-        this.headerPanel.add(logoLabel);
-    }
-
     protected void setTitlePane() {
         /* Initialize component */
-        int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
+        int x = LayoutConstants.MARGIN * 2;
         int y = LayoutConstants.MARGIN;
-        String css = ".title { font-family: Impact; font-size: 11px; color: #ffffff; }";
+        String css = ".title { font-family: " + FontsConstants.LOGO_FONT + "; font-size: 12px; color: #ffffff; }";
         String html = "<div class='title'>" + this.title + "</div>";
         StyledLabelPane titlePane = new StyledLabelPane(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT, css, html);
         /* Add to the parent component */
@@ -333,7 +322,7 @@ public class TestFrame extends JFrame implements ActionListener {
         /* Initialize component */
         int x = (this.headerPanel.getWidth() - QUESTION_NUMBER_PANE_WIDTH) / 2;
         int y = (this.headerPanel.getHeight() - QUESTION_NUMBER_PANE_HEIGHT) / 2;
-        String css = ".question { font-family: Roboto; font-size: 11px; font-weight: bold; color: #f5f5f5; text-align: center; }";
+        String css = ".question { font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 11px; font-weight: bold; color: #f5f5f5; text-align: center; }";
         String html = "";
         this.questionNumberPane = new StyledLabelPane(x, y, QUESTION_NUMBER_PANE_WIDTH, QUESTION_NUMBER_PANE_HEIGHT, css, html);
         /* Reset question number */
@@ -573,7 +562,7 @@ public class TestFrame extends JFrame implements ActionListener {
         int y = this.headerPanel.getHeight() - TIMER_LABEL_HEIGHT - LayoutConstants.MARGIN * 2;
         this.timerLabel.setBounds(x, y, TIMER_LABEL_WIDTH, TIMER_LABEL_HEIGHT);
 
-        this.timerLabel.setFont(new Font("Roboto", Font.BOLD, 12));
+        this.timerLabel.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 12));
         this.timerLabel.setForeground(new Color(245, 245, 245));
         this.timerLabel.setText(TimeUtils.displayTime(timeElapsed));
         this.stopCountdown();
@@ -620,7 +609,7 @@ public class TestFrame extends JFrame implements ActionListener {
         /* Initialize component */
         int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
         int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
-        String css = ".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }";
+        String css = ".copyright { color: #ffffff; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 8px; font-weight: bold; text-align: center; }";
         String html = "<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>";
         StyledLabelPane copyrightPane = new StyledLabelPane(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT, css, html);
         /* Add to the parent component */

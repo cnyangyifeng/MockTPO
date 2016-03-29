@@ -2,6 +2,7 @@ package com.mocktpo.ui.tests.misc;
 
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.StyledLabelPane;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 
 import java.awt.*;
@@ -41,7 +42,7 @@ public class CopyrightPanel extends BodyPanel {
         /* Initialize component */
         int x = (this.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = (this.getHeight() - DESCRIPTION_PANE_HEIGHT) / 2;
-        String css = ".cp-img { margin-bottom: 40px; text-align: center; } .cp-img img { height: 90px; width: 160px; } .cp { color: #333333; font-family: Roboto; font-size: 12px; text-align: center; }";
+        String css = ".cp-img { margin-bottom: 40px; text-align: center; } .cp-img img { height: 90px; width: 160px; } .cp { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; text-align: center; }";
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "ets_toefl.png").toString();
         String html = "<div class='cp-img'><img src='" + imgUrl + "' /></div>";
         html += "<div class='cp'>Copyright 2009, 2011 by Educational Testing Service. All rights reserved.<br />EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of<br />Educational Testing Service (ETS) in the United States and other countries.<br /><br />Click on <b>Continue</b> to go on.</div>";

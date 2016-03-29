@@ -1,5 +1,7 @@
 package com.mocktpo.ui.widgets;
 
+import com.mocktpo.util.FontsConstants;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,7 +18,7 @@ public class ModuleButton extends JButton {
         /* Set text*/
         this.setText(text);
         /* Set font */
-        this.setFont(new Font("Roboto", Font.PLAIN, 24));
+        this.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.PLAIN, 24));
         /* Set foreground */
         this.setForeground(new Color(51, 51, 51)); // #333333
         /* Set background */

@@ -5,6 +5,7 @@ import com.mocktpo.ui.widgets.ImageButton;
 import com.mocktpo.ui.widgets.StyledLabelPane;
 import com.mocktpo.ui.windows.TestFrame;
 import com.mocktpo.ui.windows.TestsHomeFrame;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
@@ -104,7 +105,7 @@ public class SectionExitDialog extends JDialog implements ActionListener {
     protected void setTitleLabel() {
         this.titleLabel = new JLabel("Section Exit", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
-        this.titleLabel.setFont(new Font("Roboto", Font.BOLD, 16));
+        this.titleLabel.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 16));
         int x = (this.bodyPanel.getWidth() - TITLE_WIDTH) / 2;
         this.titleLabel.setBounds(x, LayoutConstants.MARGIN, TITLE_WIDTH, TITLE_HEIGHT);
     }
@@ -113,7 +114,7 @@ public class SectionExitDialog extends JDialog implements ActionListener {
         /* Initialize component */
         int x = (this.bodyPanel.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = this.titleLabel.getY() + TITLE_HEIGHT + LayoutConstants.MARGIN * 2;
-        String css = ".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 30px; }";
+        String css = ".desc { background-color: #ffffff; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; color: #333333; padding: 30px; }";
         String html = "<div class='desc'>Once you leave this section and proceed to the next, you WILL NOT be able to return to it. ARE YOU SURE you wish to exit this section?<br /><br />Click on <b>Return</b> to continue working. Click on <b>Continue</b> if you are sure you want to exit this section and proceed to the next.</div>";
         this.descriptionPane = new StyledLabelPane(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT, css, html);
     }

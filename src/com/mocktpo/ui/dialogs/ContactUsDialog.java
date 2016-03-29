@@ -3,6 +3,7 @@ package com.mocktpo.ui.dialogs;
 import com.mocktpo.ui.widgets.DialogBodyPanel;
 import com.mocktpo.ui.widgets.ImageButton;
 import com.mocktpo.ui.widgets.StyledLabelPane;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 
@@ -92,7 +93,7 @@ public class ContactUsDialog extends JDialog implements ActionListener {
     protected void setTitleLabel() {
         this.titleLabel = new JLabel("Contact Us", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
-        this.titleLabel.setFont(new Font("Roboto", Font.BOLD, 16));
+        this.titleLabel.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 16));
         int x = (this.bodyPanel.getWidth() - TITLE_WIDTH) / 2;
         this.titleLabel.setBounds(x, LayoutConstants.MARGIN, TITLE_WIDTH, TITLE_HEIGHT);
 
@@ -103,7 +104,7 @@ public class ContactUsDialog extends JDialog implements ActionListener {
         /* Initialize component */
         int x = (this.bodyPanel.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = this.titleLabel.getY() + TITLE_HEIGHT + LayoutConstants.MARGIN * 2;
-        String css = ".desc { background-color: #ffffff; font-family: Roboto; font-size: 12px; color: #333333; padding: 10px; } .desc-img-wrapper { margin-top: 10px; text-align: center; }";
+        String css = ".desc { background-color: #ffffff; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; color: #333333; padding: 10px; } .desc-img-wrapper { margin-top: 10px; text-align: center; }";
         String imgUrl = this.getClass().getResource(GlobalConstants.IMAGES_DIR + "qrcode.png").toString();
         String html = "<div class='desc'>Please open WeChat on phone and scan QR Code to follow us if any technical support is required.<br />";
         html += "<div class='desc-img-wrapper'><img src='" + imgUrl + "' /></div></div>";

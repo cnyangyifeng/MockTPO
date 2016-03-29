@@ -2,6 +2,7 @@ package com.mocktpo.ui.tests.reading;
 
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.StyledLabelPane;
+import com.mocktpo.util.FontsConstants;
 
 import java.awt.*;
 
@@ -44,7 +45,7 @@ public class ReadingDirectionsPanel extends BodyPanel {
 
     protected void setDescriptionPane() {
         /* Initialize component */
-        String css = ".rd-header { color: #3d4167; font-family: Cambria; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .rd { color: #333333; font-family: Roboto; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .rd a { color: #3c4d82; }";
+        String css = ".rd-header { color: #3d4167; font-family: " + FontsConstants.DEFAULT_SERIF_FONT + "; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .rd { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .rd a { color: #3c4d82; }";
         String html = "<div class='rd-header'>Reading Section Directions</div>";
         html += "<div class='rd'>This section measures your ability to understand academic passages in English. You will read <b>3 passages</b>. In an actual test you will have <b>60 minutes (1 hour)</b> to read the passages and answer the questions.</div>";
         html += "<div class='rd'>Most questions are worth 1 point but the last question in each set is worth more than 1 point. The directions indicate how many points you may receive.</div>";

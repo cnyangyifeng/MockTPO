@@ -1,6 +1,7 @@
 package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.ui.widgets.BodyPanel;
+import com.mocktpo.util.FontsConstants;
 
 import javax.swing.*;
 import javax.swing.text.html.HTMLEditorKit;
@@ -49,7 +50,7 @@ public class ChangingVolumePanel extends BodyPanel {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".cv-header { color: #3d4167; font-family: Georgia; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .cv { color: #333333; font-family: Roboto; font-size: 12px; margin-bottom: 12px; } .cv-footer { border: 3px solid #3d4167; color: #3d4167; font-family: Roboto; font-size: 14px; font-style: italic; height: 90px; margin-top: 30px; padding: 30px; text-align: center; }");
+        style.addRule(".cv-header { color: #3d4167; font-family: " + FontsConstants.DEFAULT_SERIF_FONT + "; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .cv { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; margin-bottom: 12px; } .cv-footer { border: 3px solid #3d4167; color: #3d4167; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 14px; font-style: italic; height: 90px; margin-top: 30px; padding: 30px; text-align: center; }");
         this.descriptionPane.setEditorKit(kit);
         String text = "<div class='cv-header'>Changing the Volume</div>";
         text += "<div class='cv'>To change the volume, click on the <b>Volume</b> icon at the top of the screen. The volume control will appear. Move the volume indicator to the left or to the right to change the volume.</div>";

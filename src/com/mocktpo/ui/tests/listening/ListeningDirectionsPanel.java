@@ -2,6 +2,7 @@ package com.mocktpo.ui.tests.listening;
 
 import com.mocktpo.ui.widgets.BodyPanel;
 import com.mocktpo.ui.widgets.StyledLabelPane;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 
 import javax.media.*;
@@ -47,7 +48,7 @@ public class ListeningDirectionsPanel extends BodyPanel implements ActionListene
 
     protected void setDescriptionPane() {
         /* Initialize component */
-        String css = ".ld-header { color: #3d4167; font-family: Cambria; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .ld { color: #333333; font-family: Roboto; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .ld-footer { color: #333333; font-family: Roboto; font-size: 12px; font-style: italic; text-align: center; }";
+        String css = ".ld-header { color: #3d4167; font-family: " + FontsConstants.DEFAULT_SERIF_FONT + "; font-size: 18px; font-weight: bold; text-align: center; margin-top: 60px; margin-bottom: 40px; } .ld { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; margin-left: 24px; margin-right: 24px; margin-bottom: 12px; } .ld-footer { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 12px; font-style: italic; text-align: center; }";
         String html = "<div class='ld-header'>Listening Section Directions</div>";
         html += "<div class='ld'>This test measures your ability to understand conversations and lectures in English.</div>";
         html += "<div class='ld'>The Listening section is divided into 2 separately timed parts. In each part you will listen to 1 conversation and 2 lectures. You will hear each conversation or lecture only <b>one</b> time.</div>";

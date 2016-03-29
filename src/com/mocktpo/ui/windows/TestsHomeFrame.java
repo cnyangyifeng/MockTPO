@@ -121,28 +121,16 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
 
         this.headerPanel.setLayout(null);
 
-        this.setLogoLabel();
         this.setTitlePane();
         this.setGoBackHomeButton();
 
         this.getContentPane().add(this.headerPanel);
     }
 
-    protected void setLogoLabel() {
-        JLabel logoLabel = new JLabel();
-
-        logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
-
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "logo.png"));
-        logoLabel.setIcon(icon);
-
-        this.headerPanel.add(logoLabel);
-    }
-
     protected void setTitlePane() {
         JEditorPane titlePane = new JEditorPane();
 
-        int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
+        int x = LayoutConstants.MARGIN * 2;
         int y = LayoutConstants.MARGIN;
         titlePane.setBounds(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT);
 
@@ -151,9 +139,9 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".title { font-family: Impact; font-size: 24px; font-weight: bold; color: #ffffff; }");
+        style.addRule(".title { font-family: " + FontsConstants.LOGO_FONT + "; font-size: 20px; font-weight: bold; color: #ffffff; }");
         titlePane.setEditorKit(kit);
-        titlePane.setText("<div class='title'>MODEL TESTS</div>");
+        titlePane.setText("<div class='title'>" + GlobalConstants.APPLICATION_NAME + " " + GlobalConstants.TESTS_HOME_TITLE + "</div>");
 
         this.headerPanel.add(titlePane);
     }
@@ -199,7 +187,7 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".slogan { color: #333333; font-family: Roboto; font-size: 24px; text-align: center; }");
+        style.addRule(".slogan { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 24px; text-align: center; }");
         this.sloganPane.setEditorKit(kit);
         this.sloganPane.setText("<div class='slogan'>TOEFL&reg; iBT MODEL TESTS</div>");
         this.sloganPane.addHyperlinkListener(new HyperlinkListener() {
@@ -289,7 +277,7 @@ public class TestsHomeFrame extends JFrame implements ActionListener, MouseListe
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet style = kit.getStyleSheet();
-        style.addRule(".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }");
+        style.addRule(".copyright { color: #ffffff; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 8px; font-weight: bold; text-align: center; }");
         copyrightPane.setEditorKit(kit);
         copyrightPane.setText("<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>");
 

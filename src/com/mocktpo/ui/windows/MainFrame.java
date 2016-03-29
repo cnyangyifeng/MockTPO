@@ -3,6 +3,7 @@ package com.mocktpo.ui.windows;
 import com.mocktpo.ui.dialogs.ApplicationExitDialog;
 import com.mocktpo.ui.dialogs.ContactUsDialog;
 import com.mocktpo.ui.widgets.*;
+import com.mocktpo.util.FontsConstants;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.util.LayoutConstants;
 import org.apache.logging.log4j.LogManager;
@@ -98,30 +99,17 @@ public class MainFrame extends JFrame implements ActionListener {
         /* Set layout */
         this.headerPanel.setLayout(null);
         /* Set children components */
-        this.setLogoLabel();
         this.setTitlePane();
         this.setExitApplicationButton();
         /* Add to the parent component */
         this.getContentPane().add(this.headerPanel);
     }
 
-    protected void setLogoLabel() {
-        /* Initialize component */
-        JLabel logoLabel = new JLabel();
-        /* Set bounds */
-        logoLabel.setBounds(0, LayoutConstants.MARGIN, LayoutConstants.LOGO_LABEL_WIDTH, LayoutConstants.LOGO_LABEL_HEIGHT);
-        /* Set icon */
-        ImageIcon icon = new ImageIcon(this.getClass().getResource(GlobalConstants.IMAGES_DIR + "logo.png"));
-        logoLabel.setIcon(icon);
-        /* Add to the parent component */
-        this.headerPanel.add(logoLabel);
-    }
-
     protected void setTitlePane() {
         /* Initialize component */
-        int x = LayoutConstants.LOGO_LABEL_WIDTH + LayoutConstants.MARGIN * 2;
+        int x = LayoutConstants.MARGIN * 2;
         int y = LayoutConstants.MARGIN;
-        String css = ".title { font-family: Impact; font-size: 24px; color: #ffffff; }";
+        String css = ".title { font-family: " + FontsConstants.LOGO_FONT + "; font-size: 20px; color: #ffffff; }";
         String html = "<div class='title'>" + GlobalConstants.APPLICATION_NAME + "</div>";
         StyledLabelPane titlePane = new StyledLabelPane(x, y, LayoutConstants.TITLE_PANE_WIDTH, LayoutConstants.TITLE_PANE_HEIGHT, css, html);
         /* Add to the parent component */
@@ -164,7 +152,7 @@ public class MainFrame extends JFrame implements ActionListener {
         /* Initialize component */
         int x = (this.bodyPanel.getWidth() - SLOGAN_PANE_WIDTH) / 2;
         int y = LayoutConstants.MARGIN * 12;
-        String css = ".slogan { color: #333333; font-family: Roboto; font-size: 24px; text-align: center; } .slogan-desc { color: #999999; font-family: Roboto; font-size: 16px; margin-top: 10px; text-align: center; } a.author { color: #333333; }";
+        String css = ".slogan { color: #333333; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 24px; text-align: center; } .slogan-desc { color: #999999; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 16px; margin-top: 10px; text-align: center; } a.author { color: #333333; }";
         String html = "<div class='slogan'>" + GlobalConstants.APPLICATION_NAME + " is a TOEFL&reg; iBT Practice Offline Application</div>" +
                 "<div class='slogan-desc'>Please contact <a href='' class='author'>us</a> to report bugs and check updates.</div>";
         this.sloganPane = new StyledLabelPane(x, y, SLOGAN_PANE_WIDTH, SLOGAN_PANE_HEIGHT, css, html);
@@ -234,7 +222,7 @@ public class MainFrame extends JFrame implements ActionListener {
         /* Initialize component */
         int x = (this.footerPanel.getWidth() - LayoutConstants.COPYRIGHT_PANE_WIDTH) / 2;
         int y = (LayoutConstants.FOOTER_PANEL_HEIGHT - LayoutConstants.COPYRIGHT_PANE_HEIGHT) / 2;
-        String css = ".copyright { color: #ffffff; font-family: Roboto; font-size: 8px; font-weight: bold; text-align: center; }";
+        String css = ".copyright { color: #ffffff; font-family: " + FontsConstants.SYSTEM_FONT + "; font-size: 8px; font-weight: bold; text-align: center; }";
         String html = "<div class='copyright'>Copyright 2006, 2010, 2011 by Educational Testing Service. All rights reserved. EDUCATIONAL TESTING SERVICE, ETS, the ETS logo, TOEFL and TOEFL iBT are registered trademarks of Educational Testing Service (ETS) in the United States and other countries.</div>";
         StyledLabelPane copyrightPane = new StyledLabelPane(x, y, LayoutConstants.COPYRIGHT_PANE_WIDTH, LayoutConstants.COPYRIGHT_PANE_HEIGHT, css, html);
         /* Add to the parent component */

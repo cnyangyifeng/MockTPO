@@ -10,22 +10,26 @@ public class FontsUtils {
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             /* Cambria */
-            InputStream cambria = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Cambria.ttf");
-            InputStream cambriab = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Cambria Bold.ttf");
-            InputStream cambriai = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Cambria Italic.ttf");
-            InputStream cambriabi = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Cambria Bold Italic.ttf");
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, cambria));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, cambriab));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, cambriai));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, cambriabi));
-            /* Impact */
-            InputStream impact = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Impact.ttf");
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, impact));
+            InputStream Cambria = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Cambria-Regular.ttf");
+            InputStream CambriaBold = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Cambria-Bold.ttf");
+            InputStream CambriaBoldItalic = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Cambria-BoldItalic.ttf");
+            InputStream CambriaItalic = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Cambria-Italic.ttf");
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, Cambria));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, CambriaBold));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, CambriaBoldItalic));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, CambriaItalic));
+             /* CaptureIt */
+            InputStream CaptureIt = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Capture_it.ttf");
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, CaptureIt));
             /* Roboto */
-            InputStream roboto = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Regular.ttf");
-            InputStream robotob = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Bold.ttf");
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, roboto));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, robotob));
+            InputStream RobotoRegular = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Regular.ttf");
+            InputStream RobotoBold = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Bold.ttf");
+            InputStream RobotoBoldItalic = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-BoldItalic.ttf");
+            InputStream RobotoItalic = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Italic.ttf");
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, RobotoRegular));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, RobotoBold));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, RobotoBoldItalic));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, RobotoItalic));
         } catch (FontFormatException ffe) {
             ffe.printStackTrace();
         } catch (IOException ioe) {

@@ -23,6 +23,7 @@ public interface GlobalConstants {
     String REMOTE_TESTS_DIR = "/Users/yangyifeng/MockTPO/tests/";
 
     String APPLICATION_DIR = "/";
+    String CONFIG_DIR = "/config/";
     String RESOURCES_DIR = "/resources/";
     String AUDIOS_DIR = "/resources/audios/";
     String FONTS_DIR = "/resources/fonts/";

@@ -1,19 +1,43 @@
 package com.mocktpo;
 
-import com.mocktpo.view.window.AppWindow;
+import com.mocktpo.util.FontsUtils;
+import com.mocktpo.window.AppWindow;
+import com.mocktpo.window.SplashWindow;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class MyApplication implements Runnable {
+public class MyApplication {
 
-    @Override
-    public void run() {
+    public void init() {
+        SplashWindow splash = new SplashWindow();
+        splash.setVisible(true);
+
+        splash.update(20);
+        FontsUtils.loadFonts();
+
+        splash.update(60);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = ge.getDefaultScreenDevice();
         AppWindow win = new AppWindow(device.getDefaultConfiguration());
-        device.setFullScreenWindow(win);
+
+        splash.update(100);
+        this.sleep(300);
+
+        /* Close splash window */
+        splash.close();
+        this.sleep(100);
+        /* Set application window visible */
+        win.setOpacity(0);
         win.setVisible(true);
+        device.setFullScreenWindow(win);
+    }
+
+    private void sleep(int duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**************************************************
@@ -21,6 +45,6 @@ public class MyApplication implements Runnable {
      **************************************************/
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new MyApplication());
+        new MyApplication().init();
     }
 }

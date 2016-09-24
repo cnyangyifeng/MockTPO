@@ -18,9 +18,6 @@ public class FontsUtils {
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, CambriaBold));
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, CambriaBoldItalic));
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, CambriaItalic));
-             /* CaptureIt */
-            InputStream CaptureIt = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Capture_it.ttf");
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, CaptureIt));
             /* Roboto */
             InputStream RobotoRegular = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Regular.ttf");
             InputStream RobotoBold = FontsUtils.class.getResourceAsStream(GlobalConstants.FONTS_DIR + "Roboto-Bold.ttf");

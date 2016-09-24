@@ -4,19 +4,31 @@ import java.util.List;
 
 public class MReading {
 
-    protected String index;
-    protected int totalQuestions;
-    protected List<MReadingPassage> passages;
+    private String index;
+    private int totalQuestions;
+    private List<MReadingPassage> passages;
 
     public String getIndex() {
-        return this.index;
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public int getTotalQuestions() {
         return totalQuestions;
     }
 
+    public void setTotalQuestions(int totalQuestions) {
+        this.totalQuestions = totalQuestions;
+    }
+
     public List<MReadingPassage> getPassages() {
-        return this.passages;
+        return passages;
+    }
+
+    public void setPassages(List<MReadingPassage> passages) {
+        this.passages = passages;
     }
 }

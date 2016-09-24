@@ -4,24 +4,40 @@ import java.util.List;
 
 public class MChoiceQuestion {
 
-    protected int number;
-    protected String subject;
-    protected String answer;
-    protected List<MChoiceOption> options;
+    private int number;
+    private String subject;
+    private String answer;
+    private List<MChoiceOption> options;
 
     public int getNumber() {
-        return this.number;
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public String getSubject() {
-        return this.subject;
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getAnswer() {
-        return this.answer;
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public List<MChoiceOption> getOptions() {
-        return this.options;
+        return options;
+    }
+
+    public void setOptions(List<MChoiceOption> options) {
+        this.options = options;
     }
 }

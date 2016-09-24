@@ -2,9 +2,13 @@ package com.mocktpo.model;
 
 public class MListeningQuestion extends MChoiceQuestion {
 
-    protected MAudio audio;
+    private MAudio audio;
 
     public MAudio getAudio() {
-        return this.audio;
+        return audio;
+    }
+
+    public void setAudio(MAudio audio) {
+        this.audio = audio;
     }
 }

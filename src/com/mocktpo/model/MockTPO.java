@@ -4,10 +4,10 @@ import java.util.List;
 
 public class MockTPO {
 
-    protected List<MTest> tests;
+    private List<MTest> tests;
 
     public List<MTest> getTests() {
-        return this.tests;
+        return tests;
     }
 
     public void setTests(List<MTest> tests) {

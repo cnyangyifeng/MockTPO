@@ -4,14 +4,22 @@ import java.util.List;
 
 public class MListening {
 
-    protected String index;
-    protected List<MListeningPassage> passages;
+    private String index;
+    private List<MListeningPassage> passages;
 
     public String getIndex() {
-        return this.index;
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public List<MListeningPassage> getPassages() {
-        return this.passages;
+        return passages;
+    }
+
+    public void setPassages(List<MListeningPassage> passages) {
+        this.passages = passages;
     }
 }

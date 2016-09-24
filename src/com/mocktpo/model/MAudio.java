@@ -5,6 +5,6 @@ public class MAudio {
     private String index;
 
     public String getIndex() {
-        return this.index;
+        return index;
     }
 }

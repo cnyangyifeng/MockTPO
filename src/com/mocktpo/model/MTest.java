@@ -2,11 +2,11 @@ package com.mocktpo.model;
 
 public class MTest {
 
-    protected String index;
-    protected String name;
-    protected String download;
-    protected String next;
-    protected String reports;
+    private String index;
+    private String name;
+    private String download;
+    private String next;
+    private String reports;
 
     public MTest(String index, String name) {
         this.index = index;
@@ -17,8 +17,16 @@ public class MTest {
         return index;
     }
 
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDownload() {
@@ -39,5 +47,9 @@ public class MTest {
 
     public String getReports() {
         return reports;
+    }
+
+    public void setReports(String reports) {
+        this.reports = reports;
     }
 }

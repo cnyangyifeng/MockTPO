@@ -2,8 +2,8 @@ package com.mocktpo.model;
 
 public class MChoiceOption {
 
-    protected String index;
-    protected String text;
+    private String index;
+    private String text;
 
     public MChoiceOption(String index, String text) {
         this.index = index;
@@ -11,10 +11,18 @@ public class MChoiceOption {
     }
 
     public String getIndex() {
-        return this.index;
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public String getText() {
-        return this.text;
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

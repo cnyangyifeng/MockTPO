@@ -25,7 +25,7 @@ public class ConfigUtils {
 
     public static void save(String fileName, Object object) {
         try {
-            URL url = XMLUtils.class.getResource(GlobalConstants.CONFIG_DIR + fileName);
+            URL url = ConfigUtils.class.getResource(GlobalConstants.CONFIG_DIR + fileName);
             File file = new File(url.toURI());
             if (!file.exists()) {
                 if (file.createNewFile()) {

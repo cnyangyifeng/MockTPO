@@ -4,29 +4,49 @@ import java.util.List;
 
 public class MListeningPassage {
 
-    protected String index;
-    protected String type;
-    protected List<MImage> images;
-    protected List<MAudio> audios;
-    protected List<MListeningQuestion> questions;
+    private String index;
+    private String type;
+    private List<MImage> images;
+    private List<MAudio> audios;
+    private List<MListeningQuestion> questions;
 
     public String getIndex() {
-        return this.index;
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public String getType() {
-        return this.type;
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public List<MImage> getImages() {
-        return this.images;
+        return images;
+    }
+
+    public void setImages(List<MImage> images) {
+        this.images = images;
     }
 
     public List<MAudio> getAudios() {
-        return this.audios;
+        return audios;
+    }
+
+    public void setAudios(List<MAudio> audios) {
+        this.audios = audios;
     }
 
     public List<MListeningQuestion> getQuestions() {
-        return this.questions;
+        return questions;
+    }
+
+    public void setQuestions(List<MListeningQuestion> questions) {
+        this.questions = questions;
     }
 }

@@ -2,14 +2,22 @@ package com.mocktpo.model;
 
 public class MReadingParagraph {
 
-    protected int number;
-    protected String text;
+    private int number;
+    private String text;
 
     public int getNumber() {
-        return this.number;
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public String getText() {
-        return this.text;
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

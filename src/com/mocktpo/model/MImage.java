@@ -2,9 +2,13 @@ package com.mocktpo.model;
 
 public class MImage {
 
-    protected String index;
+    private String index;
 
     public String getIndex() {
-        return this.index;
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 }

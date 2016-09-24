@@ -4,24 +4,40 @@ import java.util.List;
 
 public class MReadingPassage {
 
-    protected String index;
-    protected String title;
-    protected List<MReadingParagraph> paragraphs;
-    protected List<MChoiceQuestion> questions;
+    private String index;
+    private String title;
+    private List<MReadingParagraph> paragraphs;
+    private List<MChoiceQuestion> questions;
 
     public String getIndex() {
-        return this.index;
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<MReadingParagraph> getParagraphs() {
-        return this.paragraphs;
+        return paragraphs;
+    }
+
+    public void setParagraphs(List<MReadingParagraph> paragraphs) {
+        this.paragraphs = paragraphs;
     }
 
     public List<MChoiceQuestion> getQuestions() {
-        return this.questions;
+        return questions;
+    }
+
+    public void setQuestions(List<MChoiceQuestion> questions) {
+        this.questions = questions;
     }
 }

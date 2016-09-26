@@ -1,7 +1,7 @@
 package com.mocktpo.orm.mapper;
 
 import com.mocktpo.orm.domain.User;
-import com.mocktpo.util.DBUtil;
+import com.mocktpo.util.DbUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.After;
 import org.junit.Before;
@@ -37,8 +37,8 @@ public class UserMapperTest {
 
     @Before
     public void setUp() {
-        DBUtil.init();
-        session = DBUtil.getSqlSession();
+        DbUtils.init();
+        session = DbUtils.getSqlSession();
         userMapper = session.getMapper(UserMapper.class);
     }
 

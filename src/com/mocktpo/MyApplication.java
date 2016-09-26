@@ -1,6 +1,6 @@
 package com.mocktpo;
 
-import com.mocktpo.util.DBUtil;
+import com.mocktpo.util.DbUtils;
 import com.mocktpo.util.FTPUtils;
 import com.mocktpo.util.FontsUtils;
 import com.mocktpo.window.AppWindow;
@@ -36,8 +36,8 @@ public class MyApplication {
         splash.update(27);
 
         long t1 = System.currentTimeMillis();
-        DBUtil.init();
-        this.setSqlSession(DBUtil.getSqlSession());
+        DbUtils.init();
+        this.setSqlSession(DbUtils.getSqlSession());
         long t2 = System.currentTimeMillis();
         System.out.println(t2 - t1);
         splash.update(67);

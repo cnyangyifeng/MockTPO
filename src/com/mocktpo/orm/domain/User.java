@@ -8,11 +8,7 @@ public class User {
 
     private String email;
 
-    private String mobile;
-
     private String license;
-
-    private String hardware;
 
     public long getId() {
         return id;
@@ -38,27 +34,11 @@ public class User {
         this.email = email;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
     public String getLicense() {
         return license;
     }
 
     public void setLicense(String license) {
         this.license = license;
-    }
-
-    public String getHardware() {
-        return hardware;
-    }
-
-    public void setHardware(String hardware) {
-        this.hardware = hardware;
     }
 }

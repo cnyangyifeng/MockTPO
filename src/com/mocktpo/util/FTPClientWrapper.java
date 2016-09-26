@@ -43,7 +43,7 @@ public class FTPClientWrapper {
         }
     }
 
-    private void connect() throws Exception {
+    public boolean connect() throws Exception {
         if (ftp == null) {
             ftp = new FTPClient();
         }
@@ -52,6 +52,6 @@ public class FTPClientWrapper {
         if (!FTPReply.isPositiveCompletion(reply)) {
             ftp.disconnect();
         }
-        ftp.login(GlobalConstants.FTP_USERNAME, GlobalConstants.FTP_PASSWORD);
+        return ftp.login(GlobalConstants.FTP_USERNAME, GlobalConstants.FTP_PASSWORD);
     }
 }

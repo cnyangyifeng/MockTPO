@@ -13,18 +13,21 @@ public interface UserMapper {
             "MT_USER_ID BIGINT AUTO_INCREMENT,",
             "MT_USER_NAME VARCHAR,",
             "MT_USER_EMAIL VARCHAR,",
-            "MT_USER_MOBILE VARCHAR,",
-            "MT_USER_LICENSE VARCHAR,",
-            "MT_USER_HARDWARE VARCHAR",
+            "MT_USER_LICENSE VARCHAR",
             ")"
     })
     void schema();
 
+    @Update({
+            "DROP TABLE MT_USER"
+    })
+    void drop();
+
     @Insert({
             "INSERT INTO MT_USER (",
-            "MT_USER_ID, MT_USER_NAME, MT_USER_EMAIL, MT_USER_MOBILE, MT_USER_LICENSE, MT_USER_HARDWARE",
+            "MT_USER_ID, MT_USER_NAME, MT_USER_EMAIL, MT_USER_LICENSE",
             ") VALUES (",
-            "#{id}, #{name}, #{email}, #{mobile}, #{license}, #{hardware}",
+            "#{id}, #{name}, #{email}, #{license}",
             ")"
     })
     @Options(

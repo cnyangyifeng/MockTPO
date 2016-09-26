@@ -17,30 +17,30 @@ public class ContactUsDialog extends MyDialog implements ActionListener {
 
     /* Constants */
 
-    public static final int DIALOG_WIDTH = 440;
-    public static final int DIALOG_HEIGHT = 420;
+    private static final int DIALOG_WIDTH = 440;
+    private static final int DIALOG_HEIGHT = 420;
 
-    public static final int TITLE_LABEL_WIDTH = 200;
-    public static final int TITLE_LABEL_HEIGHT = 40;
+    private static final int TITLE_LABEL_WIDTH = 200;
+    private static final int TITLE_LABEL_HEIGHT = 40;
 
-    public static final int DESCRIPTION_PANE_WIDTH = 418;
-    public static final int DESCRIPTION_PANE_HEIGHT = 270;
+    private static final int DESCRIPTION_PANE_WIDTH = 418;
+    private static final int DESCRIPTION_PANE_HEIGHT = 270;
 
-    public static final int QRCODE_IMAGE_LABEL_WIDTH = 180;
-    public static final int QRCODE_IMAGE_LABEL_HEIGHT = 180;
+    private static final int QRCODE_IMAGE_LABEL_WIDTH = 180;
+    private static final int QRCODE_IMAGE_LABEL_HEIGHT = 180;
 
-    public static final int CLOSE_BUTTON_WIDTH = 74;
-    public static final int CLOSE_BUTTON_HEIGHT = 34;
+    private static final int CLOSE_BUTTON_WIDTH = 74;
+    private static final int CLOSE_BUTTON_HEIGHT = 34;
 
     /**************************************************
      * Components
      **************************************************/
 
-    protected DialogBodyPanel bodyPanel;
-    protected JLabel titleLabel;
-    protected StyledLabelPane descriptionPane;
-    protected JLabel qrcodeImageLabel;
-    protected ImageButton closeButton;
+    private DialogBodyPanel bodyPanel;
+    private JLabel titleLabel;
+    private StyledLabelPane descriptionPane;
+    private JLabel qrcodeImageLabel;
+    private ImageButton closeButton;
 
     /**************************************************
      * Constructors
@@ -68,7 +68,7 @@ public class ContactUsDialog extends MyDialog implements ActionListener {
      * Global Settings
      **************************************************/
 
-    protected void globalSettings() {
+    private void globalSettings() {
         /* Set bounds */
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
@@ -82,7 +82,7 @@ public class ContactUsDialog extends MyDialog implements ActionListener {
         this.setTitle("");
     }
 
-    protected void setBodyPanel() {
+    private void setBodyPanel() {
         this.bodyPanel = new DialogBodyPanel();
         this.bodyPanel.setBounds(0, 0, this.getWidth(), this.getHeight());
 
@@ -96,7 +96,7 @@ public class ContactUsDialog extends MyDialog implements ActionListener {
         this.setContentPane(this.bodyPanel);
     }
 
-    protected void setTitleLabel() {
+    private void setTitleLabel() {
         this.titleLabel = new JLabel("Contact Us", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
         this.titleLabel.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 16));
@@ -106,7 +106,7 @@ public class ContactUsDialog extends MyDialog implements ActionListener {
         this.bodyPanel.add(this.titleLabel);
     }
 
-    protected void setDescriptionPane() {
+    private void setDescriptionPane() {
         /* Initialize component */
         int x = (this.bodyPanel.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = this.titleLabel.getY() + TITLE_LABEL_HEIGHT + LayoutConstants.MARGIN * 2;
@@ -129,7 +129,7 @@ public class ContactUsDialog extends MyDialog implements ActionListener {
         this.bodyPanel.add(this.qrcodeImageLabel, 1);
     }
 
-    protected void setCloseButton() {
+    private void setCloseButton() {
         /* Initialize component */
         int x = (this.bodyPanel.getWidth() - CLOSE_BUTTON_WIDTH) / 2;
         int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 4;

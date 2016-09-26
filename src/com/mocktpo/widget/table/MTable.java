@@ -14,9 +14,9 @@ public class MTable extends JTable {
 
     /* Constants */
 
-    public static final int TABLE_WIDTH = 1000;
-    public static final int TABLE_HEADER_HEIGHT = 40;
-    public static final int TABLE_CELL_HEIGHT = 50;
+    private static final int TABLE_WIDTH = 1000;
+    private static final int TABLE_HEADER_HEIGHT = 40;
+    private static final int TABLE_CELL_HEIGHT = 50;
 
     /**************************************************
      * Constructors
@@ -31,7 +31,7 @@ public class MTable extends JTable {
      * Components Initialization
      **************************************************/
 
-    protected void initComponents() {
+    private void initComponents() {
         /* Set table header */
         JTableHeader tableHeader = this.getTableHeader();
         tableHeader.setPreferredSize(new Dimension(TABLE_WIDTH, TABLE_HEADER_HEIGHT));

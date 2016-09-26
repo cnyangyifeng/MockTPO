@@ -1,7 +1,7 @@
 package com.mocktpo.orm.mapper;
 
 import com.mocktpo.orm.domain.User;
-import com.mocktpo.util.DbUtil;
+import com.mocktpo.util.DatabaseUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +14,7 @@ public class UserMapperTest {
 
     @Test
     public void testSchema() {
+        userMapper.drop();
         userMapper.schema();
     }
 
@@ -22,9 +23,7 @@ public class UserMapperTest {
         User user = new User();
         user.setName("eric");
         user.setEmail("account@qq.com");
-        user.setMobile("13581651017");
         user.setLicense("1234-1234-1234-1234");
-        user.setHardware("4321-4321-4321-4321");
 
         userMapper.insert(user);
     }
@@ -38,8 +37,8 @@ public class UserMapperTest {
 
     @Before
     public void setUp() {
-        DbUtil.init();
-        session = DbUtil.factory.openSession();
+        DatabaseUtils.init();
+        session = DatabaseUtils.getSqlSession();
         userMapper = session.getMapper(UserMapper.class);
     }
 

@@ -8,6 +8,10 @@ public class ImagePanel extends JPanel {
 
     private Image image;
 
+    /**************************************************
+     * Constructors
+     **************************************************/
+
     public ImagePanel(URL url) {
         this.image = Toolkit.getDefaultToolkit().getImage(url);
         this.setBackground(new Color(51, 51, 51));

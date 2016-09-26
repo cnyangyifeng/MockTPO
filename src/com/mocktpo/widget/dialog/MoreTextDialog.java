@@ -17,26 +17,26 @@ public class MoreTextDialog extends MyDialog implements ActionListener {
 
     /* Constants */
 
-    public static final int DIALOG_WIDTH = 440;
-    public static final int DIALOG_HEIGHT = 420;
+    private static final int DIALOG_WIDTH = 440;
+    private static final int DIALOG_HEIGHT = 420;
 
-    public static final int TITLE_WIDTH = 200;
-    public static final int TITLE_HEIGHT = 40;
+    private static final int TITLE_WIDTH = 200;
+    private static final int TITLE_HEIGHT = 40;
 
-    public static final int DESCRIPTION_PANE_WIDTH = 418;
-    public static final int DESCRIPTION_PANE_HEIGHT = 260;
+    private static final int DESCRIPTION_PANE_WIDTH = 418;
+    private static final int DESCRIPTION_PANE_HEIGHT = 260;
 
-    public static final int CONTINUE_BUTTON_WIDTH = 74;
-    public static final int CONTINUE_BUTTON_HEIGHT = 34;
+    private static final int CONTINUE_BUTTON_WIDTH = 74;
+    private static final int CONTINUE_BUTTON_HEIGHT = 34;
 
     /**************************************************
      * Components
      **************************************************/
 
-    protected DialogBodyPanel bodyPanel;
-    protected JLabel titleLabel;
-    protected StyledLabelPane descriptionPane;
-    protected ImageButton continueButton;
+    private DialogBodyPanel bodyPanel;
+    private JLabel titleLabel;
+    private StyledLabelPane descriptionPane;
+    private ImageButton continueButton;
 
     /**************************************************
      * Constructors
@@ -66,7 +66,7 @@ public class MoreTextDialog extends MyDialog implements ActionListener {
      * Global Settings
      **************************************************/
 
-    protected void globalSettings() {
+    private void globalSettings() {
         /* Set bounds */
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
@@ -80,7 +80,7 @@ public class MoreTextDialog extends MyDialog implements ActionListener {
         this.setTitle("");
     }
 
-    protected void setBodyPanel() {
+    private void setBodyPanel() {
         this.bodyPanel = new DialogBodyPanel();
         this.bodyPanel.setBounds(0, 0, this.getWidth(), this.getHeight());
 
@@ -95,7 +95,7 @@ public class MoreTextDialog extends MyDialog implements ActionListener {
         this.bodyPanel.add(this.continueButton);
     }
 
-    protected void setTitleLabel() {
+    private void setTitleLabel() {
         this.titleLabel = new JLabel("More Text", JLabel.CENTER);
         this.titleLabel.setForeground(Color.WHITE);
         this.titleLabel.setFont(new Font(FontsConstants.SYSTEM_FONT, Font.BOLD, 16));
@@ -103,7 +103,7 @@ public class MoreTextDialog extends MyDialog implements ActionListener {
         this.titleLabel.setBounds(x, LayoutConstants.MARGIN, TITLE_WIDTH, TITLE_HEIGHT);
     }
 
-    protected void setDescriptionPane() {
+    private void setDescriptionPane() {
         /* Initialize component */
         int x = (this.bodyPanel.getWidth() - DESCRIPTION_PANE_WIDTH) / 2;
         int y = this.titleLabel.getY() + TITLE_HEIGHT + LayoutConstants.MARGIN * 2;
@@ -112,7 +112,7 @@ public class MoreTextDialog extends MyDialog implements ActionListener {
         this.descriptionPane = new StyledLabelPane(x, y, DESCRIPTION_PANE_WIDTH, DESCRIPTION_PANE_HEIGHT, css, html);
     }
 
-    protected void setContinueButton() {
+    private void setContinueButton() {
         /* Initialize component */
         int x = (this.bodyPanel.getWidth() - CONTINUE_BUTTON_WIDTH) / 2;
         int y = this.descriptionPane.getY() + DESCRIPTION_PANE_HEIGHT + LayoutConstants.MARGIN * 2;

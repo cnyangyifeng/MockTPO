@@ -30,6 +30,9 @@ public interface GlobalConstants {
     String IMAGES_DIR = "/resources/images/";
     String TESTS_DIR = "/tests/";
 
+    String PUBLIC_KEY_FILE = "pubring.gpg";
+    String PRIVATE_KEY_FILE = "secring.gpg";
+
     String MOCKTPO_CONF_FILE = "mocktpo.xml";
     String TEST_CONF_FILE = "test.xml";
     String LISTENING_CONF_FILE = "listening.xml";

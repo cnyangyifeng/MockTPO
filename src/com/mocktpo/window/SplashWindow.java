@@ -11,20 +11,17 @@ public class SplashWindow extends JWindow {
 
     /* Constants */
 
-    public static final int SPLASH_WINDOW_WIDTH = 480;
-    public static final int SPLASH_WINDOW_HEIGHT = 300;
-    public static final int BACKGROUND_PANEL_WIDTH = 480;
-    public static final int BACKGROUND_PANEL_HEIGHT = 270;
-    public static final int PROGRESS_BAR_WIDTH = 460;
-    public static final int PROGRESS_BAR_HEIGHT = 30;
+    private static final int SPLASH_WINDOW_WIDTH = 480;
+    private static final int SPLASH_WINDOW_HEIGHT = 300;
+    private static final int BACKGROUND_PANEL_WIDTH = 480;
+    private static final int BACKGROUND_PANEL_HEIGHT = 270;
+    private static final int PROGRESS_BAR_WIDTH = 460;
+    private static final int PROGRESS_BAR_HEIGHT = 30;
 
     /* Components */
 
     private JPanel backgroundPanel;
     private JProgressBar progressBar;
-
-    /* Workers */
-    private BackgroundPanelWorker backgroundPanelWorker;
 
     public SplashWindow() {
         this.initComponents();
@@ -82,9 +79,8 @@ public class SplashWindow extends JWindow {
      * Background Panel Settings
      **************************************************/
 
-    public void setBackgroundPanel() {
-        backgroundPanelWorker = new BackgroundPanelWorker();
-        backgroundPanelWorker.execute();
+    private void setBackgroundPanel() {
+        new BackgroundPanelWorker().execute();
     }
 
     /**************************************************
@@ -125,6 +121,7 @@ public class SplashWindow extends JWindow {
             backgroundPanel.setBounds(0, 0, BACKGROUND_PANEL_WIDTH, BACKGROUND_PANEL_HEIGHT);
             /* Add to the parent component */
             getContentPane().add(backgroundPanel);
+            /* Repaint */
             repaint();
         }
     }
@@ -134,7 +131,7 @@ public class SplashWindow extends JWindow {
      **************************************************/
 
     public static void main(String[] args) {
-        SplashWindow win = new SplashWindow();
-        win.setVisible(true);
+        SplashWindow splash = new SplashWindow();
+        splash.setVisible(true);
     }
 }

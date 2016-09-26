@@ -12,9 +12,9 @@ public class MReadingReviewTable extends JTable {
 
     /* Constants */
 
-    public static final int TABLE_WIDTH = 1000;
-    public static final int TABLE_HEADER_HEIGHT = 24;
-    public static final int TABLE_CELL_HEIGHT = 24;
+    private static final int TABLE_WIDTH = 1000;
+    private static final int TABLE_HEADER_HEIGHT = 24;
+    private static final int TABLE_CELL_HEIGHT = 24;
 
     /**************************************************
      * Constructors
@@ -29,7 +29,7 @@ public class MReadingReviewTable extends JTable {
      * Components Initialization
      **************************************************/
 
-    protected void initComponents() {
+    private void initComponents() {
         /* Set table header */
         JTableHeader tableHeader = this.getTableHeader();
         tableHeader.setPreferredSize(new Dimension(TABLE_WIDTH, TABLE_HEADER_HEIGHT));

@@ -1,5 +1,6 @@
 package com.mocktpo.window;
 
+import com.mocktpo.MyApplication;
 import com.mocktpo.util.GlobalConstants;
 import com.mocktpo.view.IndexView;
 import com.mocktpo.view.PracticesHomeView;
@@ -16,6 +17,10 @@ public class AppWindow extends JFrame {
     /* Logger */
 
     protected static final Logger logger = LogManager.getLogger();
+
+    /* Application */
+
+    private MyApplication application;
 
     /* Views */
 
@@ -68,6 +73,14 @@ public class AppWindow extends JFrame {
     /**************************************************
      * Getters and Setters
      **************************************************/
+
+    public MyApplication getApplication() {
+        return application;
+    }
+
+    public void setApplication(MyApplication application) {
+        this.application = application;
+    }
 
     public IndexView getIndexView() {
         if (null == this.indexView) {

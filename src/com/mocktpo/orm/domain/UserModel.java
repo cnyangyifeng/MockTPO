@@ -1,6 +1,6 @@
 package com.mocktpo.orm.domain;
 
-public class User {
+public class UserModel {
 
     private long id;
 

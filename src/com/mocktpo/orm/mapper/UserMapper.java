@@ -1,6 +1,6 @@
 package com.mocktpo.orm.mapper;
 
-import com.mocktpo.orm.domain.User;
+import com.mocktpo.orm.domain.UserModel;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
@@ -19,7 +19,7 @@ public interface UserMapper {
     void schema();
 
     @Update({
-            "DROP TABLE MT_USER"
+            "DROP TABLE MT_USER IF EXISTS"
     })
     void drop();
 
@@ -34,7 +34,7 @@ public interface UserMapper {
             useGeneratedKeys = true,
             keyProperty = "id"
     )
-    void insert(User user);
+    void insert(UserModel user);
 
     @Select(
             "SELECT COUNT(*) FROM MT_USER"

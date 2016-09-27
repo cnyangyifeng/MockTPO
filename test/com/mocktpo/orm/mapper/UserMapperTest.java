@@ -1,6 +1,6 @@
 package com.mocktpo.orm.mapper;
 
-import com.mocktpo.orm.domain.User;
+import com.mocktpo.orm.domain.UserModel;
 import com.mocktpo.util.DbUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.After;
@@ -20,14 +20,13 @@ public class UserMapperTest {
 
     @Test
     public void testInsert() {
-        User user = new User();
+        UserModel user = new UserModel();
         user.setName("eric");
         user.setEmail("account@qq.com");
         user.setLicense("1234-1234-1234-1234");
 
         userMapper.insert(user);
     }
-
 
     @Test
     public void testCount() {

@@ -25,7 +25,7 @@ public class IndexView extends MyView {
     public static final int EXIT_APPLICATION_BUTTON_WIDTH = 84;
     public static final int EXIT_APPLICATION_BUTTON_HEIGHT = 34;
     public static final int SLOGAN_PANE_WIDTH = 1000;
-    public static final int SLOGAN_PANE_HEIGHT = 80;
+    public static final int SLOGAN_PANE_HEIGHT = 100;
     public static final int MODULE_BUTTON_WIDTH = 360;
     public static final int MODULE_BUTTON_HEIGHT = 240;
 

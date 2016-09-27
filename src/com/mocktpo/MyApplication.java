@@ -55,7 +55,7 @@ public class MyApplication {
         long t9 = System.currentTimeMillis();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = ge.getDefaultScreenDevice();
-        AppWindow win = new AppWindow(device.getDefaultConfiguration());
+        AppWindow win = new AppWindow();
         win.setApplication(this);
         long t10 = System.currentTimeMillis();
         System.out.println(t10 - t9);

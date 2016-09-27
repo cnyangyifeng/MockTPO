@@ -34,8 +34,7 @@ public class AppWindow extends JFrame {
      * Constructors
      **************************************************/
 
-    public AppWindow(GraphicsConfiguration gc) {
-        super(gc);
+    public AppWindow() {
         this.initComponents();
     }
 
